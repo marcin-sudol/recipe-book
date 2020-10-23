@@ -22,7 +22,58 @@ $font-normal: "Montserrat", sans-serif;
 // ------------------------------------------
 // LAYOUT
 // ------------------------------------------
+main {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  width: 100vw;
+
+  #recipes {
+    flex: 0 0 300px;
+
+    #recipe-list-header,
+    li,
+    #add-recipe {
+      margin: 20px;
+      padding: 10px;
+    }
+
+    #recipe-list {
+      list-style: none;
+    }
+
+    #add-recipe {
+      display: block;
+      // think how to make it better
+      width: calc(100% - 40px);
+    }
+  }
+
+  #right-area {
+    flex: 1 1 100%;
+    #recipe-container {
+      margin: 20px;
+      #ingredients {
+        list-style: none;
+      }
+    }
+  }
+}
 
 // ------------------------------------------
 // OTHER FORMATTING
 // ------------------------------------------
+
+main {
+  #recipes {
+    li {
+      border: 1px solid $color-medium;
+    }
+
+    #add-recipe {
+    }
+  }
+
+  #recipe-container {
+  }
+}

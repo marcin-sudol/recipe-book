@@ -5,4 +5,31 @@
   font-family: "Montserrat", sans-serif;
   border: 1px solid; }
 
+main {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  width: 100vw; }
+  main #recipes {
+    flex: 0 0 300px; }
+    main #recipes #recipe-list-header,
+    main #recipes li,
+    main #recipes #add-recipe {
+      margin: 20px;
+      padding: 10px; }
+    main #recipes #recipe-list {
+      list-style: none; }
+    main #recipes #add-recipe {
+      display: block;
+      width: calc(100% - 40px); }
+  main #right-area {
+    flex: 1 1 100%; }
+    main #right-area #recipe-container {
+      margin: 20px; }
+      main #right-area #recipe-container #ingredients {
+        list-style: none; }
+
+main #recipes li {
+  border: 1px solid #ccc4b8; }
+
 /*# sourceMappingURL=style.css.map */
