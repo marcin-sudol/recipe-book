@@ -76,5 +76,5 @@ const loadRecipe = (id) => {
   });
 };
 
-document.body.onload = loadRecipesList;
-document.body.onload = loadRecipe(0);
+window.addEventListener("load", loadRecipesList);
+window.addEventListener("load", () => loadRecipe(0));
