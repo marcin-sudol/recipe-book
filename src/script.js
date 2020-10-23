@@ -51,4 +51,4 @@ const loadRecipes = () => {
   });
 };
 
-loadRecipes();
+document.body.onload = loadRecipes;
