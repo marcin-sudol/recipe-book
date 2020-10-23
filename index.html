@@ -31,15 +31,23 @@
   </head>
 
   <body>
-    <section id="recipes">
-      <header id="recipe-list-header">Recipes</header>
-      <ul id="recipe-list">
-        <li>Cookies</li>
-        <li>Soup</li>
-        <li>Ice cream</li>
-      </ul>
-      <button type="button">+</button>
-    </section>
+    <main>
+      <nav id="recipes">
+        <header id="recipe-list-header">Recipes</header>
+        <ul id="recipe-list">
+          <li>Cookies</li>
+          <li>Soup</li>
+          <li>Ice cream</li>
+        </ul>
+        <button type="button">+</button>
+      </nav>
+
+      <article id="recipe-container">
+        <h4 id="recipe-name"></h4>
+        <ul id="ingredients"></ul>
+        <ol id="steps"></ol>
+      </article>
+    </main>
 
     <!-- SCRIPTS -->
     <script src="./lib/script.js"></script>

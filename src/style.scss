@@ -8,7 +8,9 @@ $accent-dark: hsl(40, 4%, 14%);
 $font-em: "Comfortaa", cursive;
 $font-normal: "Montserrat", sans-serif;
 
+// ------------------------------------------
 // DEFAULT VALUES
+// ------------------------------------------
 * {
   margin: 0;
   padding: 0;
@@ -16,3 +18,11 @@ $font-normal: "Montserrat", sans-serif;
   font-family: $font-normal;
   border: 1px solid;
 }
+
+// ------------------------------------------
+// LAYOUT
+// ------------------------------------------
+
+// ------------------------------------------
+// OTHER FORMATTING
+// ------------------------------------------

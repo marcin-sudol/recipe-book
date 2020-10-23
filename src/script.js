@@ -40,7 +40,7 @@ const recipes = [
   },
 ];
 
-const loadRecipes = () => {
+const loadRecipesList = () => {
   const list = document.getElementById("recipe-list");
 
   recipes.forEach((recipe) => {
@@ -51,4 +51,30 @@ const loadRecipes = () => {
   });
 };
 
-document.body.onload = loadRecipes;
+const loadRecipe = (id) => {
+  const recipeContainer = document.getElementById("recipe-container");
+  const recipeName = document.getElementById("recipe-name");
+  const ingredients = document.getElementById("ingredients");
+  const steps = document.getElementById("steps");
+
+  const recipe = recipes.find((item) => item.id === id);
+
+  recipeName.innerHTML = recipe.name;
+
+  recipe.ingredients.split(",").forEach((item) => {
+    let ingr = document.createElement("li");
+    ingr.appendChild(document.createTextNode(item));
+    ingredients.appendChild(ingr);
+  });
+
+  recipe.steps.forEach((item) => {
+    let step = document.createElement("li");
+    step.appendChild(
+      document.createTextNode(item.name + " " + item.time + " min.")
+    );
+    steps.appendChild(step);
+  });
+};
+
+document.body.onload = loadRecipesList;
+document.body.onload = loadRecipe(0);
