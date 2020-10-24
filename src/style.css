@@ -13,10 +13,16 @@ body {
 
 #nav {
   flex: 0 0 300px;
-  padding: 20px; }
+  padding: 20px;
+  z-index: 5; }
   #nav .header {
     margin-bottom: 20px;
-    padding: 10px; }
+    text-align: center;
+    height: 45px;
+    line-height: 45px; }
+  #nav #menu-button {
+    height: 100%;
+    float: left; }
   #nav .list {
     list-style: none; }
     #nav .list li {
@@ -36,7 +42,7 @@ body {
         #nav .list li .rating .tooltip {
           position: absolute;
           padding: 5px;
-          left: -15px;
+          right: 0px;
           bottom: -35px;
           white-space: nowrap;
           z-index: 10;
@@ -46,7 +52,7 @@ body {
 
 #add-recipe {
   display: block;
-  padding: 10px;
+  padding: 15px;
   width: 100%; }
 
 #main {
@@ -67,7 +73,8 @@ body {
   padding: 20px;
   width: 50%; }
   #ingredients .header {
-    padding: 10px; }
+    padding: 10px;
+    text-align: center; }
   #ingredients .list {
     list-style: none; }
     #ingredients .list li {
@@ -77,7 +84,8 @@ body {
   padding: 20px;
   width: 50%; }
   #steps .header {
-    padding: 10px; }
+    padding: 10px;
+    text-align: center; }
   #steps .list {
     counter-reset: li-counter; }
     #steps .list li {
@@ -99,57 +107,92 @@ body {
         #steps .list li .time i {
           float: left; }
 
-@media (max-width: 1100px) {
+@media (max-width: 1200px) {
   #ingredients,
   #steps {
     width: 100%; } }
-@media (max-width: 700px) {
+@media (max-width: 800px) {
   #nav {
     flex: 0 0 100%; }
-    #nav .list li .rating .tooltip {
-      right: 0px; }
 
   #main {
     display: none; } }
-#nav .header {
-  background-color: #ccc4b8; }
-#nav .list li {
-  border: 1px solid #ccc4b8; }
-  #nav .list li button {
+#nav {
+  background-color: white;
+  box-shadow: 2px 0px 8px #aaa; }
+  #nav .header {
+    color: #555;
+    text-transform: uppercase;
+    font-size: 20px;
+    font-weight: bold; }
+  #nav #menu-button {
     background: none;
     border: none; }
-  #nav .list li .rating {
-    border-radius: 5px; }
-    #nav .list li .rating:hover {
-      text-decoration: underline dotted; }
-    #nav .list li .rating .tooltip {
-      background-color: #ccc4b8;
-      border: none;
+    #nav #menu-button i {
+      color: #555;
+      font-size: 24px; }
+  #nav .list li {
+    background-color: #f9c74f;
+    border: 1px solid #f9c74f;
+    border-radius: 5px;
+    transition: background-color 0.2s; }
+    #nav .list li:hover {
+      background-color: white; }
+    #nav .list li button {
+      background: none;
+      border: none; }
+    #nav .list li .rating {
       border-radius: 5px; }
+      #nav .list li .rating:hover {
+        background-color: #fad275;
+        text-decoration: underline dotted; }
+      #nav .list li .rating .tooltip {
+        background-color: white;
+        color: #43aa8b;
+        border-radius: 5px;
+        font-size: 14px; }
+
+#add-recipe {
+  background-color: #555;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.2s; }
+  #add-recipe:hover {
+    background-color: #43aa8b; }
+
+#main {
+  background: #f4f4f4; }
 
 #c-recipe {
-  border: 1px solid #ccc4b8;
-  border-radius: 20px;
-  overflow: hidden; }
+  background-color: white;
+  overflow: hidden;
+  box-shadow: 0px 6px 10px #aaa; }
 
 #recipe-name {
-  background-color: #ccc4b8; }
+  background-color: #43aa8b;
+  color: white;
+  font-size: 24px; }
 
 #ingredients .header {
-  font-size: 16px;
-  text-transform: uppercase; }
+  color: #43aa8b;
+  font-size: 20px; }
 #ingredients .list {
-  border: 1px solid #ccc4b8;
-  border-radius: 10px; }
+  background-color: #f4f4f4;
+  border: 1px solid #43aa8b;
+  border-radius: 5px; }
   #ingredients .list li:not(:last-child) {
-    border-bottom: 1px solid #ccc4b8; }
+    border-bottom: 1px solid #43aa8b; }
 
 #steps .header {
-  font-size: 16px;
-  text-transform: uppercase; }
+  color: #43aa8b;
+  font-size: 20px; }
 #steps .list li .time {
+  background-color: #43aa8b;
+  color: white;
   border-radius: 5px; }
 #steps .list li:not(:last-child) {
-  border-bottom: 1px solid #ccc4b8; }
+  border-bottom: 1px solid #43aa8b; }
 
 /*# sourceMappingURL=style.css.map */

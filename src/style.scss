@@ -1,15 +1,24 @@
 // VARIABLES
-$color-light: hsl(46, 100%, 97%);
-$color-medium: hsl(38, 16%, 76%);
-$color-dark: hsl(34, 6%, 24%);
-$accent-light: hsl(17, 83%, 54%);
-$accent-dark: hsl(40, 4%, 14%);
+$accent-ye1: #fad275;
+$accent-ye2: #f9c74f;
+$accent-or1: #f8961e;
+$accent-or2: #f3722c;
+$accent-red: #f94144;
+$accent-gr1: #90be6d;
+$accent-gr2: #43aa8b;
+$accent-blu: #577590;
+
+$mono-light1: #f4f4f4;
+$mono-light2: #ddd;
+$mono-medium: #aaa;
+$mono-dark1: #555;
+$mono-dark2: #333;
 
 $font-em: "Comfortaa", cursive;
 $font-normal: "Montserrat", sans-serif;
 
-$breakdown-md: 1100px;
-$breakdown-sm: 700px;
+$breakdown-md: 1200px;
+$breakdown-sm: 800px;
 
 // ------------------------------------------
 // DEFAULT VALUES
@@ -36,10 +45,19 @@ body {
 #nav {
   flex: 0 0 300px;
   padding: 20px;
+  z-index: 5;
 
   .header {
     margin-bottom: 20px;
-    padding: 10px;
+    // padding: 10px;
+    text-align: center;
+    height: 45px;
+    line-height: 45px;
+  }
+
+  #menu-button {
+    height: 100%;
+    float: left;
   }
 
   .list {
@@ -62,7 +80,7 @@ body {
         .tooltip {
           position: absolute;
           padding: 5px;
-          left: -15px;
+          right: 0px;
           bottom: -35px;
           white-space: nowrap;
           z-index: 10;
@@ -79,7 +97,7 @@ body {
 
 #add-recipe {
   display: block;
-  padding: 10px;
+  padding: 15px;
   width: 100%;
 }
 
@@ -107,6 +125,7 @@ body {
 
   .header {
     padding: 10px;
+    text-align: center;
   }
 
   .list {
@@ -123,6 +142,7 @@ body {
 
   .header {
     padding: 10px;
+    text-align: center;
   }
 
   .list {
@@ -165,9 +185,6 @@ body {
 @media (max-width: $breakdown-sm) {
   #nav {
     flex: 0 0 100%;
-    .list li .rating .tooltip {
-      right: 0px;
-    }
   }
 
   #main {
@@ -180,12 +197,35 @@ body {
 // ------------------------------------------
 
 #nav {
+  background-color: white;
+  box-shadow: 2px 0px 8px $mono-medium;
   .header {
-    background-color: $color-medium;
+    color: $mono-dark1;
+    text-transform: uppercase;
+    font-size: 20px;
+    font-weight: bold;
   }
+
+  // look into it
+  #menu-button {
+    background: none;
+    border: none;
+    i {
+      color: $mono-dark1;
+      font-size: 24px;
+    }
+  }
+
   .list {
     li {
-      border: 1px solid $color-medium;
+      background-color: $accent-ye2;
+      border: 1px solid $accent-ye2;
+      border-radius: 5px;
+      transition: background-color 0.2s;
+      &:hover {
+        background-color: white;
+      }
+
       button {
         background: none;
         border: none;
@@ -194,56 +234,79 @@ body {
         border-radius: 5px;
 
         &:hover {
+          background-color: $accent-ye1;
           text-decoration: underline dotted;
         }
 
         .tooltip {
-          background-color: $color-medium;
-          border: none;
+          background-color: white;
+          color: $accent-gr2;
           border-radius: 5px;
+          font-size: 14px;
         }
       }
     }
   }
 }
 
+#add-recipe {
+  background-color: $mono-dark1;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.2s;
+  &:hover {
+    background-color: $accent-gr2;
+  }
+}
+
+#main {
+  background: $mono-light1;
+}
+
 #c-recipe {
-  border: 1px solid $color-medium;
-  border-radius: 20px;
+  background-color: white;
   overflow: hidden;
+  box-shadow: 0px 6px 10px $mono-medium;
 }
 
 #recipe-name {
-  background-color: $color-medium;
+  background-color: $accent-gr2;
+  color: white;
+  font-size: 24px;
 }
 
 #ingredients {
   .header {
-    font-size: 16px;
-    text-transform: uppercase;
+    color: $accent-gr2;
+    font-size: 20px;
   }
   .list {
-    border: 1px solid $color-medium;
-    border-radius: 10px;
+    background-color: $mono-light1;
+    border: 1px solid $accent-gr2;
+    border-radius: 5px;
     li:not(:last-child) {
-      border-bottom: 1px solid $color-medium;
+      border-bottom: 1px solid $accent-gr2;
     }
   }
 }
 
 #steps {
   .header {
-    font-size: 16px;
-    text-transform: uppercase;
+    color: $accent-gr2;
+    font-size: 20px;
   }
   .list {
     li {
       .time {
+        background-color: $accent-gr2;
+        color: white;
         border-radius: 5px;
       }
     }
     li:not(:last-child) {
-      border-bottom: 1px solid $color-medium;
+      border-bottom: 1px solid $accent-gr2;
     }
   }
 }
