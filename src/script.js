@@ -48,40 +48,89 @@ const recipes = [
   },
 ];
 
+// -------------------------------------------------------
+// ADDS NEW RECIPE TO THE END OF NAV LIST
+// -------------------------------------------------------
+const addRecipeToList = (recipe, list) => {
+  let rating = recipe.rating.sum / recipe.rating.votes;
+  let item = document.createElement("li");
+  let button = document.createElement("button");
+  let divRating = document.createElement("div");
+  let divTooltip = document.createElement("div");
+  item.id = "recipe-" + recipe.id;
+  button.type = "button";
+  button.onclick = clickedRecipeButton;
+  divRating.className = "rating";
+  divTooltip.className = "tooltip";
+  button.innerText = recipe.name;
+  divRating.innerText = rating.toFixed(1);
+  divTooltip.innerText = recipe.rating.votes + " votes";
+  list.appendChild(item);
+  item.appendChild(button);
+  item.appendChild(divRating);
+  divRating.appendChild(divTooltip);
+};
+
+// -------------------------------------------------------
+// LOADS RECIPES INTO NAV LIST
+// -------------------------------------------------------
 const loadRecipesList = () => {
   const list = document.querySelector("#nav .list");
-
   recipes.forEach((recipe) => {
-    let recipeItem = document.createElement("li");
-    let recipeName = document.createTextNode(recipe.name);
-    recipeItem.appendChild(recipeName);
-    list.appendChild(recipeItem);
+    addRecipeToList(recipe, list);
   });
 };
 
-const loadRecipe = (id) => {
+// -------------------------------------------------------
+// UPDATES MAIN DISPLAY WITH SELECTED RECIPE
+// -------------------------------------------------------
+const displayRecipe = (recipe) => {
   const recipeName = document.getElementById("recipe-name");
   const ingredients = document.querySelector("#ingredients .list");
   const steps = document.querySelector("#steps .list");
-
-  const recipe = recipes.find((item) => item.id === id);
-
+  // UPDATE NAME
   recipeName.innerHTML = recipe.name;
-
-  recipe.ingredients.split(",").forEach((item) => {
-    let ingr = document.createElement("li");
-    ingr.appendChild(document.createTextNode(item));
-    ingredients.appendChild(ingr);
+  // UPDATE INGREDIENTS
+  ingredients.innerHTML = "";
+  recipe.ingredients.split(",").forEach((ingredient) => {
+    let liIngredient = document.createElement("li");
+    liIngredient.innerText = ingredient;
+    ingredients.appendChild(liIngredient);
   });
-
-  recipe.steps.forEach((item) => {
-    let step = document.createElement("li");
-    step.appendChild(
-      document.createTextNode(item.name + " " + item.time + " min.")
-    );
-    steps.appendChild(step);
+  // UPDATE STEPS
+  steps.innerHTML = "";
+  recipe.steps.forEach((step) => {
+    let liStep = document.createElement("li");
+    let spStep = document.createElement("span");
+    let spTime = document.createElement("span");
+    let icon = document.createElement("i");
+    let txTime = document.createTextNode(" " + step.time + " min.");
+    spStep.className = "step";
+    spStep.innerText = step.name;
+    spTime.className = "time";
+    icon.className = "far fa-clock";
+    steps.appendChild(liStep);
+    liStep.appendChild(spStep);
+    liStep.appendChild(spTime);
+    spTime.appendChild(icon);
+    spTime.appendChild(txTime);
   });
 };
 
+// -------------------------------------------------------
+// HANDLE CLICK ON RECIPE ON THE LIST
+// -------------------------------------------------------
+function clickedRecipeButton() {
+  const recipeId = parseInt(this.parentNode.id.slice(7));
+  if (!isNaN(recipeId)) {
+    const recipe = recipes.find((recipe) => recipe.id === recipeId);
+    displayRecipe(recipe);
+  }
+}
+
+// -------------------------------------------------------
+// INITIAL LOADING
+// -------------------------------------------------------
 window.addEventListener("load", loadRecipesList);
-window.addEventListener("load", () => loadRecipe(0));
+const recipe = recipes[0];
+window.addEventListener("load", () => displayRecipe(recipe));
