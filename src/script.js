@@ -17,6 +17,10 @@ const recipes = [
         time: 45,
       },
     ],
+    rating: {
+      sum: 28,
+      votes: 6,
+    },
   },
 
   {
@@ -37,11 +41,15 @@ const recipes = [
         time: 60,
       },
     ],
+    rating: {
+      sum: 45,
+      votes: 12,
+    },
   },
 ];
 
 const loadRecipesList = () => {
-  const list = document.getElementById("recipe-list");
+  const list = document.querySelector("#nav .list");
 
   recipes.forEach((recipe) => {
     let recipeItem = document.createElement("li");
@@ -52,10 +60,9 @@ const loadRecipesList = () => {
 };
 
 const loadRecipe = (id) => {
-  const recipeContainer = document.getElementById("recipe-container");
   const recipeName = document.getElementById("recipe-name");
-  const ingredients = document.getElementById("ingredients");
-  const steps = document.getElementById("steps");
+  const ingredients = document.querySelector("#ingredients .list");
+  const steps = document.querySelector("#steps .list");
 
   const recipe = recipes.find((item) => item.id === id);
 

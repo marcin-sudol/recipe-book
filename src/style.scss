@@ -8,6 +8,9 @@ $accent-dark: hsl(40, 4%, 14%);
 $font-em: "Comfortaa", cursive;
 $font-normal: "Montserrat", sans-serif;
 
+$breakdown-md: 1100px;
+$breakdown-sm: 700px;
+
 // ------------------------------------------
 // DEFAULT VALUES
 // ------------------------------------------
@@ -16,7 +19,7 @@ $font-normal: "Montserrat", sans-serif;
   padding: 0;
   box-sizing: border-box;
   font-family: $font-normal;
-  border: 1px solid;
+  // border: 1px solid;
 }
 
 // ------------------------------------------
@@ -27,36 +30,77 @@ main {
   flex-direction: row;
   height: 100vh;
   width: 100vw;
+}
 
-  #recipes {
-    flex: 0 0 300px;
+#nav {
+  flex: 0 0 300px;
+  padding: 20px;
 
-    #recipe-list-header,
-    li,
-    #add-recipe {
-      margin: 20px;
+  .header,
+  .list li,
+  #add-recipe {
+    margin-bottom: 20px;
+    padding: 10px;
+  }
+
+  .list {
+    list-style: none;
+  }
+}
+
+#add-recipe {
+  display: block;
+  width: 100%;
+}
+
+#right-area {
+  flex: 1 1 100%;
+  padding: 20px;
+}
+
+#c-recipe {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+#recipe-name {
+  padding: 20px;
+  width: 100%;
+  text-align: center;
+}
+
+#ingredients,
+#steps {
+  padding: 20px;
+  width: 50%;
+
+  .header {
+    padding: 10px;
+  }
+
+  .list {
+    list-style: none;
+    li {
       padding: 10px;
     }
+  }
+}
 
-    #recipe-list {
-      list-style: none;
-    }
+@media (max-width: $breakdown-md) {
+  #ingredients,
+  #steps {
+    width: 100%;
+  }
+}
 
-    #add-recipe {
-      display: block;
-      // think how to make it better
-      width: calc(100% - 40px);
-    }
+@media (max-width: $breakdown-sm) {
+  #nav {
+    flex: 0 0 100%;
   }
 
   #right-area {
-    flex: 1 1 100%;
-    #recipe-container {
-      margin: 20px;
-      #ingredients {
-        list-style: none;
-      }
-    }
+    display: none;
   }
 }
 
@@ -64,16 +108,49 @@ main {
 // OTHER FORMATTING
 // ------------------------------------------
 
-main {
-  #recipes {
+#nav {
+  .header {
+    background-color: $color-medium;
+  }
+  .list {
     li {
       border: 1px solid $color-medium;
     }
+  }
+}
 
-    #add-recipe {
+#c-recipe {
+  border: 1px solid $color-medium;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+#recipe-name {
+  background-color: $color-medium;
+}
+
+#ingredients {
+  .header {
+    font-size: 16px;
+    text-transform: uppercase;
+  }
+  .list {
+    border: 1px solid $color-medium;
+    border-radius: 10px;
+    li:not(:last-child) {
+      border-bottom: 1px solid $color-medium;
     }
   }
+}
 
-  #recipe-container {
+#steps {
+  .header {
+    font-size: 16px;
+    text-transform: uppercase;
+  }
+  .list {
+    li:not(:last-child) {
+      border-bottom: 1px solid $color-medium;
+    }
   }
 }
