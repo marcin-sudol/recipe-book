@@ -3,8 +3,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Montserrat", sans-serif;
-  font-size: 16px;
-  border: 1px solid; }
+  font-size: 16px; }
 
 body {
   display: flex;
@@ -27,7 +26,8 @@ body {
       margin-bottom: 20px; }
       #nav .list li button {
         flex: 1 1 100%;
-        padding: 10px; }
+        padding: 10px;
+        text-align: left; }
       #nav .list li .rating {
         flex: 0 0 auto;
         margin: 5px;
@@ -36,7 +36,7 @@ body {
         #nav .list li .rating .tooltip {
           position: absolute;
           padding: 5px;
-          left: -20px;
+          left: -15px;
           bottom: -35px;
           white-space: nowrap;
           z-index: 10;
@@ -92,9 +92,12 @@ body {
         flex: 1 1 100%;
         padding: 10px; }
       #steps .list li .time {
-        flex: 0 0 auto;
+        flex: 0 0 110px;
         margin: 5px;
-        padding: 5px 10px; }
+        padding: 5px 10px;
+        text-align: center; }
+        #steps .list li .time i {
+          float: left; }
 
 @media (max-width: 1100px) {
   #ingredients,
@@ -114,10 +117,8 @@ body {
   border: 1px solid #ccc4b8; }
   #nav .list li button {
     background: none;
-    border: none;
-    text-align: left; }
+    border: none; }
   #nav .list li .rating {
-    text-align: center;
     border-radius: 5px; }
     #nav .list li .rating:hover {
       text-decoration: underline dotted; }
