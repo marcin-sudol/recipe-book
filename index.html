@@ -31,30 +31,57 @@
   </head>
 
   <body>
-    <main>
-      <nav id="nav">
-        <header class="header">Recipes</header>
-        <ul class="list">
-          <li>Cookies</li>
-          <li>Soup</li>
-          <li>Ice cream</li>
-        </ul>
-        <button type="button" id="add-recipe">+</button>
-      </nav>
+    <nav id="nav">
+      <header class="header">Recipes</header>
+      <ul class="list">
+        <li>
+          <button type="button">Cookies</button>
+          <span class="rating">4.4</span>
+        </li>
+        <li>
+          <button type="button">
+            Soup with a very very very very very very long name
+          </button>
+          <div class="rating">
+            4.5
+            <div class="tooltip">438 votes</div>
+          </div>
+        </li>
+        <li>
+          <button type="button">Ice Cream</button>
+          <div class="rating">
+            4.8
+            <div class="tooltip">114 votes</div>
+          </div>
+        </li>
+      </ul>
+      <button type="button" id="add-recipe">+</button>
+    </nav>
 
-      <div id="right-area">
-        <article id="c-recipe">
-          <h4 id="recipe-name"></h4>
-          <div id="ingredients">
-            <h6 class="header">Ingredients</h6>
-            <ul class="list"></ul>
-          </div>
-          <div id="steps">
-            <h6 class="header">Steps</h6>
-            <ol class="list"></ol>
-          </div>
-        </article>
-      </div>
+    <main id="main">
+      <article id="c-recipe">
+        <h4 id="recipe-name"></h4>
+        <div id="ingredients">
+          <h6 class="header">Ingredients</h6>
+          <ul class="list"></ul>
+        </div>
+        <div id="steps">
+          <h6 class="header">Steps</h6>
+          <ol class="list">
+            <li>
+              <span class="step"
+                >Prepare asdasd sdaf asdf asdf sadfasdfas dfa sdf asdf asfd asdf
+                asd fasdf sad fasd f asfasdfasdf sadf sa df</span
+              >
+              <span class="time"><i class="far fa-clock"></i> 10 min.</span>
+            </li>
+            <li>
+              <span class="step">Cook</span>
+              <span class="time"><i class="far fa-clock"></i> 45 min.</span>
+            </li>
+          </ol>
+        </div>
+      </article>
     </main>
 
     <!-- SCRIPTS -->

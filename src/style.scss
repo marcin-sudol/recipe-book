@@ -19,41 +19,71 @@ $breakdown-sm: 700px;
   padding: 0;
   box-sizing: border-box;
   font-family: $font-normal;
-  // border: 1px solid;
+  font-size: 16px;
+  border: 1px solid;
 }
 
 // ------------------------------------------
-// LAYOUT
+// LAYOUT (DISPLAY, MARGIN, PADDING, SIZING)
 // ------------------------------------------
-main {
+body {
   display: flex;
   flex-direction: row;
   height: 100vh;
   width: 100vw;
 }
-
+// NAVIGATION
 #nav {
   flex: 0 0 300px;
   padding: 20px;
 
-  .header,
-  .list li,
-  #add-recipe {
+  .header {
     margin-bottom: 20px;
     padding: 10px;
   }
 
   .list {
     list-style: none;
+    li {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-bottom: 20px;
+      button {
+        flex: 1 1 100%;
+        padding: 10px;
+      }
+      .rating {
+        flex: 0 0 auto;
+        margin: 5px;
+        padding: 5px 10px;
+        position: relative;
+        .tooltip {
+          position: absolute;
+          padding: 5px;
+          left: -20px;
+          bottom: -35px;
+          white-space: nowrap;
+          z-index: 10;
+          visibility: hidden;
+        }
+      }
+
+      .rating:hover .tooltip {
+        visibility: visible;
+      }
+    }
   }
 }
 
 #add-recipe {
   display: block;
+  padding: 10px;
   width: 100%;
 }
 
-#right-area {
+// MAIN CONTENT
+#main {
   flex: 1 1 100%;
   padding: 20px;
 }
@@ -70,8 +100,7 @@ main {
   text-align: center;
 }
 
-#ingredients,
-#steps {
+#ingredients {
   padding: 20px;
   width: 50%;
 
@@ -87,6 +116,40 @@ main {
   }
 }
 
+#steps {
+  padding: 20px;
+  width: 50%;
+
+  .header {
+    padding: 10px;
+  }
+
+  .list {
+    counter-reset: li-counter;
+    li {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      &::before {
+        counter-increment: li-counter;
+        content: counter(li-counter) ".";
+        padding: 5px;
+      }
+
+      .step {
+        flex: 1 1 100%;
+        padding: 10px;
+      }
+      .time {
+        flex: 0 0 auto;
+        margin: 5px;
+        padding: 5px 10px;
+      }
+    }
+  }
+}
+
 @media (max-width: $breakdown-md) {
   #ingredients,
   #steps {
@@ -97,9 +160,12 @@ main {
 @media (max-width: $breakdown-sm) {
   #nav {
     flex: 0 0 100%;
+    .list li .rating .tooltip {
+      right: 0px;
+    }
   }
 
-  #right-area {
+  #main {
     display: none;
   }
 }
@@ -115,6 +181,25 @@ main {
   .list {
     li {
       border: 1px solid $color-medium;
+      button {
+        background: none;
+        border: none;
+        text-align: left;
+      }
+      .rating {
+        text-align: center;
+        border-radius: 5px;
+
+        &:hover {
+          text-decoration: underline dotted;
+        }
+
+        .tooltip {
+          background-color: $color-medium;
+          border: none;
+          border-radius: 5px;
+        }
+      }
     }
   }
 }
@@ -149,6 +234,11 @@ main {
     text-transform: uppercase;
   }
   .list {
+    li {
+      .time {
+        border-radius: 5px;
+      }
+    }
     li:not(:last-child) {
       border-bottom: 1px solid $color-medium;
     }

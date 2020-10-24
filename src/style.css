@@ -2,9 +2,11 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Montserrat", sans-serif; }
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  border: 1px solid; }
 
-main {
+body {
   display: flex;
   flex-direction: row;
   height: 100vh;
@@ -13,19 +15,41 @@ main {
 #nav {
   flex: 0 0 300px;
   padding: 20px; }
-  #nav .header,
-  #nav .list li,
-  #nav #add-recipe {
+  #nav .header {
     margin-bottom: 20px;
     padding: 10px; }
   #nav .list {
     list-style: none; }
+    #nav .list li {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-bottom: 20px; }
+      #nav .list li button {
+        flex: 1 1 100%;
+        padding: 10px; }
+      #nav .list li .rating {
+        flex: 0 0 auto;
+        margin: 5px;
+        padding: 5px 10px;
+        position: relative; }
+        #nav .list li .rating .tooltip {
+          position: absolute;
+          padding: 5px;
+          left: -20px;
+          bottom: -35px;
+          white-space: nowrap;
+          z-index: 10;
+          visibility: hidden; }
+      #nav .list li .rating:hover .tooltip {
+        visibility: visible; }
 
 #add-recipe {
   display: block;
+  padding: 10px;
   width: 100%; }
 
-#right-area {
+#main {
   flex: 1 1 100%;
   padding: 20px; }
 
@@ -39,19 +63,38 @@ main {
   width: 100%;
   text-align: center; }
 
-#ingredients,
+#ingredients {
+  padding: 20px;
+  width: 50%; }
+  #ingredients .header {
+    padding: 10px; }
+  #ingredients .list {
+    list-style: none; }
+    #ingredients .list li {
+      padding: 10px; }
+
 #steps {
   padding: 20px;
   width: 50%; }
-  #ingredients .header,
   #steps .header {
     padding: 10px; }
-  #ingredients .list,
   #steps .list {
-    list-style: none; }
-    #ingredients .list li,
+    counter-reset: li-counter; }
     #steps .list li {
-      padding: 10px; }
+      display: flex;
+      flex-direction: row;
+      align-items: center; }
+      #steps .list li::before {
+        counter-increment: li-counter;
+        content: counter(li-counter) ".";
+        padding: 5px; }
+      #steps .list li .step {
+        flex: 1 1 100%;
+        padding: 10px; }
+      #steps .list li .time {
+        flex: 0 0 auto;
+        margin: 5px;
+        padding: 5px 10px; }
 
 @media (max-width: 1100px) {
   #ingredients,
@@ -60,13 +103,28 @@ main {
 @media (max-width: 700px) {
   #nav {
     flex: 0 0 100%; }
+    #nav .list li .rating .tooltip {
+      right: 0px; }
 
-  #right-area {
+  #main {
     display: none; } }
 #nav .header {
   background-color: #ccc4b8; }
 #nav .list li {
   border: 1px solid #ccc4b8; }
+  #nav .list li button {
+    background: none;
+    border: none;
+    text-align: left; }
+  #nav .list li .rating {
+    text-align: center;
+    border-radius: 5px; }
+    #nav .list li .rating:hover {
+      text-decoration: underline dotted; }
+    #nav .list li .rating .tooltip {
+      background-color: #ccc4b8;
+      border: none;
+      border-radius: 5px; }
 
 #c-recipe {
   border: 1px solid #ccc4b8;
@@ -88,6 +146,8 @@ main {
 #steps .header {
   font-size: 16px;
   text-transform: uppercase; }
+#steps .list li .time {
+  border-radius: 5px; }
 #steps .list li:not(:last-child) {
   border-bottom: 1px solid #ccc4b8; }
 
