@@ -147,11 +147,13 @@ const displayRecipe = (recipe) => {
 const hideNav = () => {
   document.getElementById("nav").classList.add("hidden");
   document.getElementById("c-nav").classList.add("collapsed");
+  document.getElementById("recipe").classList.add("expanded");
 };
 
 const showNav = () => {
   document.getElementById("nav").classList.remove("hidden");
   document.getElementById("c-nav").classList.remove("collapsed");
+  document.getElementById("recipe").classList.remove("expanded");
 };
 
 // -------------------------------------------------------

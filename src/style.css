@@ -18,16 +18,21 @@ body {
   flex: 0 0 300px;
   flex-basis: 300px;
   padding: 20px;
-  transition: flex-basis 0.6s ease-out, padding-right 0.6s ease-out; }
+  position: relative;
+  transition: flex-basis 0.5s ease-out; }
   #c-nav.collapsed {
-    flex-basis: 0px;
-    padding-right: 0px; }
+    flex-basis: 0px; }
   #c-nav .menu-button {
     padding: 5px; }
 
 #c-recipe {
   flex: 1 1 100%;
-  padding: 20px; }
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  #c-recipe i {
+    color: #ddd;
+    font-size: 80px; }
 
 #nav {
   height: 100vh;
@@ -38,7 +43,7 @@ body {
   left: 0px;
   background-color: #f9c74f;
   box-shadow: 2px 0px 8px #aaa;
-  transition: left 0.6s ease-out; }
+  transition: left 0.5s ease-out; }
   #nav.hidden {
     left: -300px; }
   #nav .header {
@@ -124,21 +129,29 @@ body {
   font-weight: bold;
   transition: background-color 0.2s; }
   #add-recipe:hover {
-    background-color: #333; }
+    background-color: #43aa8b;
+    box-shadow: 0px 0px 4px 2px white; }
 
 #recipe {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  position: relative;
-  left: 0px;
+  position: absolute;
+  left: 300px;
+  margin: 20px;
+  width: calc(100% - 300px - 2 * 20px);
   opacity: 1;
   background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
   box-shadow: 0px 6px 10px #aaa;
-  transition: left 0.5s ease-out, opacity 0.5s ease-out; }
+  transition: left 0.5s ease-out, opacity 0.5s ease-out, width 0.5s ease-out; }
   #recipe.hidden {
     left: -100vw;
     opacity: 0; }
+  #recipe.expanded:not(.hidden) {
+    left: 60px;
+    width: calc(100% - 5 * 20px); }
 
 #recipe-name {
   padding: 20px;
@@ -153,8 +166,9 @@ body {
   width: 50%; }
   #ingredients .header {
     padding: 10px;
+    margin-bottom: 20px;
     text-align: center;
-    color: #43aa8b;
+    color: #555;
     font-size: 20px; }
   #ingredients .list {
     list-style: none;
@@ -171,8 +185,9 @@ body {
   width: 50%; }
   #steps .header {
     padding: 10px;
+    margin-bottom: 20px;
     text-align: center;
-    color: #43aa8b;
+    color: #555;
     font-size: 20px; }
   #steps .list {
     counter-reset: li-counter; }
@@ -211,6 +226,8 @@ body {
     font-size: 14px;
     font-weight: bold;
     transition: background-color 0.2s, color 0.2s; }
+    #buttons button:hover {
+      cursor: pointer; }
 
 #edit-button {
   float: left;

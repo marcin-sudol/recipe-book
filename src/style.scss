@@ -17,6 +17,9 @@ $mono-dark2: #333;
 $font-em: "Comfortaa", cursive;
 $font-normal: "Montserrat", sans-serif;
 
+$nav-width: 300px;
+$main-spacing: 20px;
+
 $breakdown-md: 1200px;
 $breakdown-sm: 800px;
 
@@ -47,14 +50,14 @@ body {
 }
 
 #c-nav {
-  flex: 0 0 300px;
-  flex-basis: 300px;
-  padding: 20px;
-  transition: flex-basis 0.6s ease-out, padding-right 0.6s ease-out;
+  flex: 0 0 $nav-width;
+  flex-basis: $nav-width;
+  padding: $main-spacing;
+  position: relative;
+  transition: flex-basis 0.5s ease-out;
 
   &.collapsed {
     flex-basis: 0px;
-    padding-right: 0px;
   }
 
   .menu-button {
@@ -64,7 +67,13 @@ body {
 
 #c-recipe {
   flex: 1 1 100%;
-  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  i {
+    color: $mono-light2;
+    font-size: 80px;
+  }
 }
 
 // ------------------------------------------
@@ -72,17 +81,17 @@ body {
 // ------------------------------------------
 #nav {
   height: 100vh;
-  width: 300px;
-  padding: 20px;
+  width: $nav-width;
+  padding: $main-spacing;
   z-index: 5;
   position: absolute;
   left: 0px;
   background-color: $accent-ye2;
   box-shadow: 2px 0px 8px $mono-medium;
-  transition: left 0.6s ease-out;
+  transition: left 0.5s ease-out;
 
   &.hidden {
-    left: -300px;
+    left: -$nav-width;
   }
 
   .header {
@@ -191,7 +200,8 @@ body {
   transition: background-color 0.2s;
 
   &:hover {
-    background-color: $mono-dark2;
+    background-color: $accent-gr2;
+    box-shadow: 0px 0px 4px 2px white;
   }
 }
 
@@ -202,20 +212,28 @@ body {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  position: relative;
-  left: 0px;
+  position: absolute;
+  left: $nav-width;
+  margin: $main-spacing;
+  width: calc(100% - #{$nav-width} - 2 * #{$main-spacing});
   opacity: 1;
   background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
   box-shadow: 0px 6px 10px $mono-medium;
-  transition: left 0.5s ease-out, opacity 0.5s ease-out;
+  transition: left 0.5s ease-out, opacity 0.5s ease-out, width 0.5s ease-out;
   &.hidden {
     left: -100vw;
     opacity: 0;
   }
+  &.expanded:not(.hidden) {
+    left: 3 * $main-spacing;
+    width: calc(100% - 5 * #{$main-spacing});
+  }
 }
 
 #recipe-name {
-  padding: 20px;
+  padding: $main-spacing;
   width: 100%;
   text-align: center;
   background-color: $accent-gr2;
@@ -223,16 +241,21 @@ body {
   font-size: 24px;
 }
 
-#ingredients {
-  padding: 20px;
+@mixin box-with-header {
+  padding: $main-spacing;
   width: 50%;
 
   .header {
     padding: 10px;
+    margin-bottom: $main-spacing;
     text-align: center;
-    color: $accent-gr2;
+    color: $mono-dark1;
     font-size: 20px;
   }
+}
+
+#ingredients {
+  @include box-with-header();
 
   .list {
     list-style: none;
@@ -249,15 +272,7 @@ body {
 }
 
 #steps {
-  padding: 20px;
-  width: 50%;
-
-  .header {
-    padding: 10px;
-    text-align: center;
-    color: $accent-gr2;
-    font-size: 20px;
-  }
+  @include box-with-header();
 
   .list {
     counter-reset: li-counter;
@@ -307,6 +322,9 @@ body {
     font-size: 14px;
     font-weight: bold;
     transition: background-color 0.2s, color 0.2s;
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
 
@@ -346,7 +364,7 @@ body {
     width: 100vw;
 
     &.hidden {
-      transform: translateX(300px);
+      transform: translateX($nav-width);
     }
 
     .menu-button {
