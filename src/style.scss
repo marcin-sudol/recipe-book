@@ -87,15 +87,18 @@ $breakdown-sm: 800px;
           padding: 5px;
           width: 80px;
           right: -15px;
-          bottom: -40px;
+          bottom: -35px;
           white-space: nowrap;
           z-index: 10;
           visibility: hidden;
+          opacity: 0;
+          transition: opacity 0.2s 0.5s;
         }
       }
 
       .rating:hover .tooltip {
         visibility: visible;
+        opacity: 1;
       }
     }
   }
@@ -203,6 +206,23 @@ $breakdown-sm: 800px;
   }
 }
 
+#buttons {
+  padding: 20px;
+  width: 100%;
+  button {
+    padding: 10px;
+    width: 100px;
+  }
+}
+
+#edit-button {
+  float: left;
+}
+
+#delete-button {
+  float: right;
+}
+
 @media (max-width: $breakdown-md) {
   #ingredients,
   #steps {
@@ -222,6 +242,9 @@ $breakdown-sm: 800px;
       display: none;
     }
   }
+  #main {
+    display: none;
+  }
 }
 
 // ------------------------------------------
@@ -233,7 +256,7 @@ body {
 }
 
 #nav {
-  background-color: white;
+  background-color: $accent-ye2;
   box-shadow: 2px 0px 8px $mono-medium;
   .header {
     color: $mono-dark1;
@@ -244,8 +267,7 @@ body {
 
   .list {
     li {
-      background-color: $accent-ye2;
-      border: 1px solid $accent-ye2;
+      background-color: $accent-ye1;
       border-radius: 5px;
       transition: background-color 0.2s;
       &:hover {
@@ -258,17 +280,14 @@ body {
       }
       .rating {
         border-radius: 5px;
-
         &:hover {
-          background-color: $accent-ye1;
           text-decoration: underline dotted;
         }
-
         .tooltip {
-          background-color: white;
-          color: $accent-gr2;
+          background-color: $accent-gr2;
+          color: white;
           border-radius: 5px;
-          font-size: 14px;
+          font-size: 12px;
         }
       }
     }
@@ -343,5 +362,37 @@ body {
     li:not(:last-child) {
       border-bottom: 1px solid $accent-gr2;
     }
+  }
+}
+
+#buttons {
+  button {
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.4s, color 0.4s, box-shadow 0.4s;
+    &:hover {
+      box-shadow: 0px 3px 6px $mono-medium;
+    }
+  }
+}
+
+#edit-button {
+  background-color: $accent-ye1;
+  border: 1px solid $accent-ye1;
+  color: $mono-dark1;
+  &:hover {
+    background-color: white;
+  }
+}
+
+#delete-button {
+  background-color: $accent-red;
+  border: 1px solid $accent-red;
+  color: white;
+  &:hover {
+    background-color: white;
+    color: $accent-red;
   }
 }
