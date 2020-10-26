@@ -26,7 +26,7 @@ const recipes = [
   {
     id: 1,
     name: "Soup",
-    ingredients: "water, wegetables, pasta, potatos",
+    ingredients: "water, wegetables, pasta, potatos, mushrooms",
     steps: [
       {
         name: "Wash wegetables",
@@ -44,6 +44,25 @@ const recipes = [
     rating: {
       sum: 45,
       votes: 12,
+    },
+  },
+  {
+    id: 2,
+    name: "Ice cream",
+    ingredients: "milk, sugar, fruits",
+    steps: [
+      {
+        name: "Prepare",
+        time: 20,
+      },
+      {
+        name: "Insert into freezer",
+        time: 120,
+      },
+    ],
+    rating: {
+      sum: 17,
+      votes: 5,
     },
   },
 ];
@@ -129,8 +148,27 @@ function clickedRecipeButton() {
 }
 
 // -------------------------------------------------------
+// HIDE NAV
+// -------------------------------------------------------
+const hideNav = () => {
+  document.getElementById("nav").classList.add("hidden");
+  document.getElementById("c-nav").classList.add("collapsed");
+};
+
+const showNav = () => {
+  document.getElementById("nav").classList.remove("hidden");
+  document.getElementById("c-nav").classList.remove("collapsed");
+};
+
+// -------------------------------------------------------
 // INITIAL LOADING
 // -------------------------------------------------------
-window.addEventListener("load", loadRecipesList);
-const recipe = recipes[0];
-window.addEventListener("load", () => displayRecipe(recipe));
+const initialLoading = () => {
+  const recipe = recipes[0];
+  loadRecipesList();
+  displayRecipe(recipe);
+  document.querySelector("#nav .menu-button").onclick = hideNav;
+  document.querySelector("#c-nav .menu-button").onclick = showNav;
+};
+
+window.addEventListener("load", initialLoading);

@@ -35,29 +35,32 @@ $breakdown-sm: 800px;
 // ------------------------------------------
 // LAYOUT (DISPLAY, MARGIN, PADDING, SIZING)
 // ------------------------------------------
-body {
-  display: flex;
-  flex-direction: row;
-  height: 100vh;
-  width: 100vw;
-}
-// NAVIGATION
+
+//NAVIGATION
 #nav {
-  flex: 0 0 300px;
+  height: 100vh;
+  width: 300px;
   padding: 20px;
   z-index: 5;
+  position: absolute;
+  left: 0px;
+  transition: left 0.6s ease-out;
 
-  .header {
-    margin-bottom: 20px;
-    // padding: 10px;
-    text-align: center;
-    height: 45px;
-    line-height: 45px;
+  &.hidden {
+    left: -300px;
   }
 
-  #menu-button {
-    height: 100%;
-    float: left;
+  .header {
+    margin-bottom: 30px;
+    text-align: center;
+    height: 35px;
+    line-height: 35px;
+
+    .menu-button {
+      padding: 5px;
+      height: 100%;
+      float: left;
+    }
   }
 
   .list {
@@ -75,13 +78,16 @@ body {
       .rating {
         flex: 0 0 auto;
         margin: 5px;
-        padding: 5px 10px;
+        padding: 5px;
+        width: 50px;
+        text-align: center;
         position: relative;
         .tooltip {
           position: absolute;
           padding: 5px;
-          right: 0px;
-          bottom: -35px;
+          width: 80px;
+          right: -15px;
+          bottom: -40px;
           white-space: nowrap;
           z-index: 10;
           visibility: hidden;
@@ -101,13 +107,35 @@ body {
   width: 100%;
 }
 
-// MAIN CONTENT
 #main {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  width: 100vw;
+}
+
+#c-nav {
+  flex: 0 0 300px;
+  flex-basis: 300px;
+  padding: 20px;
+  transition: flex-basis 0.6s ease-out, padding-right 0.6s ease-out;
+
+  &.collapsed {
+    flex-basis: 0px;
+    padding-right: 0px;
+  }
+
+  .menu-button {
+    padding: 5px;
+  }
+}
+
+#c-recipe {
   flex: 1 1 100%;
   padding: 20px;
 }
 
-#c-recipe {
+#recipe {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -184,17 +212,25 @@ body {
 
 @media (max-width: $breakdown-sm) {
   #nav {
-    flex: 0 0 100%;
-  }
+    width: 100vw;
 
-  #main {
-    display: none;
+    &.hidden {
+      transform: translateX(300px);
+    }
+
+    .menu-button {
+      display: none;
+    }
   }
 }
 
 // ------------------------------------------
 // OTHER FORMATTING
 // ------------------------------------------
+
+body {
+  background: $mono-light1;
+}
 
 #nav {
   background-color: white;
@@ -204,16 +240,6 @@ body {
     text-transform: uppercase;
     font-size: 20px;
     font-weight: bold;
-  }
-
-  // look into it
-  #menu-button {
-    background: none;
-    border: none;
-    i {
-      color: $mono-dark1;
-      font-size: 24px;
-    }
   }
 
   .list {
@@ -249,6 +275,19 @@ body {
   }
 }
 
+// look into it
+.menu-button {
+  background: none;
+  border: none;
+  i {
+    color: $mono-dark1;
+    font-size: 20px;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+}
+
 #add-recipe {
   background-color: $mono-dark1;
   color: white;
@@ -261,11 +300,7 @@ body {
   }
 }
 
-#main {
-  background: $mono-light1;
-}
-
-#c-recipe {
+#recipe {
   background-color: white;
   overflow: hidden;
   box-shadow: 0px 6px 10px $mono-medium;
