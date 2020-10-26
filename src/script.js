@@ -69,6 +69,7 @@ const recipes = [
 
 let displayedRecipeId = undefined;
 let changingRecipe = false;
+const animationDuration = 500;
 
 // -------------------------------------------------------
 // ADDS NEW RECIPE TO THE END OF NAV LIST
@@ -190,17 +191,22 @@ function clickedRecipeButton() {
         showRecipe();
         setTimeout(() => {
           changingRecipe = false;
-        }, 500);
-      }, 500);
+        }, animationDuration);
+      }, animationDuration);
     } else {
       displayRecipe(recipe);
       showRecipe();
       setTimeout(() => {
         changingRecipe = false;
-      }, 500);
+      }, animationDuration);
     }
   }
 }
+
+// -------------------------------------------------------
+// HANDLE CLICK ON CLOSE BUTTON
+// -------------------------------------------------------
+const clickedCloseButton = () => {};
 
 // -------------------------------------------------------
 // INITIAL LOADING

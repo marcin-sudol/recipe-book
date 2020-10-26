@@ -8,7 +8,7 @@
 body {
   background: #f4f4f4; }
 
-#main {
+#background {
   display: flex;
   flex-direction: row;
   height: 100vh;
@@ -16,7 +16,6 @@ body {
 
 #c-nav {
   flex: 0 0 300px;
-  flex-basis: 300px;
   padding: 20px;
   position: relative;
   transition: flex-basis 0.5s ease-out; }
@@ -101,7 +100,7 @@ body {
           color: white;
           border-radius: 5px;
           font-size: 12px;
-          transition: opacity 0.2s 0.5s; }
+          transition: opacity 0.2s 0.4s; }
       #nav .list li .rating:hover .tooltip {
         visibility: visible;
         opacity: 1; }
@@ -142,7 +141,7 @@ body {
   width: calc(100% - 300px - 2 * 20px);
   opacity: 1;
   background-color: white;
-  border-radius: 8px;
+  border-radius: 5px;
   overflow: hidden;
   box-shadow: 0px 6px 10px #aaa;
   transition: left 0.5s ease-out, opacity 0.5s ease-out, width 0.5s ease-out; }
@@ -153,12 +152,29 @@ body {
     left: 60px;
     width: calc(100% - 5 * 20px); }
 
-#recipe-name {
+#recipe-header {
+  display: flex;
+  align-items: center;
   padding: 20px;
   width: 100%;
   text-align: center;
   background-color: #43aa8b;
+  color: white; }
+
+#close-button {
+  flex: 0 0 auto;
+  padding: 10px;
+  background: none;
+  border: 1px solid white;
   color: white;
+  border-radius: 5px;
+  transition: background 0.2s, color 0.2s; }
+  #close-button:hover {
+    background: white;
+    color: #43aa8b; }
+
+#recipe-name {
+  flex: 1 1 100%;
   font-size: 24px; }
 
 #ingredients {
@@ -258,7 +274,7 @@ body {
     #nav .menu-button {
       display: none; }
 
-  #main {
+  #background {
     display: none; } }
 
 /*# sourceMappingURL=style.css.map */

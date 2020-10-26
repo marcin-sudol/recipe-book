@@ -64,7 +64,10 @@
     </nav>
 
     <article id="recipe" class="hidden">
-      <h4 id="recipe-name"></h4>
+      <header id="recipe-header">
+        <button type="button" id="close-button">Close</button>
+        <h4 id="recipe-name"></h4>
+      </header>
       <div id="ingredients">
         <h6 class="header">Ingredients</h6>
         <ul class="list"></ul>
@@ -79,7 +82,7 @@
       </div>
     </article>
 
-    <main id="main">
+    <div id="background">
       <div id="c-nav">
         <button type="button" class="menu-button">
           <i class="fas fa-bars"></i>
@@ -89,7 +92,7 @@
       <div id="c-recipe">
         <i class="fas fa-utensils"></i>
       </div>
-    </main>
+    </div>
 
     <!-- SCRIPTS -->
     <script src="./lib/script.js"></script>
