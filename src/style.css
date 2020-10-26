@@ -130,9 +130,15 @@ body {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  position: relative;
+  left: 0px;
+  opacity: 1;
   background-color: white;
-  overflow: hidden;
-  box-shadow: 0px 6px 10px #aaa; }
+  box-shadow: 0px 6px 10px #aaa;
+  transition: left 0.5s ease-out, opacity 0.5s ease-out; }
+  #recipe.hidden {
+    left: -100vw;
+    opacity: 0; }
 
 #recipe-name {
   padding: 20px;

@@ -67,6 +67,9 @@ const recipes = [
   },
 ];
 
+let displayedRecipeId = undefined;
+let changingRecipe = false;
+
 // -------------------------------------------------------
 // ADDS NEW RECIPE TO THE END OF NAV LIST
 // -------------------------------------------------------
@@ -134,21 +137,12 @@ const displayRecipe = (recipe) => {
     spTime.appendChild(icon);
     spTime.appendChild(txTime);
   });
+  // UPDATE DISPLAYED RECIPE ID
+  displayedRecipeId = recipe.id;
 };
 
 // -------------------------------------------------------
-// HANDLE CLICK ON RECIPE ON THE LIST
-// -------------------------------------------------------
-function clickedRecipeButton() {
-  const recipeId = parseInt(this.parentNode.id.slice(7));
-  if (!isNaN(recipeId)) {
-    const recipe = recipes.find((recipe) => recipe.id === recipeId);
-    displayRecipe(recipe);
-  }
-}
-
-// -------------------------------------------------------
-// HIDE NAV
+// HIDE & SHOW NAV
 // -------------------------------------------------------
 const hideNav = () => {
   document.getElementById("nav").classList.add("hidden");
@@ -161,12 +155,56 @@ const showNav = () => {
 };
 
 // -------------------------------------------------------
+// HIDE & SHOW RECIPE
+// -------------------------------------------------------
+const hideRecipe = () => {
+  document.getElementById("recipe").classList.add("hidden");
+};
+
+const showRecipe = () => {
+  document.getElementById("recipe").classList.remove("hidden");
+};
+
+const getHideRecipeTime = () => {
+  return document.getElementById("recipe").transition - duration;
+};
+
+const recipeVisible = () => {
+  return !document.getElementById("recipe").classList.contains("hidden");
+};
+
+// -------------------------------------------------------
+// HANDLE CLICK ON RECIPE ON THE LIST
+// -------------------------------------------------------
+function clickedRecipeButton() {
+  const recipeId = parseInt(this.parentNode.id.slice(7));
+  if (!isNaN(recipeId) && recipeId !== displayedRecipeId && !changingRecipe) {
+    changingRecipe = true;
+    const recipe = recipes.find((recipe) => recipe.id === recipeId);
+    if (recipeVisible()) {
+      hideRecipe();
+      setTimeout(() => {
+        displayRecipe(recipe);
+        showRecipe();
+        setTimeout(() => {
+          changingRecipe = false;
+        }, 500);
+      }, 500);
+    } else {
+      displayRecipe(recipe);
+      showRecipe();
+      setTimeout(() => {
+        changingRecipe = false;
+      }, 500);
+    }
+  }
+}
+
+// -------------------------------------------------------
 // INITIAL LOADING
 // -------------------------------------------------------
 const initialLoading = () => {
-  const recipe = recipes[0];
   loadRecipesList();
-  displayRecipe(recipe);
   document.querySelector("#nav .menu-button").onclick = hideNav;
   document.querySelector("#c-nav .menu-button").onclick = showNav;
 };
