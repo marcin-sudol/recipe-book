@@ -205,7 +205,7 @@ const showNav = () => {
 // SLIDE IN RECIPE WINDOW
 // -------------------------------------------------------
 const slideInRecipeWindow = (animationTime, callback) => {
-  const recipe = document.getElementById("recipe");
+  const recipe = document.getElementById("recipe-window");
 
   recipe
     .animate(
@@ -226,7 +226,7 @@ const slideInRecipeWindow = (animationTime, callback) => {
 // SLIDE OUT RECIPE WINDOW
 // -------------------------------------------------------
 const slideOutRecipeWindow = (animationTime, callback) => {
-  const recipe = document.getElementById("recipe");
+  const recipe = document.getElementById("recipe-window");
 
   recipe
     .animate(
@@ -247,7 +247,7 @@ const slideOutRecipeWindow = (animationTime, callback) => {
 // FADE IN RECIPE WINDOW
 // -------------------------------------------------------
 const fadeInRecipeWindow = (animationTime, callback) => {
-  const recipe = document.getElementById("recipe");
+  const recipe = document.getElementById("recipe-window");
 
   recipe.style.left = "0px";
   recipe
@@ -268,7 +268,7 @@ const fadeInRecipeWindow = (animationTime, callback) => {
 // FADE OUT RECIPE WINDOW
 // -------------------------------------------------------
 const fadeOutRecipeWindow = (animationTime, callback) => {
-  const recipe = document.getElementById("recipe");
+  const recipe = document.getElementById("recipe-window");
 
   recipe
     .animate(
@@ -289,7 +289,8 @@ const fadeOutRecipeWindow = (animationTime, callback) => {
 // CHECK IF RECIPE WINDOW VISIBLE
 // -------------------------------------------------------
 const recipeWindowVisible = () =>
-  window.getComputedStyle(document.getElementById("recipe")).opacity == 1;
+  window.getComputedStyle(document.getElementById("recipe-window")).opacity ==
+  1;
 
 // -------------------------------------------------------
 // GET ANIMATION TIME
@@ -305,7 +306,7 @@ const getAnimationTime = () => {
 };
 
 // -------------------------------------------------------
-// HANDLE CLICK ON RECIPE ON THE LIST
+// CLICKED RECIPE ON THE LIST
 // -------------------------------------------------------
 function clickedRecipeButton() {
   const recipeId = parseInt(this.parentNode.id.slice(7));
@@ -335,7 +336,7 @@ function clickedRecipeButton() {
 }
 
 // -------------------------------------------------------
-// HANDLE CLICK ON CLOSE BUTTON
+// CLICKED CLOSE BUTTON
 // -------------------------------------------------------
 const clickedCloseButton = () => {
   if (recipeWindowVisible()) {
@@ -349,13 +350,37 @@ const clickedCloseButton = () => {
 };
 
 // -------------------------------------------------------
-// HANDLE CLICK ON DELETE BUTTON
+// CLICKED DELETE BUTTON
 // -------------------------------------------------------
 const clickedDeleteButton = () => {
+  showPopup();
+};
+
+// -------------------------------------------------------
+// SHOW POPUP
+// -------------------------------------------------------
+const showPopup = () => {
+  document.getElementById("recipe-window").classList.add("popup-visible");
+  document.getElementById("confirm-popup").style.display = "block";
+};
+
+// -------------------------------------------------------
+// HIDE POPUP
+// -------------------------------------------------------
+const hidePopup = () => {
+  document.getElementById("recipe-window").classList.remove("popup-visible");
+  document.getElementById("confirm-popup").style.display = "none";
+};
+
+// -------------------------------------------------------
+// DELETE -> OK
+// -------------------------------------------------------
+const deleteButtonOK = () => {
   if (recipeWindowVisible() && displayedRecipeId !== undefined) {
     changingRecipe = true;
     const time = getAnimationTime();
 
+    hidePopup();
     removeRecipeFromList(displayedRecipeId, time);
     deleteRecipe(displayedRecipeId);
 
@@ -367,6 +392,13 @@ const clickedDeleteButton = () => {
 };
 
 // -------------------------------------------------------
+// DELETE -> CANCEL
+// -------------------------------------------------------
+const deleteButtonCancel = () => {
+  hidePopup();
+};
+
+// -------------------------------------------------------
 // INITIAL LOADING
 // -------------------------------------------------------
 const initialLoading = () => {
@@ -375,6 +407,8 @@ const initialLoading = () => {
   document.querySelector("#c-nav .menu-button").onclick = showNav;
   document.getElementById("close-button").onclick = clickedCloseButton;
   document.getElementById("delete-button").onclick = clickedDeleteButton;
+  document.getElementById("ok-button").onclick = deleteButtonOK;
+  document.getElementById("cancel-button").onclick = deleteButtonCancel;
 };
 
 window.addEventListener("load", initialLoading);

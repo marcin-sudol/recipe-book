@@ -1,6 +1,6 @@
 # Recipes application.
 
-_Application was written to learn vanilla javascript._
+_Application written to learn vanilla javascript._
 
 ### Features
 
@@ -9,8 +9,9 @@ _Application was written to learn vanilla javascript._
 - rating recipe
 - removing recipe from list
 - collapsable animated menu nav
-- animated changing displayed recipe, removing recipe
+- animated main window for displaying selected recipe
 - animated popups for add / edit
+- popups on hover
 
 ### Animations
 

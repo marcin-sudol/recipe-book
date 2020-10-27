@@ -135,7 +135,7 @@ button:hover {
     background-color: #43aa8b;
     box-shadow: 0px 0px 4px 2px white; }
 
-#recipe {
+#recipe-window {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -149,6 +149,9 @@ button:hover {
   border-radius: 5px;
   overflow: hidden;
   box-shadow: 0px 6px 10px #aaa; }
+  #recipe-window.popup-visible {
+    filter: blur(10px);
+    transition: filter 0.2s; }
 
 #recipe-header {
   display: flex;
@@ -236,7 +239,7 @@ button:hover {
           float: left;
           color: white; }
 
-#buttons {
+#recipe-window .menu {
   padding: 20px;
   width: 100%; }
 
@@ -247,13 +250,13 @@ button:hover {
   border-radius: 5px;
   background: #fad275;
   border: 1px solid #fad275;
-  color: #333;
+  color: #555;
   transition: background-color 0.2s, color 0.2s; }
   #edit-button:hover {
     background: white;
     color: #555; }
   #edit-button i {
-    color: #333; }
+    color: #555; }
   #edit-button:hover i {
     color: #555; }
 
@@ -274,6 +277,57 @@ button:hover {
   #delete-button:hover i {
     color: #f94144; }
 
+#confirm-popup {
+  display: none;
+  position: absolute;
+  z-index: 25;
+  padding: 20px;
+  width: 300px;
+  max-width: calc(100% - 2 * 20px);
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0px 6px 10px #aaa; }
+  #confirm-popup .menu {
+    display: flex;
+    justify-content: space-evenly; }
+
+#popup-message {
+  margin-top: 20px;
+  margin-bottom: 40px;
+  text-align: center; }
+
+#ok-button {
+  padding: 10px;
+  width: 100px;
+  border-radius: 5px;
+  background: #f94144;
+  border: 1px solid #f94144;
+  color: white;
+  transition: background-color 0.2s, color 0.2s; }
+  #ok-button:hover {
+    background: white;
+    color: #f94144; }
+  #ok-button i {
+    color: white; }
+  #ok-button:hover i {
+    color: #f94144; }
+
+#cancel-button {
+  padding: 10px;
+  width: 100px;
+  border-radius: 5px;
+  background: #555;
+  border: 1px solid #555;
+  color: white;
+  transition: background-color 0.2s, color 0.2s; }
+  #cancel-button:hover {
+    background: white;
+    color: #555; }
+  #cancel-button i {
+    color: white; }
+  #cancel-button:hover i {
+    color: #555; }
+
 @media (max-width: 1200px) {
   #ingredients,
   #steps {
@@ -290,7 +344,7 @@ button:hover {
     #nav .menu-button {
       display: none; }
 
-  #recipe {
+  #recipe-window {
     z-index: 15; } }
 
 /*# sourceMappingURL=style.css.map */

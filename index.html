@@ -72,7 +72,7 @@
 
       <div id="c-recipe">
         <i id="bg-icon" class="fas fa-utensils"></i>
-        <article id="recipe">
+        <div id="recipe-window">
           <header id="recipe-header">
             <button type="button" id="close-button">
               <i class="fas fa-times"></i> Close
@@ -87,7 +87,7 @@
             <h6 class="header">Steps</h6>
             <ol class="list"></ol>
           </div>
-          <div id="buttons">
+          <div class="menu">
             <button type="button" id="edit-button">
               <i class="fas fa-marker"></i> Edit
             </button>
@@ -95,9 +95,23 @@
               <i class="fas fa-trash-alt"></i> Delete
             </button>
           </div>
-        </article>
+        </div>
+
+        <div id="confirm-popup">
+          <p id="popup-message">Recipe will be removed from the list</p>
+          <div class="menu">
+            <button type="button" id="ok-button">
+              <i class="fas fa-check"></i> OK
+            </button>
+            <button type="button" id="cancel-button">
+              <i class="fas fa-times"></i> Cancel
+            </button>
+          </div>
+        </div>
       </div>
     </div>
+
+    <!-- <div id="c-popup"></div> -->
 
     <!-- SCRIPTS -->
     <script src="./lib/script.js"></script>
