@@ -37,6 +37,7 @@ $z-index-add-edit: 20;
   box-sizing: border-box;
   font-family: $font-normal;
   font-size: 16px;
+  color: $mono-dark2;
   // border: 1px solid;
 }
 
@@ -244,7 +245,6 @@ button:hover {
   width: 100%;
   text-align: center;
   background-color: $accent-gr2;
-  color: white;
 }
 
 @mixin btn($bg-color, $border-color, $color, $hover-color) {
@@ -271,6 +271,7 @@ button:hover {
 
 #recipe-name {
   flex: 1 1 100%;
+  color: white;
   font-size: 24px;
 }
 
@@ -338,6 +339,7 @@ button:hover {
         border-radius: 5px;
         i {
           float: left;
+          color: white;
         }
       }
     }
@@ -351,7 +353,7 @@ button:hover {
 
 #edit-button {
   float: left;
-  @include btn($accent-ye1, $accent-ye1, $mono-dark1, $mono-dark1);
+  @include btn($accent-ye1, $accent-ye1, $mono-dark2, $mono-dark1);
 }
 
 #delete-button {

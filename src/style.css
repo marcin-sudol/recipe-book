@@ -3,7 +3,8 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Montserrat", sans-serif;
-  font-size: 16px; }
+  font-size: 16px;
+  color: #333; }
 
 body {
   background: #f4f4f4; }
@@ -159,8 +160,7 @@ button:hover {
   padding: 20px;
   width: 100%;
   text-align: center;
-  background-color: #43aa8b;
-  color: white; }
+  background-color: #43aa8b; }
 
 #close-button {
   flex: 0 0 auto;
@@ -177,6 +177,7 @@ button:hover {
 
 #recipe-name {
   flex: 1 1 100%;
+  color: white;
   font-size: 24px; }
 
 #ingredients {
@@ -231,7 +232,8 @@ button:hover {
         color: white;
         border-radius: 5px; }
         #steps .list li .time i {
-          float: left; }
+          float: left;
+          color: white; }
 
 #buttons {
   padding: 20px;
@@ -244,7 +246,7 @@ button:hover {
   border-radius: 5px;
   background: #fad275;
   border: 1px solid #fad275;
-  color: #555;
+  color: #333;
   transition: background-color 0.2s, color 0.2s; }
   #edit-button:hover {
     background: white;
