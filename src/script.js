@@ -200,21 +200,25 @@ const recipeVisible = () => {
 // -------------------------------------------------------
 function clickedRecipeButton() {
   const recipeId = parseInt(this.parentNode.id.slice(7));
-  if (!isNaN(recipeId) && recipeId !== displayedRecipeId && !changingRecipe) {
+  if (
+    !isNaN(recipeId) &&
+    !changingRecipe &&
+    (!recipeVisible() || recipeId !== displayedRecipeId)
+  ) {
     changingRecipe = true;
     const recipe = recipes.find((recipe) => recipe.id === recipeId);
 
-    if (recipeVisible()) {
+    if (!recipeVisible()) {
+      updateDisplayedRecipe(recipe);
+      showRecipe(() => {
+        changingRecipe = false;
+      });
+    } else if (recipeId !== displayedRecipeId) {
       hideRecipe(() => {
         updateDisplayedRecipe(recipe);
         showRecipe(() => {
           changingRecipe = false;
         });
-      });
-    } else {
-      updateDisplayedRecipe(recipe);
-      showRecipe(() => {
-        changingRecipe = false;
       });
     }
   }

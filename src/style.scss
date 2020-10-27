@@ -17,11 +17,16 @@ $mono-dark2: #333;
 $font-em: "Comfortaa", cursive;
 $font-normal: "Montserrat", sans-serif;
 
+$breakdown-md: 1200px;
+$breakdown-sm: 800px;
+
 $nav-width: 300px;
 $main-spacing: 20px;
 
-$breakdown-md: 1200px;
-$breakdown-sm: 800px;
+$z-index-nav: 5;
+$z-index-nav-tooltip: 10;
+$z-index-recipe-sm: 15;
+$z-index-add-edit: 20;
 
 // ------------------------------------------
 // DEFAULT VALUES
@@ -86,7 +91,7 @@ button:hover {
   height: 100vh;
   width: $nav-width;
   padding: $main-spacing;
-  z-index: 5;
+  z-index: $z-index-nav;
   position: absolute;
   left: 0px;
   background-color: $accent-ye2;
@@ -157,7 +162,7 @@ button:hover {
           right: -15px;
           bottom: -35px;
           white-space: nowrap;
-          z-index: 10;
+          z-index: $z-index-nav-tooltip;
           visibility: hidden;
           opacity: 0;
           background-color: $accent-gr2;
@@ -365,6 +370,10 @@ button:hover {
 }
 
 @media (max-width: $breakdown-sm) {
+  #background {
+    display: none;
+  }
+
   #nav {
     width: 100vw;
 
@@ -376,7 +385,10 @@ button:hover {
       display: none;
     }
   }
-  #background {
-    display: none;
+  #recipe,
+  #recipe.expanded:not(.hidden) {
+    left: 0px;
+    width: calc(100% - 2 * #{$main-spacing});
+    z-index: $z-index-recipe-sm;
   }
 }
