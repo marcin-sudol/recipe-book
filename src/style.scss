@@ -27,6 +27,7 @@ $z-index-nav: 5;
 $z-index-nav-tooltip: 10;
 $z-index-recipe-sm: 15;
 $z-index-add-edit: 20;
+$z-index-popup: 25;
 
 // ------------------------------------------
 // DEFAULT VALUES
@@ -251,6 +252,12 @@ button:hover {
   transition: background-color 0.2s, color 0.2s;
   &:hover {
     background: white;
+    color: $hover-color;
+  }
+  i {
+    color: $color;
+  }
+  &:hover i {
     color: $hover-color;
   }
 }

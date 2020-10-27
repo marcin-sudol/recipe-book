@@ -171,6 +171,10 @@ button:hover {
   #close-button:hover {
     background: white;
     color: #43aa8b; }
+  #close-button i {
+    color: white; }
+  #close-button:hover i {
+    color: #43aa8b; }
 
 #recipe-name {
   flex: 1 1 100%;
@@ -248,6 +252,10 @@ button:hover {
   #edit-button:hover {
     background: white;
     color: #555; }
+  #edit-button i {
+    color: #333; }
+  #edit-button:hover i {
+    color: #555; }
 
 #delete-button {
   float: right;
@@ -260,6 +268,10 @@ button:hover {
   transition: background-color 0.2s, color 0.2s; }
   #delete-button:hover {
     background: white;
+    color: #f94144; }
+  #delete-button i {
+    color: white; }
+  #delete-button:hover i {
     color: #f94144; }
 
 @media (max-width: 1200px) {
