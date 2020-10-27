@@ -79,10 +79,12 @@ button:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  i {
-    color: $mono-light2;
-    font-size: 80px;
-  }
+  position: relative;
+}
+
+#bg-icon {
+  color: $mono-light2;
+  font-size: 80px;
 }
 
 // ------------------------------------------
@@ -97,7 +99,7 @@ button:hover {
   left: 0px;
   background-color: $accent-ye2;
   box-shadow: 2px 0px 8px $mono-medium;
-  transition: left 0.5s ease-out;
+  transition: left 0.4s ease-out;
 
   &.hidden {
     left: -$nav-width;
@@ -219,23 +221,15 @@ button:hover {
   flex-direction: row;
   flex-wrap: wrap;
   position: absolute;
-  left: $nav-width;
+  left: -100vw;
+  top: 0px;
   margin: $main-spacing;
-  width: calc(100% - #{$nav-width} - 2 * #{$main-spacing});
-  opacity: 1;
+  width: calc(100% - 2 * #{$main-spacing});
+  opacity: 0;
   background-color: white;
   border-radius: 5px;
   overflow: hidden;
   box-shadow: 0px 6px 10px $mono-medium;
-  transition: left 0.5s ease-out, opacity 0.5s ease-out, width 0.5s ease-out;
-  &.hidden {
-    left: -100vw;
-    opacity: 0;
-  }
-  &.expanded:not(.hidden) {
-    left: 3 * $main-spacing;
-    width: calc(100% - 5 * #{$main-spacing});
-  }
 }
 
 #recipe-header {
@@ -254,9 +248,6 @@ button:hover {
   background: $bg-color;
   border: 1px solid $border-color;
   color: $color;
-  // text-transform: uppercase;
-  // font-size: 14px;
-  // font-weight: bold;
   transition: background-color 0.2s, color 0.2s;
   &:hover {
     background: white;
@@ -372,12 +363,13 @@ button:hover {
 }
 
 @media (max-width: $breakdown-sm) {
-  #background {
+  #c-nav {
     display: none;
   }
 
   #nav {
     width: 100vw;
+    transition: left 0.2s ease-out;
 
     &.hidden {
       transform: translateX($nav-width);
@@ -387,10 +379,7 @@ button:hover {
       display: none;
     }
   }
-  #recipe,
-  #recipe.expanded:not(.hidden) {
-    left: 0px;
-    width: calc(100% - 2 * #{$main-spacing});
+  #recipe {
     z-index: $z-index-recipe-sm;
   }
 }

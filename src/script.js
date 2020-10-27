@@ -71,6 +71,13 @@ let displayedRecipeId = undefined;
 let changingRecipe = false;
 
 // -------------------------------------------------------
+// LOG
+// -------------------------------------------------------
+const log = (str) => {
+  console.log(str);
+};
+
+// -------------------------------------------------------
 // ADDS NEW RECIPE TO THE END OF NAV LIST
 // -------------------------------------------------------
 const addRecipeToList = (recipe, list) => {
@@ -142,18 +149,19 @@ const updateDisplayedRecipe = (recipe) => {
 };
 
 // -------------------------------------------------------
-// HIDE & SHOW NAV
+// HIDE NAV
 // -------------------------------------------------------
 const hideNav = () => {
   document.getElementById("nav").classList.add("hidden");
   document.getElementById("c-nav").classList.add("collapsed");
-  document.getElementById("recipe").classList.add("expanded");
 };
 
+// -------------------------------------------------------
+// SHOW NAV
+// -------------------------------------------------------
 const showNav = () => {
   document.getElementById("nav").classList.remove("hidden");
   document.getElementById("c-nav").classList.remove("collapsed");
-  document.getElementById("recipe").classList.remove("expanded");
 };
 
 // -------------------------------------------------------
@@ -163,27 +171,52 @@ const getAnimationTime = () => {
   return (
     parseFloat(
       window
-        .getComputedStyle(document.getElementById("recipe"))
+        .getComputedStyle(document.getElementById("nav"))
         .transitionDuration.split(",")[0]
     ) * 1000
   );
 };
 
 // -------------------------------------------------------
-// HIDE & SHOW RECIPE
+// HIDE RECIPE WINDOW
 // -------------------------------------------------------
 const hideRecipe = (callback) => {
-  document.getElementById("recipe").classList.add("hidden");
+  const recipe = document.getElementById("recipe");
+  const animationTime = getAnimationTime();
+
+  recipe
+    .animate(
+      { left: "-100vw", opacity: 0 },
+      { duration: animationTime, easing: "ease-out" }
+    )
+    .finished.then(() => {
+      recipe.style.left = "-100vw";
+      recipe.style.opacity = 0;
+    });
+
   if (callback !== undefined) {
-    const animationTime = getAnimationTime();
     setTimeout(callback, animationTime);
   }
 };
 
+// -------------------------------------------------------
+// SHOW RECIPE WINDOW
+// -------------------------------------------------------
 const showRecipe = (callback) => {
-  document.getElementById("recipe").classList.remove("hidden");
+  const recipe = document.getElementById("recipe");
+  const animationTime = getAnimationTime();
+
+  recipe
+    .animate(
+      { left: "0px", opacity: 1 },
+      { duration: animationTime, easing: "ease-out" }
+    )
+    .finished.then(() => {
+      recipe.style.left = "0px";
+      recipe.style.opacity = 1;
+    });
+
   if (callback !== undefined) {
-    const animationTime = getAnimationTime();
     setTimeout(callback, animationTime);
   }
 };
@@ -191,9 +224,8 @@ const showRecipe = (callback) => {
 // -------------------------------------------------------
 // CHECK IF RECIPE VISIBLE
 // -------------------------------------------------------
-const recipeVisible = () => {
-  return !document.getElementById("recipe").classList.contains("hidden");
-};
+const recipeVisible = () =>
+  window.getComputedStyle(document.getElementById("recipe")).opacity == 1;
 
 // -------------------------------------------------------
 // HANDLE CLICK ON RECIPE ON THE LIST
