@@ -39,6 +39,10 @@ body {
   background: $mono-light1;
 }
 
+button:hover {
+  cursor: pointer;
+}
+
 // ------------------------------------------
 // CONTAINERS
 // ------------------------------------------
@@ -179,9 +183,6 @@ body {
     color: $mono-dark1;
     font-size: 20px;
   }
-  &:hover {
-    cursor: pointer;
-  }
 }
 .menu-button:hover i {
   color: $mono-dark2;
@@ -241,18 +242,26 @@ body {
   color: white;
 }
 
-#close-button {
-  flex: 0 0 auto;
+@mixin btn($bg-color, $border-color, $color, $hover-color) {
   padding: 10px;
-  background: none;
-  border: 1px solid white;
-  color: white;
+  width: 100px;
   border-radius: 5px;
-  transition: background 0.2s, color 0.2s;
+  background: $bg-color;
+  border: 1px solid $border-color;
+  color: $color;
+  // text-transform: uppercase;
+  // font-size: 14px;
+  // font-weight: bold;
+  transition: background-color 0.2s, color 0.2s;
   &:hover {
     background: white;
-    color: $accent-gr2;
+    color: $hover-color;
   }
+}
+
+#close-button {
+  flex: 0 0 auto;
+  @include btn($accent-gr2, white, white, $accent-gr2);
 }
 
 #recipe-name {
@@ -333,39 +342,16 @@ body {
 #buttons {
   padding: 20px;
   width: 100%;
-  button {
-    padding: 10px;
-    width: 100px;
-    border-radius: 5px;
-    text-transform: uppercase;
-    font-size: 14px;
-    font-weight: bold;
-    transition: background-color 0.2s, color 0.2s;
-    &:hover {
-      cursor: pointer;
-    }
-  }
 }
 
 #edit-button {
   float: left;
-  background-color: $accent-ye1;
-  border: 1px solid $accent-ye1;
-  color: $mono-dark1;
-  &:hover {
-    background-color: white;
-  }
+  @include btn($accent-ye1, $accent-ye1, $mono-dark1, $mono-dark1);
 }
 
 #delete-button {
   float: right;
-  background-color: $accent-red;
-  border: 1px solid $accent-red;
-  color: white;
-  &:hover {
-    background-color: white;
-    color: $accent-red;
-  }
+  @include btn($accent-red, $accent-red, white, $accent-red);
 }
 
 // ------------------------------------------
