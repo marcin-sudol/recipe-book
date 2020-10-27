@@ -257,6 +257,7 @@ button:hover {
 
 #close-button {
   flex: 0 0 auto;
+  position: absolute;
   @include btn($accent-gr2, white, white, $accent-gr2);
 }
 

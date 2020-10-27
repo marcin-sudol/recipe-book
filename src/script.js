@@ -1,4 +1,6 @@
-const recipes = [
+"use strict";
+
+let recipes = [
   {
     id: 0,
     name: "Cookies",
@@ -78,6 +80,13 @@ const log = (str) => {
 };
 
 // -------------------------------------------------------
+// DELETE RECIPE
+// -------------------------------------------------------
+const deleteRecipe = (recipeId) => {
+  recipes = recipes.filter((recipe) => recipe.id !== recipeId);
+};
+
+// -------------------------------------------------------
 // ADDS NEW RECIPE TO THE END OF NAV LIST
 // -------------------------------------------------------
 const addRecipeToList = (recipe, list) => {
@@ -101,6 +110,34 @@ const addRecipeToList = (recipe, list) => {
 };
 
 // -------------------------------------------------------
+// REMOVE RECIPE FROM LIST
+// -------------------------------------------------------
+const removeRecipeFromList = (recipeId, animationTime) => {
+  const item = document.getElementById("recipe-" + recipeId);
+  const button = item.querySelector("button");
+
+  button.removeAttribute("onclick");
+  item
+    .animate({ opacity: 0 }, { duration: animationTime * 0.5 })
+    .finished.then(() => {
+      item.style.opacity = 0;
+      item.removeChild(item.querySelector(".rating"));
+      button.animate(
+        { padding: "0px", fontSize: "0px" },
+        { duration: animationTime * 0.5, easing: "ease-out" }
+      );
+      item
+        .animate(
+          { marginBottom: "0px" },
+          { duration: animationTime * 0.5, easing: "ease-out" }
+        )
+        .finished.then(() => {
+          item.remove();
+        });
+    });
+};
+
+// -------------------------------------------------------
 // LOADS RECIPES INTO NAV LIST
 // -------------------------------------------------------
 const loadRecipesList = () => {
@@ -111,7 +148,7 @@ const loadRecipesList = () => {
 };
 
 // -------------------------------------------------------
-// UPDATES MAIN DISPLAY WITH SELECTED RECIPE
+// UPDATES RECIPE WINDOW WITH SELECTED RECIPE
 // -------------------------------------------------------
 const updateDisplayedRecipe = (recipe) => {
   const recipeName = document.getElementById("recipe-name");
@@ -165,6 +202,96 @@ const showNav = () => {
 };
 
 // -------------------------------------------------------
+// SLIDE IN RECIPE WINDOW
+// -------------------------------------------------------
+const slideInRecipeWindow = (animationTime, callback) => {
+  const recipe = document.getElementById("recipe");
+
+  recipe
+    .animate(
+      { left: "0px", opacity: 1 },
+      { duration: animationTime * 0.9, easing: "ease-out" }
+    )
+    .finished.then(() => {
+      recipe.style.left = "0px";
+      recipe.style.opacity = 1;
+    });
+
+  if (callback !== undefined) {
+    setTimeout(callback, animationTime);
+  }
+};
+
+// -------------------------------------------------------
+// SLIDE OUT RECIPE WINDOW
+// -------------------------------------------------------
+const slideOutRecipeWindow = (animationTime, callback) => {
+  const recipe = document.getElementById("recipe");
+
+  recipe
+    .animate(
+      { left: "-100vw", opacity: 0 },
+      { duration: animationTime * 0.9, easing: "ease-out" }
+    )
+    .finished.then(() => {
+      recipe.style.left = "-100vw";
+      recipe.style.opacity = 0;
+    });
+
+  if (callback !== undefined) {
+    setTimeout(callback, animationTime);
+  }
+};
+
+// -------------------------------------------------------
+// FADE IN RECIPE WINDOW
+// -------------------------------------------------------
+const fadeInRecipeWindow = (animationTime, callback) => {
+  const recipe = document.getElementById("recipe");
+
+  recipe.style.left = "0px";
+  recipe
+    .animate(
+      { opacity: 1 },
+      { duration: animationTime * 0.9, easing: "ease-out" }
+    )
+    .finished.then(() => {
+      recipe.style.opacity = 1;
+    });
+
+  if (callback !== undefined) {
+    setTimeout(callback, animationTime);
+  }
+};
+
+// -------------------------------------------------------
+// FADE OUT RECIPE WINDOW
+// -------------------------------------------------------
+const fadeOutRecipeWindow = (animationTime, callback) => {
+  const recipe = document.getElementById("recipe");
+
+  recipe
+    .animate(
+      { opacity: 0 },
+      { duration: animationTime * 0.9, easing: "ease-out" }
+    )
+    .finished.then(() => {
+      recipe.style.left = "-100vw";
+      recipe.style.opacity = 0;
+    });
+
+  if (callback !== undefined) {
+    setTimeout(callback, animationTime);
+  }
+};
+
+// -------------------------------------------------------
+// CHECK IF RECIPE WINDOW VISIBLE
+// -------------------------------------------------------
+const recipeWindowVisible = () =>
+  window.getComputedStyle(document.getElementById("recipe")).opacity == 1;
+
+// -------------------------------------------------------
 // GET ANIMATION TIME
 // -------------------------------------------------------
 const getAnimationTime = () => {
@@ -178,56 +305,6 @@ const getAnimationTime = () => {
 };
 
 // -------------------------------------------------------
-// HIDE RECIPE WINDOW
-// -------------------------------------------------------
-const hideRecipe = (callback) => {
-  const recipe = document.getElementById("recipe");
-  const animationTime = getAnimationTime();
-
-  recipe
-    .animate(
-      { left: "-100vw", opacity: 0 },
-      { duration: animationTime, easing: "ease-out" }
-    )
-    .finished.then(() => {
-      recipe.style.left = "-100vw";
-      recipe.style.opacity = 0;
-    });
-
-  if (callback !== undefined) {
-    setTimeout(callback, animationTime);
-  }
-};
-
-// -------------------------------------------------------
-// SHOW RECIPE WINDOW
-// -------------------------------------------------------
-const showRecipe = (callback) => {
-  const recipe = document.getElementById("recipe");
-  const animationTime = getAnimationTime();
-
-  recipe
-    .animate(
-      { left: "0px", opacity: 1 },
-      { duration: animationTime, easing: "ease-out" }
-    )
-    .finished.then(() => {
-      recipe.style.left = "0px";
-      recipe.style.opacity = 1;
-    });
-
-  if (callback !== undefined) {
-    setTimeout(callback, animationTime);
-  }
-};
-
-// -------------------------------------------------------
-// CHECK IF RECIPE VISIBLE
-// -------------------------------------------------------
-const recipeVisible = () =>
-  window.getComputedStyle(document.getElementById("recipe")).opacity == 1;
-
-// -------------------------------------------------------
 // HANDLE CLICK ON RECIPE ON THE LIST
 // -------------------------------------------------------
 function clickedRecipeButton() {
@@ -235,20 +312,21 @@ function clickedRecipeButton() {
   if (
     !isNaN(recipeId) &&
     !changingRecipe &&
-    (!recipeVisible() || recipeId !== displayedRecipeId)
+    (!recipeWindowVisible() || recipeId !== displayedRecipeId)
   ) {
     changingRecipe = true;
     const recipe = recipes.find((recipe) => recipe.id === recipeId);
+    const time = getAnimationTime();
 
-    if (!recipeVisible()) {
+    if (!recipeWindowVisible()) {
       updateDisplayedRecipe(recipe);
-      showRecipe(() => {
+      slideInRecipeWindow(time, () => {
         changingRecipe = false;
       });
     } else if (recipeId !== displayedRecipeId) {
-      hideRecipe(() => {
+      slideOutRecipeWindow(time, () => {
         updateDisplayedRecipe(recipe);
-        showRecipe(() => {
+        slideInRecipeWindow(time, () => {
           changingRecipe = false;
         });
       });
@@ -260,10 +338,32 @@ function clickedRecipeButton() {
 // HANDLE CLICK ON CLOSE BUTTON
 // -------------------------------------------------------
 const clickedCloseButton = () => {
-  if (recipeVisible()) changingRecipe = true;
-  hideRecipe(() => {
-    changingRecipe = false;
-  });
+  if (recipeWindowVisible()) {
+    changingRecipe = true;
+    const time = getAnimationTime();
+
+    slideOutRecipeWindow(time, () => {
+      changingRecipe = false;
+    });
+  }
+};
+
+// -------------------------------------------------------
+// HANDLE CLICK ON DELETE BUTTON
+// -------------------------------------------------------
+const clickedDeleteButton = () => {
+  if (recipeWindowVisible() && displayedRecipeId !== undefined) {
+    changingRecipe = true;
+    const time = getAnimationTime();
+
+    removeRecipeFromList(displayedRecipeId, time);
+    deleteRecipe(displayedRecipeId);
+
+    fadeOutRecipeWindow(time, () => {
+      displayedRecipeId = undefined;
+      changingRecipe = false;
+    });
+  }
 };
 
 // -------------------------------------------------------
@@ -274,6 +374,7 @@ const initialLoading = () => {
   document.querySelector("#nav .menu-button").onclick = hideNav;
   document.querySelector("#c-nav .menu-button").onclick = showNav;
   document.getElementById("close-button").onclick = clickedCloseButton;
+  document.getElementById("delete-button").onclick = clickedDeleteButton;
 };
 
 window.addEventListener("load", initialLoading);
