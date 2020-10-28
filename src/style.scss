@@ -295,16 +295,15 @@ button:hover {
 
 #ingredients-list {
   list-style: none;
-  background-color: $mono-light1;
-  border: 1px solid $accent-gr2;
-  border-radius: 5px;
+  text-align: center;
 }
 
 .ingredients-item {
+  display: inline-block;
+  margin: 5px;
   padding: 10px;
-  &:not(:last-child) {
-    border-bottom: 1px solid $accent-gr2;
-  }
+  background-color: $mono-light2;
+  border-radius: 5px;
 }
 
 #steps {

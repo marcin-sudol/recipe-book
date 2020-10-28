@@ -208,14 +208,14 @@ button:hover {
 
 #ingredients-list {
   list-style: none;
-  background-color: #f4f4f4;
-  border: 1px solid #43aa8b;
-  border-radius: 5px; }
+  text-align: center; }
 
 .ingredients-item {
-  padding: 10px; }
-  .ingredients-item:not(:last-child) {
-    border-bottom: 1px solid #43aa8b; }
+  display: inline-block;
+  margin: 5px;
+  padding: 10px;
+  background-color: #ddd;
+  border-radius: 5px; }
 
 #steps-list {
   counter-reset: li-counter; }
