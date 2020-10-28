@@ -12,23 +12,133 @@ body {
 button:hover {
   cursor: pointer; }
 
+#nav {
+  height: 100vh;
+  width: 300px;
+  padding: 20px;
+  z-index: 5;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  background-color: #f9c74f;
+  box-shadow: 2px 0px 8px #aaa;
+  transition: left 0.4s ease-out; }
+  #nav.hidden {
+    left: -300px; }
+
+#nav-header {
+  margin-bottom: 30px;
+  text-align: center;
+  height: 35px;
+  line-height: 35px;
+  color: #555;
+  text-transform: uppercase;
+  font-size: 20px;
+  font-weight: bold; }
+
+#nav-menu-button {
+  padding: 5px;
+  height: 100%;
+  float: left;
+  background: none;
+  border: none; }
+  #nav-menu-button i {
+    color: #555;
+    font-size: 20px; }
+  #nav-menu-button:hover i {
+    color: #333; }
+
+#nav-list {
+  list-style: none; }
+
+.nav-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 20px;
+  background-color: #fad275;
+  border-radius: 5px;
+  transition: background-color 0.2s; }
+  .nav-item:hover {
+    background-color: white; }
+
+.nav-item-button {
+  flex: 1 1 100%;
+  padding: 10px;
+  text-align: left;
+  background: none;
+  border: none; }
+
+.nav-item-rating {
+  flex: 0 0 auto;
+  margin: 5px;
+  padding: 5px;
+  width: 50px;
+  text-align: center;
+  position: relative;
+  border-radius: 5px; }
+  .nav-item-rating:hover {
+    text-decoration: underline dotted; }
+
+.rating-tooltip {
+  position: absolute;
+  padding: 5px;
+  width: 80px;
+  right: -15px;
+  bottom: -35px;
+  white-space: nowrap;
+  z-index: 10;
+  visibility: hidden;
+  opacity: 0;
+  background-color: #43aa8b;
+  color: white;
+  border-radius: 5px;
+  font-size: 12px;
+  transition: opacity 0.2s 0.4s; }
+
+.nav-item-rating:hover .rating-tooltip {
+  visibility: visible;
+  opacity: 1; }
+
+#nav-add-button {
+  display: block;
+  padding: 15px;
+  width: 100%;
+  background-color: #555;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.2s; }
+  #nav-add-button:hover {
+    background-color: #43aa8b;
+    box-shadow: 0px 0px 4px 2px white; }
+
 #main {
   display: flex;
   flex-direction: row;
   height: 100vh;
   width: 100vw; }
 
-#c-nav {
+#nav-bg {
   flex: 0 0 300px;
   padding: 20px;
   position: relative;
   transition: flex-basis 0.4s ease-out; }
-  #c-nav.collapsed {
+  #nav-bg.collapsed {
     flex-basis: 0px; }
-  #c-nav .menu-button {
-    padding: 5px; }
 
-#c-recipe {
+#bg-menu-button {
+  padding: 5px;
+  background: none;
+  border: none; }
+  #bg-menu-button i {
+    color: #555;
+    font-size: 20px; }
+  #bg-menu-button:hover i {
+    color: #333; }
+
+#recipe-bg {
   flex: 1 1 100%;
   display: flex;
   justify-content: center;
@@ -62,7 +172,7 @@ button:hover {
   text-align: center;
   background-color: #43aa8b; }
 
-#close-button {
+#recipe-close-button {
   flex: 0 0 auto;
   position: absolute;
   padding: 10px;
@@ -72,12 +182,12 @@ button:hover {
   border: 1px solid white;
   color: white;
   transition: background-color 0.2s, color 0.2s; }
-  #close-button:hover {
+  #recipe-close-button:hover {
     background: white;
     color: #43aa8b; }
-  #close-button i {
+  #recipe-close-button i {
     color: white; }
-  #close-button:hover i {
+  #recipe-close-button:hover i {
     color: #43aa8b; }
 
 #recipe-name {
@@ -85,66 +195,63 @@ button:hover {
   color: white;
   font-size: 24px; }
 
-#ingredients {
+#ingredients, #steps {
   padding: 20px;
   width: 50%; }
-  #ingredients .header {
-    padding: 10px;
-    margin-bottom: 20px;
-    text-align: center;
-    color: #555;
-    font-size: 20px; }
-  #ingredients .list {
-    list-style: none;
-    background-color: #f4f4f4;
-    border: 1px solid #43aa8b;
-    border-radius: 5px; }
-    #ingredients .list li {
-      padding: 10px; }
-      #ingredients .list li:not(:last-child) {
-        border-bottom: 1px solid #43aa8b; }
 
-#steps {
-  padding: 20px;
-  width: 50%; }
-  #steps .header {
-    padding: 10px;
-    margin-bottom: 20px;
-    text-align: center;
-    color: #555;
-    font-size: 20px; }
-  #steps .list {
-    counter-reset: li-counter; }
-    #steps .list li {
-      display: flex;
-      flex-direction: row;
-      align-items: center; }
-      #steps .list li:not(:last-child) {
-        border-bottom: 1px solid #43aa8b; }
-      #steps .list li::before {
-        counter-increment: li-counter;
-        content: counter(li-counter) ".";
-        padding: 5px; }
-      #steps .list li .step {
-        flex: 1 1 100%;
-        padding: 10px; }
-      #steps .list li .time {
-        flex: 0 0 110px;
-        margin: 5px;
-        padding: 5px 10px;
-        text-align: center;
-        background-color: #43aa8b;
-        color: white;
-        border-radius: 5px; }
-        #steps .list li .time i {
-          float: left;
-          color: white; }
+#ingredients-header, #steps-header {
+  padding: 10px;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #555;
+  font-size: 20px; }
 
-#recipe-window .menu {
+#ingredients-list {
+  list-style: none;
+  background-color: #f4f4f4;
+  border: 1px solid #43aa8b;
+  border-radius: 5px; }
+
+.ingredients-item {
+  padding: 10px; }
+  .ingredients-item:not(:last-child) {
+    border-bottom: 1px solid #43aa8b; }
+
+#steps-list {
+  counter-reset: li-counter; }
+
+.steps-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center; }
+  .steps-item:not(:last-child) {
+    border-bottom: 1px solid #43aa8b; }
+  .steps-item::before {
+    counter-increment: li-counter;
+    content: counter(li-counter) ".";
+    padding: 5px; }
+
+.step-name {
+  flex: 1 1 100%;
+  padding: 10px; }
+
+.step-time {
+  flex: 0 0 110px;
+  margin: 5px;
+  padding: 5px 10px;
+  text-align: center;
+  background-color: #43aa8b;
+  color: white;
+  border-radius: 5px; }
+  .step-time i {
+    float: left;
+    color: white; }
+
+#recipe-menu {
   padding: 20px;
   width: 100%; }
 
-#edit-button {
+#recipe-edit-button {
   float: left;
   padding: 10px;
   width: 100px;
@@ -153,15 +260,15 @@ button:hover {
   border: 1px solid #fad275;
   color: #555;
   transition: background-color 0.2s, color 0.2s; }
-  #edit-button:hover {
+  #recipe-edit-button:hover {
     background: white;
     color: #555; }
-  #edit-button i {
+  #recipe-edit-button i {
     color: #555; }
-  #edit-button:hover i {
+  #recipe-edit-button:hover i {
     color: #555; }
 
-#delete-button {
+#recipe-delete-button {
   float: right;
   padding: 10px;
   width: 100px;
@@ -170,110 +277,13 @@ button:hover {
   border: 1px solid #f94144;
   color: white;
   transition: background-color 0.2s, color 0.2s; }
-  #delete-button:hover {
+  #recipe-delete-button:hover {
     background: white;
     color: #f94144; }
-  #delete-button i {
+  #recipe-delete-button i {
     color: white; }
-  #delete-button:hover i {
+  #recipe-delete-button:hover i {
     color: #f94144; }
-
-#nav {
-  height: 100vh;
-  width: 300px;
-  padding: 20px;
-  z-index: 5;
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  background-color: #f9c74f;
-  box-shadow: 2px 0px 8px #aaa;
-  transition: left 0.4s ease-out; }
-  #nav.hidden {
-    left: -300px; }
-  #nav .header {
-    margin-bottom: 30px;
-    text-align: center;
-    height: 35px;
-    line-height: 35px;
-    color: #555;
-    text-transform: uppercase;
-    font-size: 20px;
-    font-weight: bold; }
-    #nav .header .menu-button {
-      padding: 5px;
-      height: 100%;
-      float: left; }
-  #nav .list {
-    list-style: none; }
-    #nav .list li {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      margin-bottom: 20px;
-      background-color: #fad275;
-      border-radius: 5px;
-      transition: background-color 0.2s; }
-      #nav .list li:hover {
-        background-color: white; }
-      #nav .list li button {
-        flex: 1 1 100%;
-        padding: 10px;
-        text-align: left;
-        background: none;
-        border: none; }
-      #nav .list li .rating {
-        flex: 0 0 auto;
-        margin: 5px;
-        padding: 5px;
-        width: 50px;
-        text-align: center;
-        position: relative;
-        border-radius: 5px; }
-        #nav .list li .rating:hover {
-          text-decoration: underline dotted; }
-        #nav .list li .rating .tooltip {
-          position: absolute;
-          padding: 5px;
-          width: 80px;
-          right: -15px;
-          bottom: -35px;
-          white-space: nowrap;
-          z-index: 10;
-          visibility: hidden;
-          opacity: 0;
-          background-color: #43aa8b;
-          color: white;
-          border-radius: 5px;
-          font-size: 12px;
-          transition: opacity 0.2s 0.4s; }
-      #nav .list li .rating:hover .tooltip {
-        visibility: visible;
-        opacity: 1; }
-
-.menu-button {
-  background: none;
-  border: none; }
-  .menu-button i {
-    color: #555;
-    font-size: 20px; }
-
-.menu-button:hover i {
-  color: #333; }
-
-#add-recipe {
-  display: block;
-  padding: 15px;
-  width: 100%;
-  background-color: #555;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-weight: bold;
-  transition: background-color 0.2s; }
-  #add-recipe:hover {
-    background-color: #43aa8b;
-    box-shadow: 0px 0px 4px 2px white; }
 
 #popup {
   position: fixed;
@@ -302,7 +312,7 @@ button:hover {
   animation: popup-bg 0.4s;
   opacity: 0.7; }
 
-#c-popup {
+#popup-container {
   position: absolute;
   height: 100%;
   width: 100%;
@@ -310,7 +320,7 @@ button:hover {
   justify-content: center;
   align-items: center; }
 
-#confirm-popup {
+#popup-window {
   display: none;
   padding: 20px;
   width: 300px;
@@ -318,16 +328,17 @@ button:hover {
   background-color: white;
   border-radius: 5px;
   box-shadow: 0px 6px 10px #333; }
-  #confirm-popup .menu {
-    display: flex;
-    justify-content: space-evenly; }
 
 #popup-message {
   margin-top: 20px;
   margin-bottom: 40px;
   text-align: center; }
 
-#ok-button {
+#popup-menu {
+  display: flex;
+  justify-content: space-evenly; }
+
+#popup-ok-button {
   padding: 10px;
   width: 100px;
   border-radius: 5px;
@@ -335,15 +346,15 @@ button:hover {
   border: 1px solid #f94144;
   color: white;
   transition: background-color 0.2s, color 0.2s; }
-  #ok-button:hover {
+  #popup-ok-button:hover {
     background: white;
     color: #f94144; }
-  #ok-button i {
+  #popup-ok-button i {
     color: white; }
-  #ok-button:hover i {
+  #popup-ok-button:hover i {
     color: #f94144; }
 
-#cancel-button {
+#popup-cancel-button {
   padding: 10px;
   width: 100px;
   border-radius: 5px;
@@ -351,29 +362,29 @@ button:hover {
   border: 1px solid #555;
   color: white;
   transition: background-color 0.2s, color 0.2s; }
-  #cancel-button:hover {
+  #popup-cancel-button:hover {
     background: white;
     color: #555; }
-  #cancel-button i {
+  #popup-cancel-button i {
     color: white; }
-  #cancel-button:hover i {
+  #popup-cancel-button:hover i {
     color: #555; }
 
 @media (max-width: 1200px) {
-  #ingredients,
+  #ingredients, #steps,
   #steps {
     width: 100%; } }
 @media (max-width: 800px) {
-  #c-nav {
+  #nav-bg {
     display: none; }
 
   #nav {
-    width: 100vw;
-    transition: left 0.2s ease-out; }
+    width: 100vw; }
     #nav.hidden {
       transform: translateX(300px); }
-    #nav .menu-button {
-      display: none; }
+
+  #nav-menu-button {
+    display: none; }
 
   #recipe-window {
     z-index: 15; } }

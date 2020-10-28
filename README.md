@@ -15,10 +15,11 @@ _Application written to learn vanilla javascript._
 
 ### Animations
 
-Application has animations written by two ways
+Application has animations written in three ways
 
-- css classes
-- js `animate` method
+- css `transition` property
+- css `animation` property
+- javascript `animate` method
 
 ### Data storage
 

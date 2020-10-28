@@ -1,4 +1,6 @@
+// ------------------------------------------
 // VARIABLES
+// ------------------------------------------
 $accent-ye1: #fad275;
 $accent-ye2: #f9c74f;
 $accent-or1: #f8961e;
@@ -25,12 +27,31 @@ $main-spacing: 20px;
 
 $animation-time: 0.4s;
 
-$z-index-zero: 0;
 $z-index-nav: 5;
 $z-index-nav-tooltip: 10;
 $z-index-recipe-sm: 15;
 $z-index-add-edit: 20;
 $z-index-popup: 25;
+
+@mixin btn($bg-color, $border-color, $color, $hover-color) {
+  padding: 10px;
+  width: 100px;
+  border-radius: 5px;
+  background: $bg-color;
+  border: 1px solid $border-color;
+  color: $color;
+  transition: background-color 0.2s, color 0.2s;
+  &:hover {
+    background: white;
+    color: $hover-color;
+  }
+  i {
+    color: $color;
+  }
+  &:hover i {
+    color: $hover-color;
+  }
+}
 
 // ------------------------------------------
 // DEFAULT VALUES
@@ -54,6 +75,126 @@ button:hover {
 }
 
 // ------------------------------------------
+// NAV
+// ------------------------------------------
+#nav {
+  height: 100vh;
+  width: $nav-width;
+  padding: $main-spacing;
+  z-index: $z-index-nav;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  background-color: $accent-ye2;
+  box-shadow: 2px 0px 8px $mono-medium;
+  transition: left $animation-time ease-out;
+  &.hidden {
+    left: -$nav-width;
+  }
+}
+
+#nav-header {
+  margin-bottom: 30px;
+  text-align: center;
+  height: 35px;
+  line-height: 35px;
+  color: $mono-dark1;
+  text-transform: uppercase;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+#nav-menu-button {
+  padding: 5px;
+  height: 100%;
+  float: left;
+  background: none;
+  border: none;
+  i {
+    color: $mono-dark1;
+    font-size: 20px;
+  }
+  &:hover i {
+    color: $mono-dark2;
+  }
+}
+
+#nav-list {
+  list-style: none;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 20px;
+  background-color: $accent-ye1;
+  border-radius: 5px;
+  transition: background-color 0.2s;
+  &:hover {
+    background-color: white;
+  }
+}
+.nav-item-button {
+  flex: 1 1 100%;
+  padding: 10px;
+  text-align: left;
+  background: none;
+  border: none;
+}
+
+.nav-item-rating {
+  flex: 0 0 auto;
+  margin: 5px;
+  padding: 5px;
+  width: 50px;
+  text-align: center;
+  position: relative;
+  border-radius: 5px;
+  &:hover {
+    text-decoration: underline dotted;
+  }
+}
+
+.rating-tooltip {
+  position: absolute;
+  padding: 5px;
+  width: 80px;
+  right: -15px;
+  bottom: -35px;
+  white-space: nowrap;
+  z-index: $z-index-nav-tooltip;
+  visibility: hidden;
+  opacity: 0;
+  background-color: $accent-gr2;
+  color: white;
+  border-radius: 5px;
+  font-size: 12px;
+  transition: opacity 0.2s 0.4s;
+}
+
+.nav-item-rating:hover .rating-tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+#nav-add-button {
+  display: block;
+  padding: 15px;
+  width: 100%;
+  background-color: $mono-dark1;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.2s;
+  &:hover {
+    background-color: $accent-gr2;
+    box-shadow: 0px 0px 4px 2px white;
+  }
+}
+
+// ------------------------------------------
 // MAIN CONTAINER
 // ------------------------------------------
 #main {
@@ -63,22 +204,30 @@ button:hover {
   width: 100vw;
 }
 
-#c-nav {
+#nav-bg {
   flex: 0 0 $nav-width;
   padding: $main-spacing;
   position: relative;
   transition: flex-basis $animation-time ease-out;
-
   &.collapsed {
     flex-basis: 0px;
   }
+}
 
-  .menu-button {
-    padding: 5px;
+#bg-menu-button {
+  padding: 5px;
+  background: none;
+  border: none;
+  i {
+    color: $mono-dark1;
+    font-size: 20px;
+  }
+  &:hover i {
+    color: $mono-dark2;
   }
 }
 
-#c-recipe {
+#recipe-bg {
   flex: 1 1 100%;
   display: flex;
   justify-content: center;
@@ -119,27 +268,7 @@ button:hover {
   background-color: $accent-gr2;
 }
 
-@mixin btn($bg-color, $border-color, $color, $hover-color) {
-  padding: 10px;
-  width: 100px;
-  border-radius: 5px;
-  background: $bg-color;
-  border: 1px solid $border-color;
-  color: $color;
-  transition: background-color 0.2s, color 0.2s;
-  &:hover {
-    background: white;
-    color: $hover-color;
-  }
-  i {
-    color: $color;
-  }
-  &:hover i {
-    color: $hover-color;
-  }
-}
-
-#close-button {
+#recipe-close-button {
   flex: 0 0 auto;
   position: absolute;
   @include btn($accent-gr2, white, white, $accent-gr2);
@@ -151,217 +280,91 @@ button:hover {
   font-size: 24px;
 }
 
-@mixin box-with-header {
+#ingredients {
   padding: $main-spacing;
   width: 50%;
-
-  .header {
-    padding: 10px;
-    margin-bottom: $main-spacing;
-    text-align: center;
-    color: $mono-dark1;
-    font-size: 20px;
-  }
 }
 
-#ingredients {
-  @include box-with-header();
+#ingredients-header {
+  padding: 10px;
+  margin-bottom: $main-spacing;
+  text-align: center;
+  color: $mono-dark1;
+  font-size: 20px;
+}
 
-  .list {
-    list-style: none;
-    background-color: $mono-light1;
-    border: 1px solid $accent-gr2;
-    border-radius: 5px;
-    li {
-      padding: 10px;
-      &:not(:last-child) {
-        border-bottom: 1px solid $accent-gr2;
-      }
-    }
+#ingredients-list {
+  list-style: none;
+  background-color: $mono-light1;
+  border: 1px solid $accent-gr2;
+  border-radius: 5px;
+}
+
+.ingredients-item {
+  padding: 10px;
+  &:not(:last-child) {
+    border-bottom: 1px solid $accent-gr2;
   }
 }
 
 #steps {
-  @include box-with-header();
+  @extend #ingredients;
+}
 
-  .list {
-    counter-reset: li-counter;
-    li {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
+#steps-header {
+  @extend #ingredients-header;
+}
 
-      &:not(:last-child) {
-        border-bottom: 1px solid $accent-gr2;
-      }
+#steps-list {
+  counter-reset: li-counter;
+}
 
-      &::before {
-        counter-increment: li-counter;
-        content: counter(li-counter) ".";
-        padding: 5px;
-      }
-
-      .step {
-        flex: 1 1 100%;
-        padding: 10px;
-      }
-      .time {
-        flex: 0 0 110px;
-        margin: 5px;
-        padding: 5px 10px;
-        text-align: center;
-        background-color: $accent-gr2;
-        color: white;
-        border-radius: 5px;
-        i {
-          float: left;
-          color: white;
-        }
-      }
-    }
+.steps-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  &:not(:last-child) {
+    border-bottom: 1px solid $accent-gr2;
+  }
+  &::before {
+    counter-increment: li-counter;
+    content: counter(li-counter) ".";
+    padding: 5px;
   }
 }
 
-#recipe-window .menu {
+.step-name {
+  flex: 1 1 100%;
+  padding: 10px;
+}
+
+.step-time {
+  flex: 0 0 110px;
+  margin: 5px;
+  padding: 5px 10px;
+  text-align: center;
+  background-color: $accent-gr2;
+  color: white;
+  border-radius: 5px;
+  i {
+    float: left;
+    color: white;
+  }
+}
+
+#recipe-menu {
   padding: 20px;
   width: 100%;
 }
 
-#edit-button {
+#recipe-edit-button {
   float: left;
   @include btn($accent-ye1, $accent-ye1, $mono-dark1, $mono-dark1);
 }
 
-#delete-button {
+#recipe-delete-button {
   float: right;
   @include btn($accent-red, $accent-red, white, $accent-red);
-}
-
-// ------------------------------------------
-// NAV
-// ------------------------------------------
-#nav {
-  height: 100vh;
-  width: $nav-width;
-  padding: $main-spacing;
-  z-index: $z-index-nav;
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  background-color: $accent-ye2;
-  box-shadow: 2px 0px 8px $mono-medium;
-  transition: left $animation-time ease-out;
-
-  &.hidden {
-    left: -$nav-width;
-  }
-
-  .header {
-    margin-bottom: 30px;
-    text-align: center;
-    height: 35px;
-    line-height: 35px;
-    color: $mono-dark1;
-    text-transform: uppercase;
-    font-size: 20px;
-    font-weight: bold;
-
-    .menu-button {
-      padding: 5px;
-      height: 100%;
-      float: left;
-    }
-  }
-
-  .list {
-    list-style: none;
-    li {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      margin-bottom: 20px;
-      background-color: $accent-ye1;
-      border-radius: 5px;
-      transition: background-color 0.2s;
-
-      &:hover {
-        background-color: white;
-      }
-
-      button {
-        flex: 1 1 100%;
-        padding: 10px;
-        text-align: left;
-        background: none;
-        border: none;
-      }
-
-      .rating {
-        flex: 0 0 auto;
-        margin: 5px;
-        padding: 5px;
-        width: 50px;
-        text-align: center;
-        position: relative;
-        border-radius: 5px;
-
-        &:hover {
-          text-decoration: underline dotted;
-        }
-
-        .tooltip {
-          position: absolute;
-          padding: 5px;
-          width: 80px;
-          right: -15px;
-          bottom: -35px;
-          white-space: nowrap;
-          z-index: $z-index-nav-tooltip;
-          visibility: hidden;
-          opacity: 0;
-          background-color: $accent-gr2;
-          color: white;
-          border-radius: 5px;
-          font-size: 12px;
-          transition: opacity 0.2s 0.4s;
-        }
-      }
-
-      .rating:hover .tooltip {
-        visibility: visible;
-        opacity: 1;
-      }
-    }
-  }
-}
-
-.menu-button {
-  background: none;
-  border: none;
-  i {
-    color: $mono-dark1;
-    font-size: 20px;
-  }
-}
-.menu-button:hover i {
-  color: $mono-dark2;
-}
-
-#add-recipe {
-  display: block;
-  padding: 15px;
-  width: 100%;
-  background-color: $mono-dark1;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-weight: bold;
-  transition: background-color 0.2s;
-
-  &:hover {
-    background-color: $accent-gr2;
-    box-shadow: 0px 0px 4px 2px white;
-  }
 }
 
 // ------------------------------------------
@@ -403,7 +406,7 @@ button:hover {
   opacity: 0.7;
 }
 
-#c-popup {
+#popup-container {
   position: absolute;
   height: 100%;
   width: 100%;
@@ -412,7 +415,7 @@ button:hover {
   align-items: center;
 }
 
-#confirm-popup {
+#popup-window {
   display: none;
   padding: $main-spacing;
   width: 300px;
@@ -420,10 +423,6 @@ button:hover {
   background-color: white;
   border-radius: 5px;
   box-shadow: 0px 6px 10px $mono-dark2;
-  .menu {
-    display: flex;
-    justify-content: space-evenly;
-  }
 }
 
 #popup-message {
@@ -432,11 +431,16 @@ button:hover {
   text-align: center;
 }
 
-#ok-button {
+#popup-menu {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+#popup-ok-button {
   @include btn($accent-red, $accent-red, white, $accent-red);
 }
 
-#cancel-button {
+#popup-cancel-button {
   @include btn($mono-dark1, $mono-dark1, white, $mono-dark1);
 }
 
@@ -451,22 +455,21 @@ button:hover {
 }
 
 @media (max-width: $breakdown-sm) {
-  #c-nav {
+  #nav-bg {
     display: none;
   }
 
   #nav {
     width: 100vw;
-    transition: left 0.2s ease-out;
-
     &.hidden {
       transform: translateX($nav-width);
     }
-
-    .menu-button {
-      display: none;
-    }
   }
+
+  #nav-menu-button {
+    display: none;
+  }
+
   #recipe-window {
     z-index: $z-index-recipe-sm;
   }

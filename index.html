@@ -32,16 +32,30 @@
 
   <body>
     <!--------------------------------------------------------
+    NAV
+    --------------------------------------------------------->
+    <nav id="nav">
+      <header id="nav-header">
+        <button id="nav-menu-button" type="button">
+          <i class="fas fa-bars"></i>
+        </button>
+        Recipes
+      </header>
+      <ul id="nav-list"></ul>
+      <button id="nav-add-button" type="button">add new recipe</button>
+    </nav>
+
+    <!--------------------------------------------------------
     MAIN CONTAINERS
     --------------------------------------------------------->
     <main id="main">
-      <div id="c-nav">
-        <button type="button" class="menu-button">
+      <div id="nav-bg">
+        <button id="bg-menu-button" type="button">
           <i class="fas fa-bars"></i>
         </button>
       </div>
 
-      <div id="c-recipe">
+      <div id="recipe-bg">
         <i id="bg-icon" class="fas fa-utensils"></i>
 
         <!--------------------------------------------------------
@@ -49,24 +63,24 @@
         --------------------------------------------------------->
         <div id="recipe-window">
           <header id="recipe-header">
-            <button type="button" id="close-button">
+            <button id="recipe-close-button" type="button">
               <i class="fas fa-times"></i> Close
             </button>
             <h4 id="recipe-name"></h4>
           </header>
           <div id="ingredients">
-            <h6 class="header">Ingredients</h6>
-            <ul class="list"></ul>
+            <h6 id="ingredients-header">Ingredients</h6>
+            <ul id="ingredients-list"></ul>
           </div>
           <div id="steps">
-            <h6 class="header">Steps</h6>
-            <ol class="list"></ol>
+            <h6 id="steps-header">Steps</h6>
+            <ol id="steps-list"></ol>
           </div>
-          <div class="menu">
-            <button type="button" id="edit-button">
+          <div id="recipe-menu">
+            <button id="recipe-edit-button" type="button">
               <i class="fas fa-marker"></i> Edit
             </button>
-            <button type="button" id="delete-button">
+            <button id="recipe-delete-button" type="button">
               <i class="fas fa-trash-alt"></i> Delete
             </button>
           </div>
@@ -75,34 +89,20 @@
     </main>
 
     <!--------------------------------------------------------
-    NAV
-    --------------------------------------------------------->
-    <nav id="nav">
-      <header class="header">
-        <button type="button" class="menu-button">
-          <i class="fas fa-bars"></i>
-        </button>
-        Recipes
-      </header>
-      <ul class="list"></ul>
-      <button type="button" id="add-recipe">add new recipe</button>
-    </nav>
-
-    <!--------------------------------------------------------
     POPUP
     --------------------------------------------------------->
 
     <div id="popup">
       <div id="popup-bg"></div>
 
-      <div id="c-popup">
-        <div id="confirm-popup">
+      <div id="popup-container">
+        <div id="popup-window">
           <p id="popup-message">Remove recipe from the list?</p>
-          <div class="menu">
-            <button type="button" id="ok-button">
+          <div id="popup-menu">
+            <button id="popup-ok-button" type="button">
               <i class="fas fa-check"></i> OK
             </button>
-            <button type="button" id="cancel-button">
+            <button id="popup-cancel-button" type="button">
               <i class="fas fa-times"></i> Cancel
             </button>
           </div>

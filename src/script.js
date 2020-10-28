@@ -95,11 +95,13 @@ const addRecipeToList = (recipe, list) => {
   let button = document.createElement("button");
   let divRating = document.createElement("div");
   let divTooltip = document.createElement("div");
-  item.id = "recipe-" + recipe.id;
+  item.className = "nav-item";
+  item.id = "nav-item-" + recipe.id;
+  button.className = "nav-item-button";
   button.type = "button";
   button.onclick = clickedRecipeButton;
-  divRating.className = "rating";
-  divTooltip.className = "tooltip";
+  divRating.className = "nav-item-rating";
+  divTooltip.className = "rating-tooltip";
   button.innerText = recipe.name;
   divRating.innerText = rating.toFixed(1);
   divTooltip.innerText = recipe.rating.votes + " votes";
@@ -113,15 +115,15 @@ const addRecipeToList = (recipe, list) => {
 // REMOVE RECIPE FROM LIST
 // -------------------------------------------------------
 const removeRecipeFromList = (recipeId, animationTime) => {
-  const item = document.getElementById("recipe-" + recipeId);
-  const button = item.querySelector("button");
+  const item = document.getElementById("nav-item-" + recipeId);
+  const button = item.querySelector(".nav-item-button");
 
   button.removeAttribute("onclick");
   item
     .animate({ opacity: 0 }, { duration: animationTime * 0.5 })
     .finished.then(() => {
       item.style.opacity = 0;
-      item.removeChild(item.querySelector(".rating"));
+      item.removeChild(item.querySelector(".nav-item-rating"));
       button.animate(
         { padding: "0px", fontSize: "0px" },
         { duration: animationTime * 0.5, easing: "ease-out" }
@@ -141,7 +143,7 @@ const removeRecipeFromList = (recipeId, animationTime) => {
 // LOADS RECIPES INTO NAV LIST
 // -------------------------------------------------------
 const loadRecipesList = () => {
-  const list = document.querySelector("#nav .list");
+  const list = document.getElementById("nav-list");
   recipes.forEach((recipe) => {
     addRecipeToList(recipe, list);
   });
@@ -152,32 +154,34 @@ const loadRecipesList = () => {
 // -------------------------------------------------------
 const updateDisplayedRecipe = (recipe) => {
   const recipeName = document.getElementById("recipe-name");
-  const ingredients = document.querySelector("#ingredients .list");
-  const steps = document.querySelector("#steps .list");
+  const ingredients = document.getElementById("ingredients-list");
+  const steps = document.getElementById("steps-list");
   // UPDATE NAME
   recipeName.innerHTML = recipe.name;
   // UPDATE INGREDIENTS
   ingredients.innerHTML = "";
   recipe.ingredients.split(",").forEach((ingredient) => {
-    let liIngredient = document.createElement("li");
-    liIngredient.innerText = ingredient;
-    ingredients.appendChild(liIngredient);
+    let itemIngredient = document.createElement("li");
+    itemIngredient.className = "ingredients-item";
+    itemIngredient.innerText = ingredient;
+    ingredients.appendChild(itemIngredient);
   });
   // UPDATE STEPS
   steps.innerHTML = "";
   recipe.steps.forEach((step) => {
-    let liStep = document.createElement("li");
+    let itemStep = document.createElement("li");
     let spStep = document.createElement("span");
     let spTime = document.createElement("span");
     let icon = document.createElement("i");
     let txTime = document.createTextNode(" " + step.time + " min.");
-    spStep.className = "step";
+    itemStep.className = "steps-item";
+    spStep.className = "step-name";
     spStep.innerText = step.name;
-    spTime.className = "time";
+    spTime.className = "step-time";
     icon.className = "far fa-clock";
-    steps.appendChild(liStep);
-    liStep.appendChild(spStep);
-    liStep.appendChild(spTime);
+    steps.appendChild(itemStep);
+    itemStep.appendChild(spStep);
+    itemStep.appendChild(spTime);
     spTime.appendChild(icon);
     spTime.appendChild(txTime);
   });
@@ -190,7 +194,7 @@ const updateDisplayedRecipe = (recipe) => {
 // -------------------------------------------------------
 const hideNav = () => {
   document.getElementById("nav").classList.add("hidden");
-  document.getElementById("c-nav").classList.add("collapsed");
+  document.getElementById("nav-bg").classList.add("collapsed");
 };
 
 // -------------------------------------------------------
@@ -198,7 +202,7 @@ const hideNav = () => {
 // -------------------------------------------------------
 const showNav = () => {
   document.getElementById("nav").classList.remove("hidden");
-  document.getElementById("c-nav").classList.remove("collapsed");
+  document.getElementById("nav-bg").classList.remove("collapsed");
 };
 
 // -------------------------------------------------------
@@ -309,7 +313,7 @@ const getAnimationTime = () => {
 // CLICKED RECIPE ON THE LIST
 // -------------------------------------------------------
 function clickedRecipeButton() {
-  const recipeId = parseInt(this.parentNode.id.slice(7));
+  const recipeId = parseInt(this.parentNode.id.slice(9));
   if (
     !isNaN(recipeId) &&
     !changingRecipe &&
@@ -364,7 +368,7 @@ const clickedDeleteButton = () => {
 const showPopup = (animationTime, callback) => {
   document.getElementById("popup").classList.add("popup-visible");
 
-  const popup = document.getElementById("confirm-popup");
+  const popup = document.getElementById("popup-window");
   popup.style.opacity = 0;
   popup.style.transform = "translateY(-200px)";
   popup.style.display = "block";
@@ -392,8 +396,7 @@ const showPopup = (animationTime, callback) => {
 // -------------------------------------------------------
 const hidePopup = () => {
   document.getElementById("popup").classList.remove("popup-visible");
-
-  document.getElementById("confirm-popup").style.display = "none";
+  document.getElementById("popup-window").style.display = "none";
 };
 
 // -------------------------------------------------------
@@ -427,12 +430,12 @@ const deleteButtonCancel = () => {
 // -------------------------------------------------------
 const initialLoading = () => {
   loadRecipesList();
-  document.querySelector("#nav .menu-button").onclick = hideNav;
-  document.querySelector("#c-nav .menu-button").onclick = showNav;
-  document.getElementById("close-button").onclick = clickedCloseButton;
-  document.getElementById("delete-button").onclick = clickedDeleteButton;
-  document.getElementById("ok-button").onclick = deleteButtonOK;
-  document.getElementById("cancel-button").onclick = deleteButtonCancel;
+  document.getElementById("nav-menu-button").onclick = hideNav;
+  document.getElementById("bg-menu-button").onclick = showNav;
+  document.getElementById("recipe-close-button").onclick = clickedCloseButton;
+  document.getElementById("recipe-delete-button").onclick = clickedDeleteButton;
+  document.getElementById("popup-ok-button").onclick = deleteButtonOK;
+  document.getElementById("popup-cancel-button").onclick = deleteButtonCancel;
 };
 
 window.addEventListener("load", initialLoading);
