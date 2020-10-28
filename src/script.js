@@ -353,22 +353,46 @@ const clickedCloseButton = () => {
 // CLICKED DELETE BUTTON
 // -------------------------------------------------------
 const clickedDeleteButton = () => {
-  showPopup();
+  const time = getAnimationTime();
+
+  showPopup(time);
 };
 
 // -------------------------------------------------------
 // SHOW POPUP
 // -------------------------------------------------------
-const showPopup = () => {
-  document.getElementById("recipe-window").classList.add("popup-visible");
-  document.getElementById("confirm-popup").style.display = "block";
+const showPopup = (animationTime, callback) => {
+  document.getElementById("popup").classList.add("popup-visible");
+
+  const popup = document.getElementById("confirm-popup");
+  popup.style.opacity = 0;
+  popup.style.transform = "translateY(-200px)";
+  popup.style.display = "block";
+
+  popup
+    .animate(
+      {
+        opacity: 1,
+        transform: "translateY(0px)",
+      },
+      { duration: animationTime * 0.9, easing: "ease-out" }
+    )
+    .finished.then(() => {
+      popup.style.opacity = 1;
+      popup.style.transform = "translateY(0px)";
+    });
+
+  if (callback !== undefined) {
+    setTimeout(callback, animationTime);
+  }
 };
 
 // -------------------------------------------------------
 // HIDE POPUP
 // -------------------------------------------------------
 const hidePopup = () => {
-  document.getElementById("recipe-window").classList.remove("popup-visible");
+  document.getElementById("popup").classList.remove("popup-visible");
+
   document.getElementById("confirm-popup").style.display = "none";
 };
 

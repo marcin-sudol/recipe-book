@@ -31,39 +31,10 @@
   </head>
 
   <body>
-    <nav id="nav">
-      <header class="header">
-        <button type="button" class="menu-button">
-          <i class="fas fa-bars"></i>
-        </button>
-        Recipes
-      </header>
-      <ul class="list">
-        <!-- <li>
-          <button type="button">Cookies</button>
-          <span class="rating">4.4</span>
-        </li>
-        <li>
-          <button type="button">
-            Soup with a very very very very very very long name
-          </button>
-          <div class="rating">
-            4.5
-            <div class="tooltip">438 votes</div>
-          </div>
-        </li>
-        <li>
-          <button type="button">Ice Cream</button>
-          <div class="rating">
-            4.8
-            <div class="tooltip">114 votes</div>
-          </div>
-        </li> -->
-      </ul>
-      <button type="button" id="add-recipe">add new recipe</button>
-    </nav>
-
-    <div id="background">
+    <!--------------------------------------------------------
+    MAIN CONTAINERS
+    --------------------------------------------------------->
+    <main id="main">
       <div id="c-nav">
         <button type="button" class="menu-button">
           <i class="fas fa-bars"></i>
@@ -72,6 +43,10 @@
 
       <div id="c-recipe">
         <i id="bg-icon" class="fas fa-utensils"></i>
+
+        <!--------------------------------------------------------
+        RECIPE WINDOW
+        --------------------------------------------------------->
         <div id="recipe-window">
           <header id="recipe-header">
             <button type="button" id="close-button">
@@ -96,9 +71,33 @@
             </button>
           </div>
         </div>
+      </div>
+    </main>
 
+    <!--------------------------------------------------------
+    NAV
+    --------------------------------------------------------->
+    <nav id="nav">
+      <header class="header">
+        <button type="button" class="menu-button">
+          <i class="fas fa-bars"></i>
+        </button>
+        Recipes
+      </header>
+      <ul class="list"></ul>
+      <button type="button" id="add-recipe">add new recipe</button>
+    </nav>
+
+    <!--------------------------------------------------------
+    POPUP
+    --------------------------------------------------------->
+
+    <div id="popup">
+      <div id="popup-bg"></div>
+
+      <div id="c-popup">
         <div id="confirm-popup">
-          <p id="popup-message">Recipe will be removed from the list</p>
+          <p id="popup-message">Remove recipe from the list?</p>
           <div class="menu">
             <button type="button" id="ok-button">
               <i class="fas fa-check"></i> OK
@@ -110,8 +109,6 @@
         </div>
       </div>
     </div>
-
-    <!-- <div id="c-popup"></div> -->
 
     <!-- SCRIPTS -->
     <script src="./lib/script.js"></script>

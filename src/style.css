@@ -12,7 +12,7 @@ body {
 button:hover {
   cursor: pointer; }
 
-#background {
+#main {
   display: flex;
   flex-direction: row;
   height: 100vh;
@@ -39,102 +39,6 @@ button:hover {
   color: #ddd;
   font-size: 80px; }
 
-#nav {
-  height: 100vh;
-  width: 300px;
-  padding: 20px;
-  z-index: 5;
-  position: absolute;
-  left: 0px;
-  background-color: #f9c74f;
-  box-shadow: 2px 0px 8px #aaa;
-  transition: left 0.4s ease-out; }
-  #nav.hidden {
-    left: -300px; }
-  #nav .header {
-    margin-bottom: 30px;
-    text-align: center;
-    height: 35px;
-    line-height: 35px;
-    color: #555;
-    text-transform: uppercase;
-    font-size: 20px;
-    font-weight: bold; }
-    #nav .header .menu-button {
-      padding: 5px;
-      height: 100%;
-      float: left; }
-  #nav .list {
-    list-style: none; }
-    #nav .list li {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      margin-bottom: 20px;
-      background-color: #fad275;
-      border-radius: 5px;
-      transition: background-color 0.2s; }
-      #nav .list li:hover {
-        background-color: white; }
-      #nav .list li button {
-        flex: 1 1 100%;
-        padding: 10px;
-        text-align: left;
-        background: none;
-        border: none; }
-      #nav .list li .rating {
-        flex: 0 0 auto;
-        margin: 5px;
-        padding: 5px;
-        width: 50px;
-        text-align: center;
-        position: relative;
-        border-radius: 5px; }
-        #nav .list li .rating:hover {
-          text-decoration: underline dotted; }
-        #nav .list li .rating .tooltip {
-          position: absolute;
-          padding: 5px;
-          width: 80px;
-          right: -15px;
-          bottom: -35px;
-          white-space: nowrap;
-          z-index: 10;
-          visibility: hidden;
-          opacity: 0;
-          background-color: #43aa8b;
-          color: white;
-          border-radius: 5px;
-          font-size: 12px;
-          transition: opacity 0.2s 0.4s; }
-      #nav .list li .rating:hover .tooltip {
-        visibility: visible;
-        opacity: 1; }
-
-.menu-button {
-  background: none;
-  border: none; }
-  .menu-button i {
-    color: #555;
-    font-size: 20px; }
-
-.menu-button:hover i {
-  color: #333; }
-
-#add-recipe {
-  display: block;
-  padding: 15px;
-  width: 100%;
-  background-color: #555;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-weight: bold;
-  transition: background-color 0.2s; }
-  #add-recipe:hover {
-    background-color: #43aa8b;
-    box-shadow: 0px 0px 4px 2px white; }
-
 #recipe-window {
   display: flex;
   flex-direction: row;
@@ -149,9 +53,6 @@ button:hover {
   border-radius: 5px;
   overflow: hidden;
   box-shadow: 0px 6px 10px #aaa; }
-  #recipe-window.popup-visible {
-    filter: blur(10px);
-    transition: filter 0.2s; }
 
 #recipe-header {
   display: flex;
@@ -277,16 +178,146 @@ button:hover {
   #delete-button:hover i {
     color: #f94144; }
 
+#nav {
+  height: 100vh;
+  width: 300px;
+  padding: 20px;
+  z-index: 5;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  background-color: #f9c74f;
+  box-shadow: 2px 0px 8px #aaa;
+  transition: left 0.4s ease-out; }
+  #nav.hidden {
+    left: -300px; }
+  #nav .header {
+    margin-bottom: 30px;
+    text-align: center;
+    height: 35px;
+    line-height: 35px;
+    color: #555;
+    text-transform: uppercase;
+    font-size: 20px;
+    font-weight: bold; }
+    #nav .header .menu-button {
+      padding: 5px;
+      height: 100%;
+      float: left; }
+  #nav .list {
+    list-style: none; }
+    #nav .list li {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-bottom: 20px;
+      background-color: #fad275;
+      border-radius: 5px;
+      transition: background-color 0.2s; }
+      #nav .list li:hover {
+        background-color: white; }
+      #nav .list li button {
+        flex: 1 1 100%;
+        padding: 10px;
+        text-align: left;
+        background: none;
+        border: none; }
+      #nav .list li .rating {
+        flex: 0 0 auto;
+        margin: 5px;
+        padding: 5px;
+        width: 50px;
+        text-align: center;
+        position: relative;
+        border-radius: 5px; }
+        #nav .list li .rating:hover {
+          text-decoration: underline dotted; }
+        #nav .list li .rating .tooltip {
+          position: absolute;
+          padding: 5px;
+          width: 80px;
+          right: -15px;
+          bottom: -35px;
+          white-space: nowrap;
+          z-index: 10;
+          visibility: hidden;
+          opacity: 0;
+          background-color: #43aa8b;
+          color: white;
+          border-radius: 5px;
+          font-size: 12px;
+          transition: opacity 0.2s 0.4s; }
+      #nav .list li .rating:hover .tooltip {
+        visibility: visible;
+        opacity: 1; }
+
+.menu-button {
+  background: none;
+  border: none; }
+  .menu-button i {
+    color: #555;
+    font-size: 20px; }
+
+.menu-button:hover i {
+  color: #333; }
+
+#add-recipe {
+  display: block;
+  padding: 15px;
+  width: 100%;
+  background-color: #555;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.2s; }
+  #add-recipe:hover {
+    background-color: #43aa8b;
+    box-shadow: 0px 0px 4px 2px white; }
+
+#popup {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: 25;
+  display: none; }
+  #popup.popup-visible {
+    display: block; }
+
+#popup-bg {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  background-color: #555; }
+
+@keyframes popup-bg {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 0.7; } }
+#popup.popup-visible #popup-bg {
+  animation: popup-bg 0.4s;
+  opacity: 0.7; }
+
+#c-popup {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
 #confirm-popup {
   display: none;
-  position: absolute;
-  z-index: 25;
   padding: 20px;
   width: 300px;
   max-width: calc(100% - 2 * 20px);
   background-color: white;
   border-radius: 5px;
-  box-shadow: 0px 6px 10px #aaa; }
+  box-shadow: 0px 6px 10px #333; }
   #confirm-popup .menu {
     display: flex;
     justify-content: space-evenly; }

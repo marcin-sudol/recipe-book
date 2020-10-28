@@ -23,6 +23,9 @@ $breakdown-sm: 800px;
 $nav-width: 300px;
 $main-spacing: 20px;
 
+$animation-time: 0.4s;
+
+$z-index-zero: 0;
 $z-index-nav: 5;
 $z-index-nav-tooltip: 10;
 $z-index-recipe-sm: 15;
@@ -51,9 +54,9 @@ button:hover {
 }
 
 // ------------------------------------------
-// CONTAINERS
+// MAIN CONTAINER
 // ------------------------------------------
-#background {
+#main {
   display: flex;
   flex-direction: row;
   height: 100vh;
@@ -64,7 +67,7 @@ button:hover {
   flex: 0 0 $nav-width;
   padding: $main-spacing;
   position: relative;
-  transition: flex-basis 0.4s ease-out;
+  transition: flex-basis $animation-time ease-out;
 
   &.collapsed {
     flex-basis: 0px;
@@ -89,132 +92,6 @@ button:hover {
 }
 
 // ------------------------------------------
-// NAV
-// ------------------------------------------
-#nav {
-  height: 100vh;
-  width: $nav-width;
-  padding: $main-spacing;
-  z-index: $z-index-nav;
-  position: absolute;
-  left: 0px;
-  background-color: $accent-ye2;
-  box-shadow: 2px 0px 8px $mono-medium;
-  transition: left 0.4s ease-out;
-
-  &.hidden {
-    left: -$nav-width;
-  }
-
-  .header {
-    margin-bottom: 30px;
-    text-align: center;
-    height: 35px;
-    line-height: 35px;
-    color: $mono-dark1;
-    text-transform: uppercase;
-    font-size: 20px;
-    font-weight: bold;
-
-    .menu-button {
-      padding: 5px;
-      height: 100%;
-      float: left;
-    }
-  }
-
-  .list {
-    list-style: none;
-    li {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      margin-bottom: 20px;
-      background-color: $accent-ye1;
-      border-radius: 5px;
-      transition: background-color 0.2s;
-
-      &:hover {
-        background-color: white;
-      }
-
-      button {
-        flex: 1 1 100%;
-        padding: 10px;
-        text-align: left;
-        background: none;
-        border: none;
-      }
-
-      .rating {
-        flex: 0 0 auto;
-        margin: 5px;
-        padding: 5px;
-        width: 50px;
-        text-align: center;
-        position: relative;
-        border-radius: 5px;
-
-        &:hover {
-          text-decoration: underline dotted;
-        }
-
-        .tooltip {
-          position: absolute;
-          padding: 5px;
-          width: 80px;
-          right: -15px;
-          bottom: -35px;
-          white-space: nowrap;
-          z-index: $z-index-nav-tooltip;
-          visibility: hidden;
-          opacity: 0;
-          background-color: $accent-gr2;
-          color: white;
-          border-radius: 5px;
-          font-size: 12px;
-          transition: opacity 0.2s 0.4s;
-        }
-      }
-
-      .rating:hover .tooltip {
-        visibility: visible;
-        opacity: 1;
-      }
-    }
-  }
-}
-
-.menu-button {
-  background: none;
-  border: none;
-  i {
-    color: $mono-dark1;
-    font-size: 20px;
-  }
-}
-.menu-button:hover i {
-  color: $mono-dark2;
-}
-
-#add-recipe {
-  display: block;
-  padding: 15px;
-  width: 100%;
-  background-color: $mono-dark1;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-weight: bold;
-  transition: background-color 0.2s;
-
-  &:hover {
-    background-color: $accent-gr2;
-    box-shadow: 0px 0px 4px 2px white;
-  }
-}
-
-// ------------------------------------------
 // RECIPE
 // ------------------------------------------
 #recipe-window {
@@ -231,10 +108,6 @@ button:hover {
   border-radius: 5px;
   overflow: hidden;
   box-shadow: 0px 6px 10px $mono-medium;
-  &.popup-visible {
-    filter: blur(10px);
-    transition: filter 0.2s;
-  }
 }
 
 #recipe-header {
@@ -365,19 +238,188 @@ button:hover {
 }
 
 // ------------------------------------------
+// NAV
+// ------------------------------------------
+#nav {
+  height: 100vh;
+  width: $nav-width;
+  padding: $main-spacing;
+  z-index: $z-index-nav;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  background-color: $accent-ye2;
+  box-shadow: 2px 0px 8px $mono-medium;
+  transition: left $animation-time ease-out;
+
+  &.hidden {
+    left: -$nav-width;
+  }
+
+  .header {
+    margin-bottom: 30px;
+    text-align: center;
+    height: 35px;
+    line-height: 35px;
+    color: $mono-dark1;
+    text-transform: uppercase;
+    font-size: 20px;
+    font-weight: bold;
+
+    .menu-button {
+      padding: 5px;
+      height: 100%;
+      float: left;
+    }
+  }
+
+  .list {
+    list-style: none;
+    li {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-bottom: 20px;
+      background-color: $accent-ye1;
+      border-radius: 5px;
+      transition: background-color 0.2s;
+
+      &:hover {
+        background-color: white;
+      }
+
+      button {
+        flex: 1 1 100%;
+        padding: 10px;
+        text-align: left;
+        background: none;
+        border: none;
+      }
+
+      .rating {
+        flex: 0 0 auto;
+        margin: 5px;
+        padding: 5px;
+        width: 50px;
+        text-align: center;
+        position: relative;
+        border-radius: 5px;
+
+        &:hover {
+          text-decoration: underline dotted;
+        }
+
+        .tooltip {
+          position: absolute;
+          padding: 5px;
+          width: 80px;
+          right: -15px;
+          bottom: -35px;
+          white-space: nowrap;
+          z-index: $z-index-nav-tooltip;
+          visibility: hidden;
+          opacity: 0;
+          background-color: $accent-gr2;
+          color: white;
+          border-radius: 5px;
+          font-size: 12px;
+          transition: opacity 0.2s 0.4s;
+        }
+      }
+
+      .rating:hover .tooltip {
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.menu-button {
+  background: none;
+  border: none;
+  i {
+    color: $mono-dark1;
+    font-size: 20px;
+  }
+}
+.menu-button:hover i {
+  color: $mono-dark2;
+}
+
+#add-recipe {
+  display: block;
+  padding: 15px;
+  width: 100%;
+  background-color: $mono-dark1;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: $accent-gr2;
+    box-shadow: 0px 0px 4px 2px white;
+  }
+}
+
+// ------------------------------------------
 // POPUP
 // ------------------------------------------
 
+#popup {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: $z-index-popup;
+  display: none;
+  &.popup-visible {
+    display: block;
+  }
+}
+
+#popup-bg {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  background-color: $mono-dark1;
+}
+
+@keyframes popup-bg {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.7;
+  }
+}
+
+#popup.popup-visible #popup-bg {
+  animation: popup-bg $animation-time;
+  opacity: 0.7;
+}
+
+#c-popup {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 #confirm-popup {
   display: none;
-  position: absolute;
-  z-index: $z-index-popup;
   padding: $main-spacing;
   width: 300px;
   max-width: calc(100% - 2 * #{$main-spacing});
   background-color: white;
   border-radius: 5px;
-  box-shadow: 0px 6px 10px $mono-medium;
+  box-shadow: 0px 6px 10px $mono-dark2;
   .menu {
     display: flex;
     justify-content: space-evenly;
