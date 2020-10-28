@@ -241,7 +241,7 @@ button:hover {
 }
 
 // ------------------------------------------
-// RECIPE
+// RECIPE WINDOW
 // ------------------------------------------
 #recipe-window {
   display: flex;
@@ -296,14 +296,15 @@ button:hover {
 #ingredients-list {
   list-style: none;
   text-align: center;
+  border: 1px solid $accent-gr2;
+  border-radius: 5px;
 }
 
 .ingredients-item {
-  display: inline-block;
-  margin: 5px;
   padding: 10px;
-  background-color: $mono-light2;
-  border-radius: 5px;
+  &:not(:last-child) {
+    border-bottom: 1px solid $accent-gr2;
+  }
 }
 
 #steps {
@@ -384,7 +385,6 @@ button:hover {
 }
 
 #popup-bg {
-  position: absolute;
   height: 100%;
   width: 100%;
   opacity: 0;
@@ -407,6 +407,8 @@ button:hover {
 
 #popup-container {
   position: absolute;
+  left: 0;
+  top: 0;
   height: 100%;
   width: 100%;
   display: flex;
@@ -414,7 +416,7 @@ button:hover {
   align-items: center;
 }
 
-#popup-window {
+#popup-delete {
   display: none;
   padding: $main-spacing;
   width: 300px;
@@ -424,22 +426,63 @@ button:hover {
   box-shadow: 0px 6px 10px $mono-dark2;
 }
 
-#popup-message {
+#popup-delete-message {
   margin-top: $main-spacing;
   margin-bottom: 2 * $main-spacing;
   text-align: center;
 }
 
-#popup-menu {
+#popup-delete-menu {
   display: flex;
   justify-content: space-evenly;
 }
 
-#popup-ok-button {
+#delete-ok-button {
   @include btn($accent-red, $accent-red, white, $accent-red);
 }
 
-#popup-cancel-button {
+#delete-cancel-button {
+  @include btn($mono-dark1, $mono-dark1, white, $mono-dark1);
+}
+
+#popup-edit {
+  display: none;
+  padding: $main-spacing;
+  width: 800px;
+  max-width: calc(100% - 2 * #{$main-spacing});
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0px 6px 10px $mono-dark2;
+}
+
+#popup-edit-message {
+  margin-top: $main-spacing;
+  margin-bottom: 2 * $main-spacing;
+  text-align: center;
+}
+
+#input-name-label,
+#input-ingredients-label {
+  display: inline-block;
+  width: 120px;
+}
+
+#input-name,
+#input-ingredients {
+  width: calc(100% - 125px);
+  padding: 5px;
+}
+
+#popup-edit-menu {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+#edit-ok-button {
+  @include btn($accent-gr2, $accent-gr2, white, $accent-gr2);
+}
+
+#edit-cancel-button {
   @include btn($mono-dark1, $mono-dark1, white, $mono-dark1);
 }
 

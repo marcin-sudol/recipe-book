@@ -208,14 +208,14 @@ button:hover {
 
 #ingredients-list {
   list-style: none;
-  text-align: center; }
+  text-align: center;
+  border: 1px solid #43aa8b;
+  border-radius: 5px; }
 
 .ingredients-item {
-  display: inline-block;
-  margin: 5px;
-  padding: 10px;
-  background-color: #ddd;
-  border-radius: 5px; }
+  padding: 10px; }
+  .ingredients-item:not(:last-child) {
+    border-bottom: 1px solid #43aa8b; }
 
 #steps-list {
   counter-reset: li-counter; }
@@ -297,7 +297,6 @@ button:hover {
     display: block; }
 
 #popup-bg {
-  position: absolute;
   height: 100%;
   width: 100%;
   opacity: 0;
@@ -314,13 +313,15 @@ button:hover {
 
 #popup-container {
   position: absolute;
+  left: 0;
+  top: 0;
   height: 100%;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center; }
 
-#popup-window {
+#popup-delete {
   display: none;
   padding: 20px;
   width: 300px;
@@ -329,16 +330,16 @@ button:hover {
   border-radius: 5px;
   box-shadow: 0px 6px 10px #333; }
 
-#popup-message {
+#popup-delete-message {
   margin-top: 20px;
   margin-bottom: 40px;
   text-align: center; }
 
-#popup-menu {
+#popup-delete-menu {
   display: flex;
   justify-content: space-evenly; }
 
-#popup-ok-button {
+#delete-ok-button {
   padding: 10px;
   width: 100px;
   border-radius: 5px;
@@ -346,15 +347,15 @@ button:hover {
   border: 1px solid #f94144;
   color: white;
   transition: background-color 0.2s, color 0.2s; }
-  #popup-ok-button:hover {
+  #delete-ok-button:hover {
     background: white;
     color: #f94144; }
-  #popup-ok-button i {
+  #delete-ok-button i {
     color: white; }
-  #popup-ok-button:hover i {
+  #delete-ok-button:hover i {
     color: #f94144; }
 
-#popup-cancel-button {
+#delete-cancel-button {
   padding: 10px;
   width: 100px;
   border-radius: 5px;
@@ -362,12 +363,72 @@ button:hover {
   border: 1px solid #555;
   color: white;
   transition: background-color 0.2s, color 0.2s; }
-  #popup-cancel-button:hover {
+  #delete-cancel-button:hover {
     background: white;
     color: #555; }
-  #popup-cancel-button i {
+  #delete-cancel-button i {
     color: white; }
-  #popup-cancel-button:hover i {
+  #delete-cancel-button:hover i {
+    color: #555; }
+
+#popup-edit {
+  display: none;
+  padding: 20px;
+  width: 800px;
+  max-width: calc(100% - 2 * 20px);
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0px 6px 10px #333; }
+
+#popup-edit-message {
+  margin-top: 20px;
+  margin-bottom: 40px;
+  text-align: center; }
+
+#input-name-label,
+#input-ingredients-label {
+  display: inline-block;
+  width: 120px; }
+
+#input-name,
+#input-ingredients {
+  width: calc(100% - 125px);
+  padding: 5px; }
+
+#popup-edit-menu {
+  display: flex;
+  justify-content: space-evenly; }
+
+#edit-ok-button {
+  padding: 10px;
+  width: 100px;
+  border-radius: 5px;
+  background: #43aa8b;
+  border: 1px solid #43aa8b;
+  color: white;
+  transition: background-color 0.2s, color 0.2s; }
+  #edit-ok-button:hover {
+    background: white;
+    color: #43aa8b; }
+  #edit-ok-button i {
+    color: white; }
+  #edit-ok-button:hover i {
+    color: #43aa8b; }
+
+#edit-cancel-button {
+  padding: 10px;
+  width: 100px;
+  border-radius: 5px;
+  background: #555;
+  border: 1px solid #555;
+  color: white;
+  transition: background-color 0.2s, color 0.2s; }
+  #edit-cancel-button:hover {
+    background: white;
+    color: #555; }
+  #edit-cancel-button i {
+    color: white; }
+  #edit-cancel-button:hover i {
     color: #555; }
 
 @media (max-width: 1200px) {

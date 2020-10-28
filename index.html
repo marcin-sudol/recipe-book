@@ -97,18 +97,69 @@
     <!--------------------------------------------------------
     POPUP
     --------------------------------------------------------->
-
     <div id="popup">
       <div id="popup-bg"></div>
 
       <div id="popup-container">
-        <div id="popup-window">
-          <p id="popup-message">Remove recipe from the list?</p>
-          <div id="popup-menu">
-            <button id="popup-ok-button" type="button">
+        <div id="popup-delete" class="popup-window">
+          <p id="popup-delete-message">Remove recipe from the list?</p>
+          <div id="popup-delete-menu">
+            <button id="delete-ok-button" type="button">
               <i class="fas fa-check"></i> OK
             </button>
-            <button id="popup-cancel-button" type="button">
+            <button id="delete-cancel-button" type="button">
+              <i class="fas fa-times"></i> Cancel
+            </button>
+          </div>
+        </div>
+
+        <div id="popup-edit" class="popup-window">
+          <p id="popup-edit-message">Edit</p>
+
+          <label for="input-name" id="input-name-label">Name:</label>
+          <input type="text" id="input-name" required />
+
+          <label for="input-ingredients" id="input-ingredients-label"
+            >Ingredients:</label
+          >
+          <input type="text" id="input-ingredients" required />
+
+          <ol>
+            <li>
+              <input type="text" class="input-step" required />
+              <label for="input-time-1">minutes:</label>
+              <input
+                type="number"
+                min="5"
+                max="180"
+                step="5"
+                class="input-time"
+                id="input-time-1"
+                required
+              />
+            </li>
+            <li>
+              <input type="text" class="input-step" required />
+              <label for="input-time-2">minutes:</label>
+              <input
+                type="number"
+                min="5"
+                max="180"
+                step="5"
+                class="input-time"
+                id="input-time-2"
+                required
+              />
+              <button type="button">&minus;</button>
+            </li>
+          </ol>
+          <button type="button">&plus;</button>
+
+          <div id="popup-edit-menu">
+            <button id="edit-ok-button" type="button">
+              <i class="fas fa-check"></i> OK
+            </button>
+            <button id="edit-cancel-button" type="button">
               <i class="fas fa-times"></i> Cancel
             </button>
           </div>

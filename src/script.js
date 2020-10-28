@@ -354,40 +354,52 @@ const clickedCloseButton = () => {
 };
 
 // -------------------------------------------------------
+// CLICKED EDIT BUTTON
+// -------------------------------------------------------
+const clickedEditButton = () => {
+  const time = getAnimationTime();
+
+  showPopup("popup-edit", time);
+};
+
+// -------------------------------------------------------
 // CLICKED DELETE BUTTON
 // -------------------------------------------------------
 const clickedDeleteButton = () => {
   const time = getAnimationTime();
 
-  showPopup(time);
+  showPopup("popup-delete", time);
 };
 
 // -------------------------------------------------------
 // SHOW POPUP
 // -------------------------------------------------------
-const showPopup = (animationTime, callback) => {
-  document.getElementById("popup").classList.add("popup-visible");
+const showPopup = (popupId, animationTime, callback) => {
+  const popup = document.getElementById(popupId);
 
-  const popup = document.getElementById("popup-window");
-  popup.style.opacity = 0;
-  popup.style.transform = "translateY(-200px)";
-  popup.style.display = "block";
+  if (popup != null) {
+    document.getElementById("popup").classList.add("popup-visible");
 
-  popup
-    .animate(
-      {
-        opacity: 1,
-        transform: "translateY(0px)",
-      },
-      { duration: animationTime * 0.9, easing: "ease-out" }
-    )
-    .finished.then(() => {
-      popup.style.opacity = 1;
-      popup.style.transform = "translateY(0px)";
-    });
+    popup.style.opacity = 0;
+    popup.style.transform = "translateY(-200px)";
+    popup.style.display = "block";
 
-  if (callback !== undefined) {
-    setTimeout(callback, animationTime);
+    popup
+      .animate(
+        {
+          opacity: 1,
+          transform: "translateY(0px)",
+        },
+        { duration: animationTime * 0.9, easing: "ease-out" }
+      )
+      .finished.then(() => {
+        popup.style.opacity = 1;
+        popup.style.transform = "translateY(0px)";
+      });
+
+    if (callback !== undefined) {
+      setTimeout(callback, animationTime);
+    }
   }
 };
 
@@ -396,7 +408,21 @@ const showPopup = (animationTime, callback) => {
 // -------------------------------------------------------
 const hidePopup = () => {
   document.getElementById("popup").classList.remove("popup-visible");
-  document.getElementById("popup-window").style.display = "none";
+  for (let elem of document.getElementsByClassName("popup-window")) {
+    elem.style.display = "none";
+  }
+};
+
+// -------------------------------------------------------
+// EDIT -> OK
+// -------------------------------------------------------
+const editButtonOK = () => {};
+
+// -------------------------------------------------------
+// EDIT -> CANCEL
+// -------------------------------------------------------
+const editButtonCancel = () => {
+  hidePopup();
 };
 
 // -------------------------------------------------------
@@ -433,9 +459,12 @@ const initialLoading = () => {
   document.getElementById("nav-menu-button").onclick = hideNav;
   document.getElementById("bg-menu-button").onclick = showNav;
   document.getElementById("recipe-close-button").onclick = clickedCloseButton;
+  document.getElementById("recipe-edit-button").onclick = clickedEditButton;
   document.getElementById("recipe-delete-button").onclick = clickedDeleteButton;
-  document.getElementById("popup-ok-button").onclick = deleteButtonOK;
-  document.getElementById("popup-cancel-button").onclick = deleteButtonCancel;
+  document.getElementById("edit-ok-button").onclick = editButtonOK;
+  document.getElementById("edit-cancel-button").onclick = editButtonCancel;
+  document.getElementById("delete-ok-button").onclick = deleteButtonOK;
+  document.getElementById("delete-cancel-button").onclick = deleteButtonCancel;
 };
 
 window.addEventListener("load", initialLoading);
