@@ -324,7 +324,7 @@ const hidePopup = () => {
 };
 
 // -------------------------------------------------------
-// ADD STEP TO EDITOR WINDOW
+// ADD STEP TO EDITOR POPUP
 // -------------------------------------------------------
 const addStepToEditor = () => {
   const list = document.getElementById("input-steps-list");
@@ -366,7 +366,7 @@ const addStepToEditor = () => {
 };
 
 // -------------------------------------------------------
-// REMOVE STEP TO EDITOR WINDOW
+// REMOVE STEP FROM EDITOR POPUP
 // -------------------------------------------------------
 const removeStepFromEditor = () => {
   const list = document.getElementById("input-steps-list");
@@ -389,6 +389,16 @@ const removeStepFromEditor = () => {
         list.removeChild(item);
       });
   }
+};
+
+// -------------------------------------------------------
+// CLEAR EDITOR POPUP
+// -------------------------------------------------------
+const clearEditor = () => {
+  const fields = document
+    .getElementById("popup-edit-form")
+    .querySelectorAll("input, textarea");
+  for (let elem of fields) elem.value = "";
 };
 
 // -------------------------------------------------------
@@ -419,6 +429,13 @@ function clickedRecipeButton() {
     }
   }
 }
+// -------------------------------------------------------
+// CLICKED ADD NEW RECIPE
+// -------------------------------------------------------
+const clickedAddRecipeButton = () => {
+  clearEditor();
+  showPopup("popup-edit", 400);
+};
 
 // -------------------------------------------------------
 // CLICKED CLOSE BUTTON
@@ -448,18 +465,6 @@ const clickedDeleteButton = () => {
 };
 
 // -------------------------------------------------------
-// EDIT -> OK
-// -------------------------------------------------------
-const editButtonOK = () => {};
-
-// -------------------------------------------------------
-// EDIT -> CANCEL
-// -------------------------------------------------------
-const editButtonCancel = () => {
-  hidePopup();
-};
-
-// -------------------------------------------------------
 // DELETE -> OK
 // -------------------------------------------------------
 const deleteButtonOK = () => {
@@ -485,21 +490,47 @@ const deleteButtonCancel = () => {
 };
 
 // -------------------------------------------------------
+// EDIT -> OK
+// -------------------------------------------------------
+const editButtonOK = () => {};
+
+// -------------------------------------------------------
+// EDIT -> CLEAR
+// -------------------------------------------------------
+const editButtonClear = () => {
+  clearEditor();
+};
+
+// -------------------------------------------------------
+// EDIT -> CANCEL
+// -------------------------------------------------------
+const editButtonCancel = () => {
+  hidePopup();
+};
+
+// -------------------------------------------------------
 // INITIAL LOADING
 // -------------------------------------------------------
 const initialLoading = () => {
   loadRecipesList(400);
+
   document.getElementById("nav-menu-button").onclick = hideNav;
   document.getElementById("bg-menu-button").onclick = showNav;
+  document.getElementById("nav-add-button").onclick = clickedAddRecipeButton;
+
   document.getElementById("recipe-close-button").onclick = clickedCloseButton;
   document.getElementById("recipe-edit-button").onclick = clickedEditButton;
   document.getElementById("recipe-delete-button").onclick = clickedDeleteButton;
-  document.getElementById("edit-ok-button").onclick = editButtonOK;
-  document.getElementById("edit-cancel-button").onclick = editButtonCancel;
-  document.getElementById("add-step-button").onclick = addStepToEditor;
-  document.getElementById("remove-step-button").onclick = removeStepFromEditor;
+
   document.getElementById("delete-ok-button").onclick = deleteButtonOK;
   document.getElementById("delete-cancel-button").onclick = deleteButtonCancel;
+
+  document.getElementById("edit-ok-button").onclick = editButtonOK;
+  document.getElementById("edit-clear-button").onclick = editButtonClear;
+  document.getElementById("edit-cancel-button").onclick = editButtonCancel;
+
+  document.getElementById("add-step-button").onclick = addStepToEditor;
+  document.getElementById("remove-step-button").onclick = removeStepFromEditor;
 
   addStepToEditor();
   // clickedEditButton();
