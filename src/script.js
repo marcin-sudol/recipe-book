@@ -144,9 +144,24 @@ const removeRecipeFromList = (recipeId, animationTime) => {
 // -------------------------------------------------------
 const loadRecipesList = () => {
   const list = document.getElementById("nav-list");
+  const time = getAnimationTime();
+  list.style.opacity = 0;
   recipes.forEach((recipe) => {
     addRecipeToList(recipe, list);
   });
+  list
+    .animate(
+      {
+        opacity: 1,
+      },
+      {
+        duration: time,
+        easing: "ease-out",
+      }
+    )
+    .finished.then(() => {
+      list.style.opacity = 1;
+    });
 };
 
 // -------------------------------------------------------
