@@ -56,6 +56,7 @@ button:hover {
   flex-direction: row;
   align-items: center;
   margin-bottom: 20px;
+  overflow: hidden;
   background-color: #fad275;
   border-radius: 5px;
   transition: background-color 0.2s; }
@@ -150,15 +151,14 @@ button:hover {
   font-size: 80px; }
 
 #recipe-window {
-  display: flex;
+  display: none;
   flex-direction: row;
   flex-wrap: wrap;
   position: absolute;
-  left: -100vw;
+  left: 0px;
   top: 0px;
   margin: 20px;
   width: calc(100% - 2 * 20px);
-  opacity: 0;
   background-color: white;
   border-radius: 5px;
   overflow: hidden;
@@ -218,7 +218,7 @@ button:hover {
     border-bottom: 1px solid #43aa8b; }
 
 #steps-list {
-  counter-reset: li-counter; }
+  counter-reset: steps-counter; }
 
 .steps-item {
   display: flex;
@@ -227,8 +227,8 @@ button:hover {
   .steps-item:not(:last-child) {
     border-bottom: 1px solid #43aa8b; }
   .steps-item::before {
-    counter-increment: li-counter;
-    content: counter(li-counter) ".";
+    counter-increment: steps-counter;
+    content: counter(steps-counter) ".";
     padding: 5px; }
 
 .step-name {
@@ -380,20 +380,81 @@ button:hover {
   border-radius: 5px;
   box-shadow: 0px 6px 10px #333; }
 
-#popup-edit-message {
+#popup-edit-title {
   margin-top: 20px;
-  margin-bottom: 40px;
-  text-align: center; }
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold; }
 
-#input-name-label,
-#input-ingredients-label {
-  display: inline-block;
-  width: 120px; }
+#popup-edit-form {
+  margin-bottom: 40px; }
+
+input,
+textarea,
+label,
+#steps-label {
+  margin: 5px;
+  padding: 5px; }
+
+input,
+textarea {
+  background-color: #f4f4f4;
+  border: 1px solid #aaa;
+  border-radius: 5px; }
 
 #input-name,
 #input-ingredients {
-  width: calc(100% - 125px);
-  padding: 5px; }
+  display: block;
+  width: calc(100% - 15px);
+  margin-bottom: 20px; }
+
+#input-ingredients {
+  resize: none; }
+
+#input-steps-list {
+  list-style: none;
+  counter-reset: editor-counter; }
+
+.input-steps-item {
+  overflow: hidden;
+  counter-increment: editor-counter; }
+  .input-steps-item::before {
+    content: counter(editor-counter);
+    display: inline-block;
+    margin: 5px;
+    padding: 5px;
+    width: 20px;
+    text-align: center;
+    background-color: #ddd;
+    border-radius: 5px; }
+
+.input-step {
+  width: calc(100% - 230px); }
+
+.input-time {
+  width: 70px; }
+
+#input-steps-menu {
+  text-align: center; }
+
+#add-step-button,
+#remove-step-button {
+  margin: 5px;
+  height: 30px;
+  width: 30px;
+  line-height: 30px;
+  text-align: center;
+  color: white;
+  border: none;
+  border-radius: 999px;
+  font-weight: bold; }
+
+#add-step-button {
+  background-color: #43aa8b; }
+
+#remove-step-button {
+  background-color: #f9c74f; }
 
 #popup-edit-menu {
   display: flex;
@@ -414,6 +475,22 @@ button:hover {
     color: white; }
   #edit-ok-button:hover i {
     color: #43aa8b; }
+
+#edit-clear-button {
+  padding: 10px;
+  width: 100px;
+  border-radius: 5px;
+  background: #f9c74f;
+  border: 1px solid #f9c74f;
+  color: #555;
+  transition: background-color 0.2s, color 0.2s; }
+  #edit-clear-button:hover {
+    background: white;
+    color: #555; }
+  #edit-clear-button i {
+    color: #555; }
+  #edit-clear-button:hover i {
+    color: #555; }
 
 #edit-cancel-button {
   padding: 10px;

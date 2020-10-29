@@ -101,6 +101,7 @@
       <div id="popup-bg"></div>
 
       <div id="popup-container">
+        <!-- POPUP TO DELETE RECIPE -->
         <div id="popup-delete" class="popup-window">
           <p id="popup-delete-message">Remove recipe from the list?</p>
           <div id="popup-delete-menu">
@@ -113,51 +114,41 @@
           </div>
         </div>
 
+        <!-- POPUP TO EDIT RECIPE -->
         <div id="popup-edit" class="popup-window">
-          <p id="popup-edit-message">Edit</p>
+          <p id="popup-edit-title">Insert recipe</p>
 
-          <label for="input-name" id="input-name-label">Name:</label>
-          <input type="text" id="input-name" required />
-
-          <label for="input-ingredients" id="input-ingredients-label"
-            >Ingredients:</label
-          >
-          <input type="text" id="input-ingredients" required />
-
-          <ol>
-            <li>
-              <input type="text" class="input-step" required />
-              <label for="input-time-1">minutes:</label>
-              <input
-                type="number"
-                min="5"
-                max="180"
-                step="5"
-                class="input-time"
-                id="input-time-1"
-                required
-              />
-            </li>
-            <li>
-              <input type="text" class="input-step" required />
-              <label for="input-time-2">minutes:</label>
-              <input
-                type="number"
-                min="5"
-                max="180"
-                step="5"
-                class="input-time"
-                id="input-time-2"
-                required
-              />
-              <button type="button">&minus;</button>
-            </li>
-          </ol>
-          <button type="button">&plus;</button>
+          <form id="popup-edit-form">
+            <label id="input-name-label" for="input-name">Name:</label>
+            <input
+              type="text"
+              id="input-name"
+              required
+              placeholder="Insert name"
+            />
+            <label id="input-ingredients-label" for="input-ingredients">
+              Ingredients:</label
+            >
+            <textarea
+              id="input-ingredients"
+              rows="2"
+              required
+              placeholder="Insert ingredients separated with commas"
+            ></textarea>
+            <p id="steps-label">Steps:</p>
+            <ol id="input-steps-list"></ol>
+            <div id="input-steps-menu">
+              <button id="add-step-button" type="button">&plus;</button>
+              <button id="remove-step-button" type="button">&minus;</button>
+            </div>
+          </form>
 
           <div id="popup-edit-menu">
             <button id="edit-ok-button" type="button">
               <i class="fas fa-check"></i> OK
+            </button>
+            <button id="edit-clear-button" type="button">
+              <i class="fas fa-undo"></i> Clear
             </button>
             <button id="edit-cancel-button" type="button">
               <i class="fas fa-times"></i> Cancel

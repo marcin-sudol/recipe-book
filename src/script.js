@@ -120,48 +120,37 @@ const removeRecipeFromList = (recipeId, animationTime) => {
 
   button.removeAttribute("onclick");
   item
-    .animate({ opacity: 0 }, { duration: animationTime * 0.5 })
+    .animate(
+      [
+        { opacity: 1 },
+        { opacity: 0, maxHeight: "50px", marginBottom: "20px" },
+        { opacity: 0, maxHeight: "0px", marginBottom: "0px" },
+      ],
+      { duration: animationTime }
+    )
     .finished.then(() => {
-      item.style.opacity = 0;
-      item.removeChild(item.querySelector(".nav-item-rating"));
-      button.animate(
-        { padding: "0px", fontSize: "0px" },
-        { duration: animationTime * 0.5, easing: "ease-out" }
-      );
-      item
-        .animate(
-          { marginBottom: "0px" },
-          { duration: animationTime * 0.5, easing: "ease-out" }
-        )
-        .finished.then(() => {
-          item.remove();
-        });
+      item.remove();
     });
 };
 
 // -------------------------------------------------------
 // LOADS RECIPES INTO NAV LIST
 // -------------------------------------------------------
-const loadRecipesList = () => {
+const loadRecipesList = (animationTime) => {
   const list = document.getElementById("nav-list");
-  const time = getAnimationTime();
-  list.style.opacity = 0;
+
   recipes.forEach((recipe) => {
     addRecipeToList(recipe, list);
   });
-  list
-    .animate(
-      {
-        opacity: 1,
-      },
-      {
-        duration: time,
-        easing: "ease-out",
-      }
-    )
-    .finished.then(() => {
-      list.style.opacity = 1;
-    });
+  list.animate(
+    {
+      opacity: [0, 1],
+    },
+    {
+      duration: animationTime,
+      easing: "ease-out",
+    }
+  );
 };
 
 // -------------------------------------------------------
@@ -205,6 +194,13 @@ const updateDisplayedRecipe = (recipe) => {
 };
 
 // -------------------------------------------------------
+// CHECK IF RECIPE WINDOW VISIBLE
+// -------------------------------------------------------
+const recipeWindowVisible = () =>
+  window.getComputedStyle(document.getElementById("recipe-window")).display ===
+  "flex";
+
+// -------------------------------------------------------
 // HIDE NAV
 // -------------------------------------------------------
 const hideNav = () => {
@@ -226,15 +222,11 @@ const showNav = () => {
 const slideInRecipeWindow = (animationTime, callback) => {
   const recipe = document.getElementById("recipe-window");
 
-  recipe
-    .animate(
-      { left: "0px", opacity: 1 },
-      { duration: animationTime * 0.9, easing: "ease-out" }
-    )
-    .finished.then(() => {
-      recipe.style.left = "0px";
-      recipe.style.opacity = 1;
-    });
+  recipe.style.display = "flex";
+  recipe.animate(
+    { left: ["-30vw", "0px"], opacity: [0, 1] },
+    { duration: animationTime * 0.9, easing: "ease-out" }
+  );
 
   if (callback !== undefined) {
     setTimeout(callback, animationTime);
@@ -249,12 +241,11 @@ const slideOutRecipeWindow = (animationTime, callback) => {
 
   recipe
     .animate(
-      { left: "-100vw", opacity: 0 },
+      { left: ["0px", "-30vw"], opacity: [1, 0] },
       { duration: animationTime * 0.9, easing: "ease-out" }
     )
     .finished.then(() => {
-      recipe.style.left = "-100vw";
-      recipe.style.opacity = 0;
+      recipe.style.display = "none";
     });
 
   if (callback !== undefined) {
@@ -268,15 +259,11 @@ const slideOutRecipeWindow = (animationTime, callback) => {
 const fadeInRecipeWindow = (animationTime, callback) => {
   const recipe = document.getElementById("recipe-window");
 
-  recipe.style.left = "0px";
-  recipe
-    .animate(
-      { opacity: 1 },
-      { duration: animationTime * 0.9, easing: "ease-out" }
-    )
-    .finished.then(() => {
-      recipe.style.opacity = 1;
-    });
+  recipe.style.display = "flex";
+  recipe.animate(
+    { opacity: [0, 1] },
+    { duration: animationTime * 0.9, easing: "ease-out" }
+  );
 
   if (callback !== undefined) {
     setTimeout(callback, animationTime);
@@ -291,99 +278,16 @@ const fadeOutRecipeWindow = (animationTime, callback) => {
 
   recipe
     .animate(
-      { opacity: 0 },
+      { opacity: [1, 0] },
       { duration: animationTime * 0.9, easing: "ease-out" }
     )
     .finished.then(() => {
-      recipe.style.left = "-100vw";
-      recipe.style.opacity = 0;
+      recipe.style.display = "none";
     });
 
   if (callback !== undefined) {
     setTimeout(callback, animationTime);
   }
-};
-
-// -------------------------------------------------------
-// CHECK IF RECIPE WINDOW VISIBLE
-// -------------------------------------------------------
-const recipeWindowVisible = () =>
-  window.getComputedStyle(document.getElementById("recipe-window")).opacity ==
-  1;
-
-// -------------------------------------------------------
-// GET ANIMATION TIME
-// -------------------------------------------------------
-const getAnimationTime = () => {
-  return (
-    parseFloat(
-      window
-        .getComputedStyle(document.getElementById("nav"))
-        .transitionDuration.split(",")[0]
-    ) * 1000
-  );
-};
-
-// -------------------------------------------------------
-// CLICKED RECIPE ON THE LIST
-// -------------------------------------------------------
-function clickedRecipeButton() {
-  const recipeId = parseInt(this.parentNode.id.slice(9));
-  if (
-    !isNaN(recipeId) &&
-    !changingRecipe &&
-    (!recipeWindowVisible() || recipeId !== displayedRecipeId)
-  ) {
-    changingRecipe = true;
-    const recipe = recipes.find((recipe) => recipe.id === recipeId);
-    const time = getAnimationTime();
-
-    if (!recipeWindowVisible()) {
-      updateDisplayedRecipe(recipe);
-      slideInRecipeWindow(time, () => {
-        changingRecipe = false;
-      });
-    } else if (recipeId !== displayedRecipeId) {
-      slideOutRecipeWindow(time, () => {
-        updateDisplayedRecipe(recipe);
-        slideInRecipeWindow(time, () => {
-          changingRecipe = false;
-        });
-      });
-    }
-  }
-}
-
-// -------------------------------------------------------
-// CLICKED CLOSE BUTTON
-// -------------------------------------------------------
-const clickedCloseButton = () => {
-  if (recipeWindowVisible()) {
-    changingRecipe = true;
-    const time = getAnimationTime();
-
-    slideOutRecipeWindow(time, () => {
-      changingRecipe = false;
-    });
-  }
-};
-
-// -------------------------------------------------------
-// CLICKED EDIT BUTTON
-// -------------------------------------------------------
-const clickedEditButton = () => {
-  const time = getAnimationTime();
-
-  showPopup("popup-edit", time);
-};
-
-// -------------------------------------------------------
-// CLICKED DELETE BUTTON
-// -------------------------------------------------------
-const clickedDeleteButton = () => {
-  const time = getAnimationTime();
-
-  showPopup("popup-delete", time);
 };
 
 // -------------------------------------------------------
@@ -394,23 +298,14 @@ const showPopup = (popupId, animationTime, callback) => {
 
   if (popup != null) {
     document.getElementById("popup").classList.add("popup-visible");
-
-    popup.style.opacity = 0;
-    popup.style.transform = "translateY(-200px)";
     popup.style.display = "block";
-
-    popup
-      .animate(
-        {
-          opacity: 1,
-          transform: "translateY(0px)",
-        },
-        { duration: animationTime * 0.9, easing: "ease-out" }
-      )
-      .finished.then(() => {
-        popup.style.opacity = 1;
-        popup.style.transform = "translateY(0px)";
-      });
+    popup.animate(
+      {
+        opacity: [0, 1],
+        transform: ["translateY(-200px)", "translateY(0px)"],
+      },
+      { duration: animationTime * 0.9, easing: "ease-out" }
+    );
 
     if (callback !== undefined) {
       setTimeout(callback, animationTime);
@@ -426,6 +321,130 @@ const hidePopup = () => {
   for (let elem of document.getElementsByClassName("popup-window")) {
     elem.style.display = "none";
   }
+};
+
+// -------------------------------------------------------
+// ADD STEP TO EDITOR WINDOW
+// -------------------------------------------------------
+const addStepToEditor = () => {
+  const list = document.getElementById("input-steps-list");
+
+  const item = document.createElement("li");
+  const stepInput = document.createElement("input");
+  const timeLabel = document.createElement("label");
+  const timeInput = document.createElement("input");
+  item.className = "input-steps-item";
+  stepInput.type = "text";
+  stepInput.className = "input-step";
+  stepInput.required = true;
+  timeLabel.className = "input-time-label";
+  timeLabel.htmlFor = "input-time-" + (list.childElementCount + 1);
+  timeLabel.innerText = "minutes:";
+  timeInput.className = "input-time";
+  timeInput.id = "input-time-" + (list.childElementCount + 1);
+  timeInput.type = "number";
+  timeInput.min = "5";
+  timeInput.max = "180";
+  timeInput.step = "5";
+  timeInput.required = true;
+  item.appendChild(stepInput);
+  item.appendChild(timeLabel);
+  item.appendChild(timeInput);
+  list.appendChild(item);
+
+  item.animate(
+    [
+      { opacity: 0, maxHeight: "0px" },
+      { opacity: 0, maxHeight: "100px" },
+      { opacity: 1 },
+    ],
+    {
+      duration: 100,
+      easing: "ease-in",
+    }
+  );
+};
+
+// -------------------------------------------------------
+// REMOVE STEP TO EDITOR WINDOW
+// -------------------------------------------------------
+const removeStepFromEditor = () => {
+  const list = document.getElementById("input-steps-list");
+  if (list.childElementCount > 1) {
+    const item = list.lastElementChild;
+
+    item
+      .animate(
+        [
+          { opacity: 1 },
+          { opacity: 0, maxHeight: "100px" },
+          { opacity: 0, maxHeight: "0px" },
+        ],
+        {
+          duration: 100,
+          easing: "ease-out",
+        }
+      )
+      .finished.then(() => {
+        list.removeChild(item);
+      });
+  }
+};
+
+// -------------------------------------------------------
+// CLICKED RECIPE ON THE LIST
+// -------------------------------------------------------
+function clickedRecipeButton() {
+  const recipeId = parseInt(this.parentNode.id.slice(9));
+  if (
+    !isNaN(recipeId) &&
+    !changingRecipe &&
+    (!recipeWindowVisible() || recipeId !== displayedRecipeId)
+  ) {
+    changingRecipe = true;
+    const recipe = recipes.find((recipe) => recipe.id === recipeId);
+
+    if (!recipeWindowVisible()) {
+      updateDisplayedRecipe(recipe);
+      slideInRecipeWindow(400, () => {
+        changingRecipe = false;
+      });
+    } else if (recipeId !== displayedRecipeId) {
+      slideOutRecipeWindow(400, () => {
+        updateDisplayedRecipe(recipe);
+        slideInRecipeWindow(400, () => {
+          changingRecipe = false;
+        });
+      });
+    }
+  }
+}
+
+// -------------------------------------------------------
+// CLICKED CLOSE BUTTON
+// -------------------------------------------------------
+const clickedCloseButton = () => {
+  if (recipeWindowVisible()) {
+    changingRecipe = true;
+
+    slideOutRecipeWindow(400, () => {
+      changingRecipe = false;
+    });
+  }
+};
+
+// -------------------------------------------------------
+// CLICKED EDIT BUTTON
+// -------------------------------------------------------
+const clickedEditButton = () => {
+  showPopup("popup-edit", 400);
+};
+
+// -------------------------------------------------------
+// CLICKED DELETE BUTTON
+// -------------------------------------------------------
+const clickedDeleteButton = () => {
+  showPopup("popup-delete", 400);
 };
 
 // -------------------------------------------------------
@@ -446,13 +465,12 @@ const editButtonCancel = () => {
 const deleteButtonOK = () => {
   if (recipeWindowVisible() && displayedRecipeId !== undefined) {
     changingRecipe = true;
-    const time = getAnimationTime();
 
     hidePopup();
-    removeRecipeFromList(displayedRecipeId, time);
+    removeRecipeFromList(displayedRecipeId, 400);
     deleteRecipe(displayedRecipeId);
 
-    fadeOutRecipeWindow(time, () => {
+    fadeOutRecipeWindow(400, () => {
       displayedRecipeId = undefined;
       changingRecipe = false;
     });
@@ -470,7 +488,7 @@ const deleteButtonCancel = () => {
 // INITIAL LOADING
 // -------------------------------------------------------
 const initialLoading = () => {
-  loadRecipesList();
+  loadRecipesList(400);
   document.getElementById("nav-menu-button").onclick = hideNav;
   document.getElementById("bg-menu-button").onclick = showNav;
   document.getElementById("recipe-close-button").onclick = clickedCloseButton;
@@ -478,8 +496,13 @@ const initialLoading = () => {
   document.getElementById("recipe-delete-button").onclick = clickedDeleteButton;
   document.getElementById("edit-ok-button").onclick = editButtonOK;
   document.getElementById("edit-cancel-button").onclick = editButtonCancel;
+  document.getElementById("add-step-button").onclick = addStepToEditor;
+  document.getElementById("remove-step-button").onclick = removeStepFromEditor;
   document.getElementById("delete-ok-button").onclick = deleteButtonOK;
   document.getElementById("delete-cancel-button").onclick = deleteButtonCancel;
+
+  addStepToEditor();
+  // clickedEditButton();
 };
 
 window.addEventListener("load", initialLoading);
