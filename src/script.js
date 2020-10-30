@@ -1,15 +1,15 @@
 // -------------------------------------------------------
 // UTILITIES
 // -------------------------------------------------------
-const log = (str) => {
+function log(str) {
   console.log(str);
-};
+}
 
 // -------------------------------------------------------
 // RECIPE ITEM
 // -------------------------------------------------------
 class RecipeItem {
-  constructor(obj, action) {
+  constructor(obj, displayCallback) {
     this.element = document.createElement("li");
     this.element.className = "nav-item";
     this.element.id = "nav-item-" + obj.id;
@@ -19,7 +19,7 @@ class RecipeItem {
     button.type = "button";
     button.innerText = obj.name;
     button.onclick = function () {
-      action(obj);
+      displayCallback(obj);
     };
     this.element.appendChild(button);
 
@@ -36,74 +36,32 @@ class RecipeItem {
 }
 
 // -------------------------------------------------------
-// RECIPES LIST
-// -------------------------------------------------------
-class RecipesList {
-  constructor(arr) {
-    this.clickedOnItem = this.clickedOnItem.bind(this);
-
-    this.arr = arr;
-    this.element = document.getElementById("nav-list");
-    this.recipeWindow = new RecipeWindow();
-    this.arr.forEach((obj) => this.addRecipeToList(obj));
-    this.element.animate(
-      {
-        opacity: [0, 1],
-      },
-      {
-        duration: 400,
-        easing: "ease-out",
-      }
-    );
-  }
-
-  addRecipeToArr(obj) {
-    this.arr.push(obj);
-  }
-
-  addRecipeToList(obj) {
-    const item = new RecipeItem(obj, this.clickedOnItem);
-    this.element.appendChild(item.element);
-  }
-
-  addRecipe(obj) {
-    this.addRecipeToArr(obj);
-    this.addRecipeToList(obj);
-  }
-
-  // CONTINUE HERE
-  deleteRecipe(obj) {
-    this.arr = this.arr.filter((item) => item !== obj);
-  }
-
-  clickedOnItem(obj) {
-    this.recipeWindow.display(obj);
-  }
-}
-
-// -------------------------------------------------------
 // RECIPE WINDOW
 // -------------------------------------------------------
 class RecipeWindow {
-  constructor() {
+  constructor(editorCallback, deleteCallback) {
+    this.open = this.open.bind(this);
     this.close = this.close.bind(this);
-
+    this.openEditor = this.openEditor.bind(this);
+    this.openDelete = this.openDelete.bind(this);
     this.element = document.getElementById("recipe-window");
     this.obj = "undefined";
     this.visible = false;
     this.changing = false;
     this.animationTime = 400;
+    this.editorCallback = editorCallback;
+    this.deleteCallback = deleteCallback;
     document.getElementById("recipe-close-button").onclick = this.close;
+    document.getElementById("recipe-edit-button").onclick = this.openEditor;
+    document.getElementById("recipe-delete-button").onclick = this.openDelete;
   }
 
   update(obj) {
     this.obj = obj;
 
-    // UPDATE NAME
     const recipeName = document.getElementById("recipe-name");
     recipeName.innerHTML = this.obj.name;
 
-    // UPDATE INGREDIENTS
     const ingredients = document.getElementById("ingredients-list");
     ingredients.innerHTML = "";
     this.obj.ingredients.split(",").forEach((ingredient) => {
@@ -113,7 +71,6 @@ class RecipeWindow {
       ingredients.appendChild(itemIngredient);
     });
 
-    // UPDATE STEPS
     const steps = document.getElementById("steps-list");
     steps.innerHTML = "";
     this.obj.steps.forEach((step) => {
@@ -198,7 +155,7 @@ class RecipeWindow {
     }
   }
 
-  display(obj) {
+  open(obj) {
     if (!this.changing && (!this.visible || obj !== this.obj)) {
       this.changing = true;
 
@@ -222,22 +179,28 @@ class RecipeWindow {
       }
     }
   }
+
+  openEditor() {
+    this.editorCallback(this.obj);
+  }
+
+  openDelete() {
+    this.deleteCallback(this.obj);
+  }
 }
 
 // -------------------------------------------------------
 // NAV
 // -------------------------------------------------------
 class Nav {
-  constructor() {
+  constructor(addCallback) {
     this.show = this.show.bind(this);
     this.hide = this.hide.bind(this);
-
     this.nav = document.getElementById("nav");
     this.bg = document.getElementById("nav-bg");
-    this.navMenuButton = document.getElementById("nav-menu-button");
-    this.bgMenuButton = document.getElementById("bg-menu-button");
-    this.navMenuButton.onclick = this.hide;
-    this.bgMenuButton.onclick = this.show;
+    document.getElementById("nav-menu-button").onclick = this.hide;
+    document.getElementById("bg-menu-button").onclick = this.show;
+    document.getElementById("nav-add-button").onclick = addCallback;
   }
   show() {
     this.nav.classList.remove("hidden");
@@ -249,10 +212,200 @@ class Nav {
   }
 }
 
-class Popup {
-  constructor() {}
-  show(name) {}
-  hide() {}
+// -------------------------------------------------------
+// RECIPE APP
+// -------------------------------------------------------
+class RecipeApp {
+  constructor(arr) {
+    this.deleteRecipe = this.deleteRecipe.bind(this);
+    this.arr = arr;
+    this.elemList = document.getElementById("nav-list");
+    this.popups = new Popups(this.deleteRecipe);
+    this.nav = new Nav(this.popups.openEditor);
+    this.recipeWindow = new RecipeWindow(
+      this.popups.openEditor,
+      this.popups.openDelete
+    );
+    this.arr.forEach((obj) => this.addRecipeToList(obj));
+    this.elemList.animate(
+      {
+        opacity: [0, 1],
+      },
+      {
+        duration: 400,
+        easing: "ease-out",
+      }
+    );
+  }
+
+  addRecipeToArr(obj) {
+    this.arr.push(obj);
+  }
+
+  addRecipeToList(obj) {
+    const item = new RecipeItem(obj, this.recipeWindow.open);
+    this.elemList.appendChild(item.element);
+  }
+
+  addRecipe(obj) {
+    this.addRecipeToArr(obj);
+    this.addRecipeToList(obj);
+  }
+
+  deleteRecipe(obj) {
+    this.arr = this.arr.filter((item) => item !== obj);
+    this.popups.close();
+    this.recipeWindow.close();
+    const item = document.getElementById("nav-item-" + obj.id);
+    item
+      .animate(
+        [
+          { opacity: 1 },
+          { opacity: 0, maxHeight: "50px", marginBottom: "20px" },
+          { opacity: 0, maxHeight: "0px", marginBottom: "0px" },
+        ],
+        { duration: 400 }
+      )
+      .finished.then(() => {
+        item.remove();
+      });
+  }
+}
+
+// -------------------------------------------------------
+// POPUPS
+// -------------------------------------------------------
+class Popups {
+  constructor(deleteCallback) {
+    this.openEditor = this.openEditor.bind(this);
+    this.openDelete = this.openDelete.bind(this);
+    this.close = this.close.bind(this);
+    this.confirmDelete = this.confirmDelete.bind(this);
+    this.addStepToEditor = this.addStepToEditor.bind(this);
+    this.removeStepFromEditor = this.removeStepFromEditor.bind(this);
+    this.clearEditor = this.clearEditor.bind(this);
+    this.element = document.getElementById("popup");
+    this.editorElement = document.getElementById("popup-edit");
+    this.deleteElement = document.getElementById("popup-delete");
+    this.stepsElement = document.getElementById("input-steps-list");
+    this.obj = undefined;
+    this.deleteCallback = deleteCallback;
+    document.getElementById("add-step-button").onclick = this.addStepToEditor;
+    document.getElementById(
+      "remove-step-button"
+    ).onclick = this.removeStepFromEditor;
+    document.getElementById("edit-clear-button").onclick = this.clearEditor;
+    document.getElementById("edit-cancel-button").onclick = this.close;
+    document.getElementById("delete-ok-button").onclick = this.confirmDelete;
+    document.getElementById("delete-cancel-button").onclick = this.close;
+    this.addStepToEditor();
+  }
+
+  open(elem) {
+    if (popup != null) {
+      this.element.classList.add("popup-visible");
+      elem.style.display = "block";
+      elem.animate(
+        {
+          opacity: [0, 1],
+          transform: ["translateY(-200px)", "translateY(0px)"],
+        },
+        { duration: 400, easing: "ease-out" }
+      );
+    }
+  }
+
+  openEditor(obj) {
+    this.obj = obj;
+    this.open(this.editorElement);
+  }
+
+  openDelete(obj) {
+    this.obj = obj;
+    this.open(this.deleteElement);
+  }
+
+  close() {
+    this.obj = undefined;
+    this.element.classList.remove("popup-visible");
+    this.editorElement.style.display = "none";
+    this.deleteElement.style.display = "none";
+  }
+
+  confirmDelete() {
+    this.deleteCallback(this.obj);
+  }
+
+  addStepToEditor() {
+    const item = document.createElement("li");
+    item.className = "input-steps-item";
+
+    const stepInput = document.createElement("input");
+    stepInput.type = "text";
+    stepInput.className = "input-step";
+    stepInput.required = true;
+    item.appendChild(stepInput);
+
+    const timeLabel = document.createElement("label");
+    timeLabel.className = "input-time-label";
+    timeLabel.htmlFor =
+      "input-time-" + (this.stepsElement.childElementCount + 1);
+    timeLabel.innerText = "minutes:";
+    item.appendChild(timeLabel);
+
+    const timeInput = document.createElement("input");
+    timeInput.className = "input-time";
+    timeInput.id = "input-time-" + (this.stepsElement.childElementCount + 1);
+    timeInput.type = "number";
+    timeInput.min = "5";
+    timeInput.max = "180";
+    timeInput.step = "5";
+    timeInput.required = true;
+    item.appendChild(timeInput);
+
+    this.stepsElement.appendChild(item);
+
+    item.animate(
+      [
+        { opacity: 0, maxHeight: "0px" },
+        { opacity: 0, maxHeight: "100px" },
+        { opacity: 1 },
+      ],
+      {
+        duration: 100,
+        easing: "ease-in",
+      }
+    );
+  }
+
+  removeStepFromEditor() {
+    if (this.stepsElement.childElementCount > 1) {
+      const item = this.stepsElement.lastElementChild;
+
+      item
+        .animate(
+          [
+            { opacity: 1 },
+            { opacity: 0, maxHeight: "100px" },
+            { opacity: 0, maxHeight: "0px" },
+          ],
+          {
+            duration: 100,
+            easing: "ease-out",
+          }
+        )
+        .finished.then(() => {
+          this.stepsElement.removeChild(item);
+        });
+    }
+  }
+
+  clearEditor() {
+    const fields = document
+      .getElementById("popup-edit-form")
+      .querySelectorAll("input, textarea");
+    for (let elem of fields) elem.value = "";
+  }
 }
 
 class Editor {
@@ -263,9 +416,7 @@ class Editor {
 }
 
 const initialLoading = (arr) => {
-  log("load");
-  const recipesList = new RecipesList(arr);
-  const nav = new Nav();
+  const app = new RecipeApp(arr);
 };
 
 let recipes = [
