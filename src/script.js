@@ -42,7 +42,7 @@ class RecipeWindow {
   constructor(editorCallback, deleteCallback) {
     this.open = this.open.bind(this);
     this.close = this.close.bind(this);
-    this.openEditor = this.openEditor.bind(this);
+    this.openEditorToEdit = this.openEditorToEdit.bind(this);
     this.openDelete = this.openDelete.bind(this);
     this.element = document.getElementById("recipe-window");
     this.obj = "undefined";
@@ -52,7 +52,9 @@ class RecipeWindow {
     this.editorCallback = editorCallback;
     this.deleteCallback = deleteCallback;
     document.getElementById("recipe-close-button").onclick = this.close;
-    document.getElementById("recipe-edit-button").onclick = this.openEditor;
+    document.getElementById(
+      "recipe-edit-button"
+    ).onclick = this.openEditorToEdit;
     document.getElementById("recipe-delete-button").onclick = this.openDelete;
   }
 
@@ -180,7 +182,7 @@ class RecipeWindow {
     }
   }
 
-  openEditor() {
+  openEditorToEdit() {
     this.editorCallback(this.obj);
   }
 
@@ -196,19 +198,27 @@ class Nav {
   constructor(addCallback) {
     this.show = this.show.bind(this);
     this.hide = this.hide.bind(this);
+    this.openEditorToAdd = this.openEditorToAdd.bind(this);
     this.nav = document.getElementById("nav");
     this.bg = document.getElementById("nav-bg");
+    this.addCallback = addCallback;
     document.getElementById("nav-menu-button").onclick = this.hide;
     document.getElementById("bg-menu-button").onclick = this.show;
-    document.getElementById("nav-add-button").onclick = addCallback;
+    document.getElementById("nav-add-button").onclick = this.openEditorToAdd;
   }
+
   show() {
     this.nav.classList.remove("hidden");
     this.bg.classList.remove("collapsed");
   }
+
   hide() {
     this.nav.classList.add("hidden");
     this.bg.classList.add("collapsed");
+  }
+
+  openEditorToAdd() {
+    this.addCallback();
   }
 }
 
@@ -221,9 +231,9 @@ class RecipeApp {
     this.arr = arr;
     this.elemList = document.getElementById("nav-list");
     this.popups = new Popups(this.deleteRecipe);
-    this.nav = new Nav(this.popups.openEditor);
+    this.nav = new Nav(this.popups.openEditorToAdd);
     this.recipeWindow = new RecipeWindow(
-      this.popups.openEditor,
+      this.popups.openEditorToEdit,
       this.popups.openDelete
     );
     this.arr.forEach((obj) => this.addRecipeToList(obj));
@@ -277,7 +287,8 @@ class RecipeApp {
 // -------------------------------------------------------
 class Popups {
   constructor(deleteCallback) {
-    this.openEditor = this.openEditor.bind(this);
+    this.openEditorToAdd = this.openEditorToAdd.bind(this);
+    this.openEditorToEdit = this.openEditorToEdit.bind(this);
     this.openDelete = this.openDelete.bind(this);
     this.close = this.close.bind(this);
     this.confirmDelete = this.confirmDelete.bind(this);
@@ -315,8 +326,14 @@ class Popups {
     }
   }
 
-  openEditor(obj) {
+  openEditorToAdd() {
+    this.clearEditor();
+    this.open(this.editorElement);
+  }
+
+  openEditorToEdit(obj) {
     this.obj = obj;
+    this.loadEditor();
     this.open(this.editorElement);
   }
 
@@ -343,6 +360,7 @@ class Popups {
     const stepInput = document.createElement("input");
     stepInput.type = "text";
     stepInput.className = "input-step";
+    stepInput.id = "input-step-" + (this.stepsElement.childElementCount + 1);
     stepInput.required = true;
     item.appendChild(stepInput);
 
@@ -400,7 +418,33 @@ class Popups {
     }
   }
 
+  removeAllStepsFromEditor() {
+    while (this.stepsElement.childElementCount > 1) {
+      this.stepsElement.removeChild(this.stepsElement.lastElementChild);
+    }
+  }
+
+  loadEditor() {
+    if (this.obj !== undefined) {
+      this.removeAllStepsFromEditor();
+      document.getElementById("input-name").value = this.obj.name;
+      document.getElementById("input-ingredients").value = this.obj.ingredients;
+      for (let i = 1; i < this.obj.steps.length; i++) {
+        this.addStepToEditor();
+      }
+      for (let i = 0; i < this.obj.steps.length; i++) {
+        document.getElementById("input-step-" + (i + 1)).value = this.obj.steps[
+          i
+        ].name;
+        document.getElementById("input-time-" + (i + 1)).value = this.obj.steps[
+          i
+        ].time;
+      }
+    }
+  }
+
   clearEditor() {
+    this.removeAllStepsFromEditor();
     const fields = document
       .getElementById("popup-edit-form")
       .querySelectorAll("input, textarea");
