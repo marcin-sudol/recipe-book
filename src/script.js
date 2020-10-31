@@ -231,10 +231,10 @@ class RecipeApp {
     this.arr = arr;
     this.elemList = document.getElementById("nav-list");
     this.popups = new Popups(this.deleteRecipe);
-    this.nav = new Nav(this.popups.openEditorToAdd);
+    this.nav = new Nav(this.popups.editor.openToAdd);
     this.recipeWindow = new RecipeWindow(
-      this.popups.openEditorToEdit,
-      this.popups.openDelete
+      this.popups.editor.openToEdit,
+      this.popups.delete.open
     );
     this.arr.forEach((obj) => this.addRecipeToList(obj));
     this.elemList.animate(
@@ -287,73 +287,79 @@ class RecipeApp {
 // -------------------------------------------------------
 class Popups {
   constructor(deleteCallback) {
-    this.openEditorToAdd = this.openEditorToAdd.bind(this);
-    this.openEditorToEdit = this.openEditorToEdit.bind(this);
-    this.openDelete = this.openDelete.bind(this);
+    this.open = this.open.bind(this);
     this.close = this.close.bind(this);
-    this.confirmDelete = this.confirmDelete.bind(this);
-    this.addStepToEditor = this.addStepToEditor.bind(this);
-    this.removeStepFromEditor = this.removeStepFromEditor.bind(this);
-    this.clearEditor = this.clearEditor.bind(this);
     this.element = document.getElementById("popup");
-    this.editorElement = document.getElementById("popup-edit");
-    this.deleteElement = document.getElementById("popup-delete");
-    this.stepsElement = document.getElementById("input-steps-list");
-    this.obj = undefined;
-    this.deleteCallback = deleteCallback;
-    document.getElementById("add-step-button").onclick = this.addStepToEditor;
-    document.getElementById(
-      "remove-step-button"
-    ).onclick = this.removeStepFromEditor;
-    document.getElementById("edit-clear-button").onclick = this.clearEditor;
-    document.getElementById("edit-cancel-button").onclick = this.close;
-    document.getElementById("delete-ok-button").onclick = this.confirmDelete;
-    document.getElementById("delete-cancel-button").onclick = this.close;
-    this.addStepToEditor();
+    this.editor = new EditorWindow(this.open, this.close);
+    this.delete = new DeleteWindow(this.open, this.close, deleteCallback);
   }
 
-  open(elem) {
-    if (popup != null) {
-      this.element.classList.add("popup-visible");
-      elem.style.display = "block";
-      elem.animate(
-        {
-          opacity: [0, 1],
-          transform: ["translateY(-200px)", "translateY(0px)"],
-        },
-        { duration: 400, easing: "ease-out" }
-      );
-    }
-  }
-
-  openEditorToAdd() {
-    this.clearEditor();
-    this.open(this.editorElement);
-  }
-
-  openEditorToEdit(obj) {
-    this.obj = obj;
-    this.loadEditor();
-    this.open(this.editorElement);
-  }
-
-  openDelete(obj) {
-    this.obj = obj;
-    this.open(this.deleteElement);
+  open() {
+    this.element.classList.add("visible");
   }
 
   close() {
+    this.element.classList.remove("visible");
+  }
+}
+
+class PopupWindow {
+  constructor(openCallback, closeCallback) {
+    this.open = this.open.bind(this);
+    this.close = this.close.bind(this);
+    this.element = undefined;
+    this.openCallback = openCallback;
+    this.closeCallback = closeCallback;
+  }
+
+  open() {
+    this.openCallback();
+    this.element.style.display = "block";
+    this.element.animate(
+      {
+        opacity: [0, 1],
+        transform: ["translateY(-200px)", "translateY(0px)"],
+      },
+      { duration: 400, easing: "ease-out" }
+    );
+  }
+
+  close() {
+    this.element.style.display = "none";
+    this.closeCallback();
+  }
+}
+
+class EditorWindow extends PopupWindow {
+  constructor(openCallback, closeCallback) {
+    super(openCallback, closeCallback);
+    this.openToAdd = this.openToAdd.bind(this);
+    this.openToEdit = this.openToEdit.bind(this);
+    this.addStep = this.addStep.bind(this);
+    this.removeStep = this.removeStep.bind(this);
+    this.clear = this.clear.bind(this);
+    this.element = document.getElementById("popup-edit");
+    this.stepsElement = document.getElementById("input-steps-list");
     this.obj = undefined;
-    this.element.classList.remove("popup-visible");
-    this.editorElement.style.display = "none";
-    this.deleteElement.style.display = "none";
+    document.getElementById("add-step-button").onclick = this.addStep;
+    document.getElementById("remove-step-button").onclick = this.removeStep;
+    document.getElementById("edit-clear-button").onclick = this.clear;
+    document.getElementById("edit-cancel-button").onclick = this.close;
+    this.addStep();
   }
 
-  confirmDelete() {
-    this.deleteCallback(this.obj);
+  openToAdd() {
+    this.clear();
+    this.open();
   }
 
-  addStepToEditor() {
+  openToEdit(obj) {
+    this.obj = obj;
+    this.load();
+    this.open();
+  }
+
+  addStep() {
     const item = document.createElement("li");
     item.className = "input-steps-item";
 
@@ -361,7 +367,6 @@ class Popups {
     stepInput.type = "text";
     stepInput.className = "input-step";
     stepInput.id = "input-step-" + (this.stepsElement.childElementCount + 1);
-    stepInput.required = true;
     item.appendChild(stepInput);
 
     const timeLabel = document.createElement("label");
@@ -378,7 +383,6 @@ class Popups {
     timeInput.min = "5";
     timeInput.max = "180";
     timeInput.step = "5";
-    timeInput.required = true;
     item.appendChild(timeInput);
 
     this.stepsElement.appendChild(item);
@@ -396,7 +400,7 @@ class Popups {
     );
   }
 
-  removeStepFromEditor() {
+  removeStep() {
     if (this.stepsElement.childElementCount > 1) {
       const item = this.stepsElement.lastElementChild;
 
@@ -418,19 +422,19 @@ class Popups {
     }
   }
 
-  removeAllStepsFromEditor() {
+  removeAllSteps() {
     while (this.stepsElement.childElementCount > 1) {
       this.stepsElement.removeChild(this.stepsElement.lastElementChild);
     }
   }
 
-  loadEditor() {
+  load() {
     if (this.obj !== undefined) {
-      this.removeAllStepsFromEditor();
+      this.removeAllSteps();
       document.getElementById("input-name").value = this.obj.name;
       document.getElementById("input-ingredients").value = this.obj.ingredients;
       for (let i = 1; i < this.obj.steps.length; i++) {
-        this.addStepToEditor();
+        this.addStep();
       }
       for (let i = 0; i < this.obj.steps.length; i++) {
         document.getElementById("input-step-" + (i + 1)).value = this.obj.steps[
@@ -443,8 +447,8 @@ class Popups {
     }
   }
 
-  clearEditor() {
-    this.removeAllStepsFromEditor();
+  clear() {
+    this.removeAllSteps();
     const fields = document
       .getElementById("popup-edit-form")
       .querySelectorAll("input, textarea");
@@ -452,11 +456,29 @@ class Popups {
   }
 }
 
-class Editor {
-  constructor() {}
-  addStep() {}
-  removeStep() {}
-  clear() {}
+class DeleteWindow extends PopupWindow {
+  constructor(openCallback, closeCallback, deleteCallback) {
+    super(openCallback, closeCallback);
+    this.open = this.open.bind(this);
+    this.submit = this.submit.bind(this);
+    this.element = document.getElementById("popup-delete");
+    this.obj = undefined;
+    this.openCallback = openCallback;
+    this.closeCallback = closeCallback;
+    this.deleteCallback = deleteCallback;
+    document.getElementById("delete-ok-button").onclick = this.submit;
+    document.getElementById("delete-cancel-button").onclick = this.close;
+  }
+
+  open(obj) {
+    this.obj = obj;
+    super.open();
+  }
+
+  submit() {
+    this.close();
+    this.deleteCallback(this.obj);
+  }
 }
 
 const initialLoading = (arr) => {

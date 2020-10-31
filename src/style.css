@@ -293,7 +293,7 @@ button:hover {
   width: 100vw;
   z-index: 25;
   display: none; }
-  #popup.popup-visible {
+  #popup.visible {
     display: block; }
 
 #popup-bg {
@@ -307,7 +307,7 @@ button:hover {
     opacity: 0; }
   to {
     opacity: 0.7; } }
-#popup.popup-visible #popup-bg {
+#popup.visible #popup-bg {
   animation: popup-bg 0.4s;
   opacity: 0.7; }
 
