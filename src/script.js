@@ -162,51 +162,31 @@ class RecipeWindow {
 }
 
 // -------------------------------------------------------
-// RECIPE ITEM
-// -------------------------------------------------------
-class RecipeItem {
-  constructor(obj, displayCallback) {
-    this.element = document.createElement("li");
-    this.element.className = "nav-item";
-    this.element.id = "nav-item-" + obj.id;
-
-    const button = document.createElement("button");
-    button.className = "nav-item-button";
-    button.type = "button";
-    button.innerText = obj.name;
-    button.onclick = function () {
-      displayCallback(obj);
-    };
-    this.element.appendChild(button);
-
-    const divRating = document.createElement("div");
-    divRating.className = "nav-item-rating";
-    if (obj.rating.votes > 0)
-      divRating.innerText = (obj.rating.sum / obj.rating.votes).toFixed(1);
-    else divRating.innerText = "-";
-    this.element.appendChild(divRating);
-
-    const divTooltip = document.createElement("div");
-    divTooltip.className = "rating-tooltip";
-    divTooltip.innerText = obj.rating.votes + " votes";
-    divRating.appendChild(divTooltip);
-  }
-}
-
-// -------------------------------------------------------
 // NAV
 // -------------------------------------------------------
 class Nav {
-  constructor(addCallback) {
+  constructor(arr, openCallback, addCallback) {
     this.show = this.show.bind(this);
     this.hide = this.hide.bind(this);
     this.openEditorToAdd = this.openEditorToAdd.bind(this);
     this.nav = document.getElementById("nav");
     this.bg = document.getElementById("nav-bg");
+    this.elemList = document.getElementById("nav-list");
+    this.openCallback = openCallback;
     this.addCallback = addCallback;
     document.getElementById("nav-menu-button").onclick = this.hide;
     document.getElementById("bg-menu-button").onclick = this.show;
     document.getElementById("nav-add-button").onclick = this.openEditorToAdd;
+    arr.forEach((obj) => this.add(obj));
+    this.elemList.animate(
+      {
+        opacity: [0, 1],
+      },
+      {
+        duration: 400,
+        easing: "ease-out",
+      }
+    );
   }
 
   show() {
@@ -219,56 +199,48 @@ class Nav {
     this.bg.classList.add("collapsed");
   }
 
-  openEditorToAdd() {
-    this.addCallback();
-  }
-}
+  add(obj) {
+    const openCallback = this.openCallback;
+    const item = document.createElement("li");
+    item.className = "nav-item";
+    item.id = "nav-item-" + obj.id;
 
-// -------------------------------------------------------
-// RECIPE APP
-// -------------------------------------------------------
-class RecipeApp {
-  constructor(arr) {
-    this.deleteRecipe = this.deleteRecipe.bind(this);
-    this.saveRecipe = this.saveRecipe.bind(this);
-    this.arr = arr;
-    this.elemList = document.getElementById("nav-list");
-    this.popups = new Popups(this.saveRecipe, this.deleteRecipe);
-    this.nav = new Nav(this.popups.editor.openToAdd);
-    this.recipeWindow = new RecipeWindow(
-      this.popups.editor.openToEdit,
-      this.popups.delete.open
-    );
-    this.arr.forEach((obj) => this.addRecipeToList(obj));
-    this.elemList.animate(
-      {
-        opacity: [0, 1],
-      },
-      {
-        duration: 400,
-        easing: "ease-out",
-      }
-    );
+    const button = document.createElement("button");
+    button.className = "nav-item-button";
+    button.type = "button";
+    button.innerText = obj.name;
+    // not working
+    button.onclick = function () {
+      openCallback(obj);
+    };
+    item.appendChild(button);
+
+    const divRating = document.createElement("div");
+    divRating.className = "nav-item-rating";
+    if (obj.rating.votes > 0)
+      divRating.innerText = (obj.rating.sum / obj.rating.votes).toFixed(1);
+    else divRating.innerText = "-";
+    item.appendChild(divRating);
+
+    const divTooltip = document.createElement("div");
+    divTooltip.className = "rating-tooltip";
+    divTooltip.innerText = obj.rating.votes + " votes";
+    divRating.appendChild(divTooltip);
+    this.elemList.appendChild(item);
   }
 
-  addRecipeToArr(obj) {
-    this.arr.push(obj);
+  update(obj) {
+    const openCallback = this.openCallback;
+    const button = document
+      .getElementById("nav-item-" + obj.id)
+      .querySelector(".nav-item-button");
+    button.innerText = obj.name;
+    button.onclick = function () {
+      openCallback(obj);
+    };
   }
 
-  addRecipeToList(obj) {
-    const item = new RecipeItem(obj, this.recipeWindow.open);
-    this.elemList.appendChild(item.element);
-  }
-
-  addRecipe(obj) {
-    this.addRecipeToArr(obj);
-    this.addRecipeToList(obj);
-  }
-
-  deleteRecipe(obj) {
-    this.arr = this.arr.filter((item) => item !== obj);
-    this.popups.close();
-    this.recipeWindow.close();
+  remove(obj) {
     const item = document.getElementById("nav-item-" + obj.id);
     item
       .animate(
@@ -284,6 +256,42 @@ class RecipeApp {
       });
   }
 
+  openEditorToAdd() {
+    this.addCallback();
+  }
+}
+
+// -------------------------------------------------------
+// RECIPE APP
+// -------------------------------------------------------
+class RecipeApp {
+  constructor(arr) {
+    this.deleteRecipe = this.deleteRecipe.bind(this);
+    this.saveRecipe = this.saveRecipe.bind(this);
+    this.arr = arr;
+    this.popups = new Popups(this.saveRecipe, this.deleteRecipe);
+    this.recipeWindow = new RecipeWindow(
+      this.popups.editor.openToEdit,
+      this.popups.delete.open
+    );
+    this.nav = new Nav(
+      this.arr,
+      this.recipeWindow.open,
+      this.popups.editor.openToAdd
+    );
+  }
+
+  addRecipe(obj) {
+    this.arr.push(obj);
+    this.nav.add(obj);
+  }
+
+  deleteRecipe(obj) {
+    this.arr = this.arr.filter((item) => item !== obj);
+    this.recipeWindow.close();
+    this.nav.remove(obj);
+  }
+
   saveRecipe(obj) {
     if (!obj.hasOwnProperty("id")) {
       obj.id = this.arr[this.arr.length - 1].id + 1;
@@ -291,6 +299,8 @@ class RecipeApp {
     } else {
       const index = this.arr.findIndex((item) => item.id === obj.id);
       this.arr[index] = obj;
+      this.nav.update(obj);
+      this.recipeWindow.update(obj);
       // not working because recipe item connected to specified object
     }
   }
