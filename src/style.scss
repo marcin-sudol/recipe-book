@@ -5,7 +5,8 @@ $accent-ye1: #fad275;
 $accent-ye2: #f9c74f;
 $accent-or1: #f8961e;
 $accent-or2: #f3722c;
-$accent-red: #f94144;
+$accent-re1: #ffeaea;
+$accent-re2: #f94144;
 $accent-gr1: #90be6d;
 $accent-gr2: #43aa8b;
 $accent-blu: #577590;
@@ -128,7 +129,6 @@ button:hover {
   flex-direction: row;
   align-items: center;
   margin-bottom: 20px;
-  overflow: hidden;
   background-color: $accent-ye1;
   border-radius: 5px;
   transition: background-color 0.2s;
@@ -162,7 +162,7 @@ button:hover {
   padding: 5px;
   width: 80px;
   right: -15px;
-  bottom: -35px;
+  bottom: -24px;
   white-space: nowrap;
   z-index: $z-index-nav-tooltip;
   visibility: hidden;
@@ -364,7 +364,7 @@ button:hover {
 
 #recipe-delete-button {
   float: right;
-  @include btn($accent-red, $accent-red, white, $accent-red);
+  @include btn($accent-re2, $accent-re2, white, $accent-re2);
 }
 
 // ------------------------------------------
@@ -438,7 +438,7 @@ button:hover {
 }
 
 #delete-ok-button {
-  @include btn($accent-red, $accent-red, white, $accent-red);
+  @include btn($accent-re2, $accent-re2, white, $accent-re2);
 }
 
 #delete-cancel-button {
@@ -464,7 +464,7 @@ button:hover {
 }
 
 #popup-edit-form {
-  margin-bottom: 2 * $main-spacing;
+  margin-bottom: $main-spacing;
 }
 
 input,
@@ -480,6 +480,11 @@ textarea {
   background-color: $mono-light1;
   border: 1px solid $mono-medium;
   border-radius: 5px;
+  &.incorrect {
+    // background-color: $accent-re1;
+    border: 1px solid $accent-re2;
+    box-shadow: 0px 0px 3px $accent-re2;
+  }
 }
 
 #input-name,
@@ -544,6 +549,18 @@ textarea {
 
 #remove-step-button {
   background-color: $accent-ye2;
+}
+
+#form-validation-warning {
+  display: none;
+  margin: 5px;
+  margin-bottom: $main-spacing;
+  padding: 10px;
+  background-color: $accent-re1;
+  border-radius: 5px;
+  &.visible {
+    display: block;
+  }
 }
 
 #popup-edit-menu {

@@ -56,7 +56,6 @@ button:hover {
   flex-direction: row;
   align-items: center;
   margin-bottom: 20px;
-  overflow: hidden;
   background-color: #fad275;
   border-radius: 5px;
   transition: background-color 0.2s; }
@@ -86,7 +85,7 @@ button:hover {
   padding: 5px;
   width: 80px;
   right: -15px;
-  bottom: -35px;
+  bottom: -24px;
   white-space: nowrap;
   z-index: 10;
   visibility: hidden;
@@ -388,7 +387,7 @@ button:hover {
   font-weight: bold; }
 
 #popup-edit-form {
-  margin-bottom: 40px; }
+  margin-bottom: 20px; }
 
 input,
 textarea,
@@ -402,6 +401,10 @@ textarea {
   background-color: #f4f4f4;
   border: 1px solid #aaa;
   border-radius: 5px; }
+  input.incorrect,
+  textarea.incorrect {
+    border: 1px solid #f94144;
+    box-shadow: 0px 0px 3px #f94144; }
 
 #input-name,
 #input-ingredients {
@@ -455,6 +458,16 @@ textarea {
 
 #remove-step-button {
   background-color: #f9c74f; }
+
+#form-validation-warning {
+  display: none;
+  margin: 5px;
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #ffeaea;
+  border-radius: 5px; }
+  #form-validation-warning.visible {
+    display: block; }
 
 #popup-edit-menu {
   display: flex;

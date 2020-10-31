@@ -118,7 +118,7 @@
         <div id="popup-edit" class="popup-window">
           <p id="popup-edit-title">Insert recipe</p>
 
-          <form id="popup-edit-form">
+          <form id="popup-edit-form" novalidate>
             <label id="input-name-label" for="input-name">Name:</label>
             <input type="text" id="input-name" placeholder="Insert name" />
             <label id="input-ingredients-label" for="input-ingredients">
@@ -136,6 +136,14 @@
               <button id="remove-step-button" type="button">&minus;</button>
             </div>
           </form>
+
+          <div id="form-validation-warning">
+            <p>
+              <i class="fas fa-exclamation-triangle"></i> Correct highlighted
+              fields.<br />All fields should be filled.<br />Minutes should be
+              between 5 and 180.
+            </p>
+          </div>
 
           <div id="popup-edit-menu">
             <button id="edit-ok-button" type="button">
