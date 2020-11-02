@@ -8,12 +8,12 @@ function log(str) {
 // -------------------------------------------------------
 // RECIPE WINDOW
 // -------------------------------------------------------
-class RecipeWindow {
+class MainWindow {
   constructor(editorCallback, deleteCallback) {
     this.open = this.open.bind(this);
     this.close = this.close.bind(this);
-    this.openEditorToEdit = this.openEditorToEdit.bind(this);
-    this.openDelete = this.openDelete.bind(this);
+    this.clickedEdit = this.clickedEdit.bind(this);
+    this.clickedDelete = this.clickedDelete.bind(this);
     this.element = document.getElementById("recipe-window");
     this.obj = "undefined";
     this.visible = false;
@@ -22,10 +22,10 @@ class RecipeWindow {
     this.editorCallback = editorCallback;
     this.deleteCallback = deleteCallback;
     document.getElementById("recipe-close-button").onclick = this.close;
+    document.getElementById("recipe-edit-button").onclick = this.clickedEdit;
     document.getElementById(
-      "recipe-edit-button"
-    ).onclick = this.openEditorToEdit;
-    document.getElementById("recipe-delete-button").onclick = this.openDelete;
+      "recipe-delete-button"
+    ).onclick = this.clickedDelete;
   }
 
   update(obj) {
@@ -116,13 +116,20 @@ class RecipeWindow {
       });
   }
 
-  close() {
+  close(style) {
+    log(style);
     if (this.visible) {
       this.changing = true;
-      this.slideOut();
+      switch (style) {
+        case "fade":
+          this.fadeOut();
+          break;
+        default:
+          this.slideOut();
+          break;
+      }
       setTimeout(() => {
         this.changing = false;
-        this.visible = false;
       }, this.animationTime);
     }
   }
@@ -136,7 +143,6 @@ class RecipeWindow {
         this.slideIn();
         setTimeout(() => {
           this.changing = false;
-          this.visible = true;
         }, this.animationTime);
       } else if (obj !== this.obj) {
         this.slideOut();
@@ -145,18 +151,17 @@ class RecipeWindow {
           this.slideIn();
           setTimeout(() => {
             this.changing = false;
-            this.visible = true;
           }, this.animationTime);
         }, this.animationTime + 100);
       }
     }
   }
 
-  openEditorToEdit() {
+  clickedEdit() {
     this.editorCallback(this.obj);
   }
 
-  openDelete() {
+  clickedDelete() {
     this.deleteCallback(this.obj);
   }
 }
@@ -168,7 +173,7 @@ class Nav {
   constructor(arr, openCallback, addCallback) {
     this.show = this.show.bind(this);
     this.hide = this.hide.bind(this);
-    this.openEditorToAdd = this.openEditorToAdd.bind(this);
+    this.clickedAdd = this.clickedAdd.bind(this);
     this.nav = document.getElementById("nav");
     this.bg = document.getElementById("nav-bg");
     this.elemList = document.getElementById("nav-list");
@@ -176,7 +181,7 @@ class Nav {
     this.addCallback = addCallback;
     document.getElementById("nav-menu-button").onclick = this.hide;
     document.getElementById("bg-menu-button").onclick = this.show;
-    document.getElementById("nav-add-button").onclick = this.openEditorToAdd;
+    document.getElementById("nav-add-button").onclick = this.clickedAdd;
     arr.forEach((obj) => this.add(obj));
     this.elemList.animate(
       {
@@ -209,7 +214,6 @@ class Nav {
     button.className = "nav-item-button";
     button.type = "button";
     button.innerText = obj.name;
-    // not working
     button.onclick = function () {
       openCallback(obj);
     };
@@ -256,7 +260,7 @@ class Nav {
       });
   }
 
-  openEditorToAdd() {
+  clickedAdd() {
     this.addCallback();
   }
 }
@@ -270,13 +274,13 @@ class RecipeApp {
     this.saveRecipe = this.saveRecipe.bind(this);
     this.arr = arr;
     this.popups = new Popups(this.saveRecipe, this.deleteRecipe);
-    this.recipeWindow = new RecipeWindow(
+    this.mainWindow = new MainWindow(
       this.popups.editor.openToEdit,
       this.popups.delete.open
     );
     this.nav = new Nav(
       this.arr,
-      this.recipeWindow.open,
+      this.mainWindow.open,
       this.popups.editor.openToAdd
     );
   }
@@ -288,7 +292,7 @@ class RecipeApp {
 
   deleteRecipe(obj) {
     this.arr = this.arr.filter((item) => item !== obj);
-    this.recipeWindow.close();
+    this.mainWindow.close("fade");
     this.nav.remove(obj);
   }
 
@@ -300,8 +304,7 @@ class RecipeApp {
       const index = this.arr.findIndex((item) => item.id === obj.id);
       this.arr[index] = obj;
       this.nav.update(obj);
-      this.recipeWindow.update(obj);
-      // not working because recipe item connected to specified object
+      this.mainWindow.update(obj);
     }
   }
 }
@@ -314,8 +317,8 @@ class Popups {
     this.open = this.open.bind(this);
     this.close = this.close.bind(this);
     this.element = document.getElementById("popup");
-    this.editor = new EditorWindow(this.open, this.close, saveCallback);
-    this.delete = new DeleteWindow(this.open, this.close, deleteCallback);
+    this.editor = new EditorPopup(this.open, this.close, saveCallback);
+    this.delete = new DeletePopup(this.open, this.close, deleteCallback);
   }
 
   open() {
@@ -327,6 +330,9 @@ class Popups {
   }
 }
 
+// -------------------------------------------------------
+// POPUP WINDOW
+// -------------------------------------------------------
 class PopupWindow {
   constructor(openCallback, closeCallback) {
     this.open = this.open.bind(this);
@@ -354,7 +360,10 @@ class PopupWindow {
   }
 }
 
-class EditorWindow extends PopupWindow {
+// -------------------------------------------------------
+// EDITOR POPUP
+// -------------------------------------------------------
+class EditorPopup extends PopupWindow {
   constructor(openCallback, closeCallback, saveCallback) {
     super(openCallback, closeCallback);
     this.openToAdd = this.openToAdd.bind(this);
@@ -540,7 +549,10 @@ class EditorWindow extends PopupWindow {
   }
 }
 
-class DeleteWindow extends PopupWindow {
+// -------------------------------------------------------
+// DELETE POPUP
+// -------------------------------------------------------
+class DeletePopup extends PopupWindow {
   constructor(openCallback, closeCallback, deleteCallback) {
     super(openCallback, closeCallback);
     this.open = this.open.bind(this);
