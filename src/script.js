@@ -503,9 +503,13 @@ class EditorPopup extends PopupWindow {
       name: document.getElementById("input-name").value,
       ingredients: document.getElementById("input-ingredients").value,
       steps: [],
-      rating: { sum: 0, votes: 0 },
     };
-    if (this.obj !== undefined) newObj.id = this.obj.id;
+    if (this.obj !== undefined) {
+      newObj.id = this.obj.id;
+      newObj.rating = Object.assign({}, this.obj.rating);
+    } else {
+      newObj.rating = { sum: 0, votes: 0 };
+    }
     const steps = document.getElementById("input-steps-list");
     for (let i = 0; i < steps.childElementCount; i++) {
       newObj.steps.push({
@@ -565,7 +569,7 @@ class RecipeApp {
     if (storedArr === null) {
       // no data in local storate
       this.arr = this.startingArray.slice();
-      this.storage.setItem("recipes", JSON.stringify(this.arr));
+      this.saveRecipesToLocalMemory();
     } else {
       // data in local storage
       this.arr = JSON.parse(storedArr);
@@ -584,7 +588,7 @@ class RecipeApp {
 
   addRecipe(obj) {
     this.arr.push(obj);
-    this.storage.setItem("recipes", JSON.stringify(this.arr));
+    this.saveRecipesToLocalMemory();
     this.nav.add(obj);
     this.mainWindow.display(obj, "no", "fade");
   }
@@ -602,10 +606,14 @@ class RecipeApp {
     } else {
       const index = this.arr.findIndex((item) => item.id === obj.id);
       this.arr[index] = obj;
-      this.storage.setItem("recipes", JSON.stringify(this.arr));
+      this.saveRecipesToLocalMemory();
       this.nav.update(obj);
       this.mainWindow.display(obj, "no", "fade");
     }
+  }
+
+  saveRecipesToLocalMemory() {
+    this.storage.setItem("recipes", JSON.stringify(this.arr));
   }
 }
 
