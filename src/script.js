@@ -9,8 +9,14 @@ function log(str) {
 // RECIPE WINDOW
 // -------------------------------------------------------
 class MainWindow {
-  constructor(editorCallback, deleteCallback) {
-    this.open = this.open.bind(this);
+  constructor(openEditorToEditCallback, openDeleteCallback) {
+    this.show = this.show.bind(this);
+    this.hide = this.hide.bind(this);
+    this.slideIn = this.slideIn.bind(this);
+    this.slideOut = this.slideOut.bind(this);
+    this.fadeIn = this.fadeIn.bind(this);
+    this.fadeOut = this.fadeOut.bind(this);
+    this.display = this.display.bind(this);
     this.close = this.close.bind(this);
     this.clickedEdit = this.clickedEdit.bind(this);
     this.clickedDelete = this.clickedDelete.bind(this);
@@ -19,8 +25,8 @@ class MainWindow {
     this.visible = false;
     this.changing = false;
     this.animationTime = 400;
-    this.editorCallback = editorCallback;
-    this.deleteCallback = deleteCallback;
+    this.openEditorToEditCallback = openEditorToEditCallback;
+    this.openDeleteCallback = openDeleteCallback;
     document.getElementById("recipe-close-button").onclick = this.close;
     document.getElementById("recipe-edit-button").onclick = this.clickedEdit;
     document.getElementById(
@@ -68,7 +74,19 @@ class MainWindow {
     });
   }
 
-  slideIn() {
+  show(callback) {
+    this.element.style.display = "flex";
+    this.visible = true;
+    callback();
+  }
+
+  hide(callback) {
+    this.element.style.display = "none";
+    this.visible = false;
+    callback();
+  }
+
+  slideIn(callback) {
     this.element.style.display = "flex";
     this.element
       .animate(
@@ -76,23 +94,22 @@ class MainWindow {
         { duration: this.animationTime, easing: "ease-out" }
       )
       .finished.then(() => {
-        this.visible = true;
+        this.show(callback);
       });
   }
 
-  slideOut() {
+  slideOut(callback) {
     this.element
       .animate(
         { left: ["0px", "-30vw"], opacity: [1, 0] },
         { duration: this.animationTime, easing: "ease-out" }
       )
       .finished.then(() => {
-        this.element.style.display = "none";
-        this.visible = false;
+        this.hide(callback);
       });
   }
 
-  fadeIn() {
+  fadeIn(callback) {
     this.element.style.display = "flex";
     this.element
       .animate(
@@ -100,69 +117,71 @@ class MainWindow {
         { duration: this.animationTime, easing: "ease-out" }
       )
       .finished.then(() => {
-        this.visible = true;
+        this.show(callback);
       });
   }
 
-  fadeOut() {
+  fadeOut(callback) {
     this.element
       .animate(
         { opacity: [1, 0] },
         { duration: this.animationTime, easing: "ease-out" }
       )
       .finished.then(() => {
-        this.element.style.display = "none";
-        this.visible = false;
+        this.hide(callback);
       });
   }
 
-  close(style) {
-    log(style);
+  close(styleOut) {
     if (this.visible) {
+      let functionOut;
+      if (styleOut === "fade") functionOut = this.fadeOut;
+      else functionOut = this.slideOut;
+
       this.changing = true;
-      switch (style) {
-        case "fade":
-          this.fadeOut();
-          break;
-        default:
-          this.slideOut();
-          break;
-      }
+      functionOut();
+
       setTimeout(() => {
         this.changing = false;
       }, this.animationTime);
     }
   }
 
-  open(obj) {
+  display(obj, styleOut, styleIn) {
     if (!this.changing && (!this.visible || obj !== this.obj)) {
       this.changing = true;
 
+      let functionOut, functionIn;
+      if (styleOut === "no") functionOut = this.hide;
+      else if (styleOut === "fade") functionOut = this.fadeOut;
+      else functionOut = this.slideOut;
+
+      if (styleIn === "no") functionIn = this.show;
+      else if (styleIn === "fade") functionIn = this.fadeIn;
+      else functionIn = this.slideIn;
+
       if (!this.visible) {
         this.update(obj);
-        this.slideIn();
-        setTimeout(() => {
+        functionIn(() => {
           this.changing = false;
-        }, this.animationTime);
+        });
       } else if (obj !== this.obj) {
-        this.slideOut();
-        setTimeout(() => {
+        functionOut(() => {
           this.update(obj);
-          this.slideIn();
-          setTimeout(() => {
+          functionIn(() => {
             this.changing = false;
-          }, this.animationTime);
-        }, this.animationTime + 100);
+          });
+        });
       }
     }
   }
 
   clickedEdit() {
-    this.editorCallback(this.obj);
+    this.openEditorToEditCallback(this.obj);
   }
 
   clickedDelete() {
-    this.deleteCallback(this.obj);
+    this.openDeleteCallback(this.obj);
   }
 }
 
@@ -170,15 +189,15 @@ class MainWindow {
 // NAV
 // -------------------------------------------------------
 class Nav {
-  constructor(arr, openCallback, addCallback) {
+  constructor(arr, displayRecipeCallback, openEditorToAddCallback) {
     this.show = this.show.bind(this);
     this.hide = this.hide.bind(this);
     this.clickedAdd = this.clickedAdd.bind(this);
     this.nav = document.getElementById("nav");
     this.bg = document.getElementById("nav-bg");
     this.elemList = document.getElementById("nav-list");
-    this.openCallback = openCallback;
-    this.addCallback = addCallback;
+    this.displayRecipeCallback = displayRecipeCallback;
+    this.openEditorToAddCallback = openEditorToAddCallback;
     document.getElementById("nav-menu-button").onclick = this.hide;
     document.getElementById("bg-menu-button").onclick = this.show;
     document.getElementById("nav-add-button").onclick = this.clickedAdd;
@@ -205,7 +224,7 @@ class Nav {
   }
 
   add(obj) {
-    const openCallback = this.openCallback;
+    const displayRecipeCallback = this.displayRecipeCallback;
     const item = document.createElement("li");
     item.className = "nav-item";
     item.id = "nav-item-" + obj.id;
@@ -215,7 +234,7 @@ class Nav {
     button.type = "button";
     button.innerText = obj.name;
     button.onclick = function () {
-      openCallback(obj);
+      displayRecipeCallback(obj);
     };
     item.appendChild(button);
 
@@ -234,13 +253,13 @@ class Nav {
   }
 
   update(obj) {
-    const openCallback = this.openCallback;
+    const displayRecipeCallback = this.displayRecipeCallback;
     const button = document
       .getElementById("nav-item-" + obj.id)
       .querySelector(".nav-item-button");
     button.innerText = obj.name;
     button.onclick = function () {
-      openCallback(obj);
+      displayRecipeCallback(obj);
     };
   }
 
@@ -261,7 +280,7 @@ class Nav {
   }
 
   clickedAdd() {
-    this.addCallback();
+    this.openEditorToAddCallback();
   }
 }
 
@@ -280,7 +299,7 @@ class RecipeApp {
     );
     this.nav = new Nav(
       this.arr,
-      this.mainWindow.open,
+      this.mainWindow.display,
       this.popups.editor.openToAdd
     );
   }
@@ -288,6 +307,7 @@ class RecipeApp {
   addRecipe(obj) {
     this.arr.push(obj);
     this.nav.add(obj);
+    this.mainWindow.display(obj, "no", "fade");
   }
 
   deleteRecipe(obj) {
@@ -313,12 +333,12 @@ class RecipeApp {
 // POPUPS
 // -------------------------------------------------------
 class Popups {
-  constructor(saveCallback, deleteCallback) {
+  constructor(saveRecipeCallback, deleteRecipeCallback) {
     this.open = this.open.bind(this);
     this.close = this.close.bind(this);
     this.element = document.getElementById("popup");
-    this.editor = new EditorPopup(this.open, this.close, saveCallback);
-    this.delete = new DeletePopup(this.open, this.close, deleteCallback);
+    this.editor = new EditorPopup(this.open, this.close, saveRecipeCallback);
+    this.delete = new DeletePopup(this.open, this.close, deleteRecipeCallback);
   }
 
   open() {
@@ -334,16 +354,16 @@ class Popups {
 // POPUP WINDOW
 // -------------------------------------------------------
 class PopupWindow {
-  constructor(openCallback, closeCallback) {
+  constructor(openParentCallback, closeParentCallback) {
     this.open = this.open.bind(this);
     this.close = this.close.bind(this);
     this.element = undefined;
-    this.openCallback = openCallback;
-    this.closeCallback = closeCallback;
+    this.openParentCallback = openParentCallback;
+    this.closeParentCallback = closeParentCallback;
   }
 
   open() {
-    this.openCallback();
+    this.openParentCallback();
     this.element.style.display = "block";
     this.element.animate(
       {
@@ -356,7 +376,7 @@ class PopupWindow {
 
   close() {
     this.element.style.display = "none";
-    this.closeCallback();
+    this.closeParentCallback();
   }
 }
 
@@ -364,8 +384,8 @@ class PopupWindow {
 // EDITOR POPUP
 // -------------------------------------------------------
 class EditorPopup extends PopupWindow {
-  constructor(openCallback, closeCallback, saveCallback) {
-    super(openCallback, closeCallback);
+  constructor(openParentCallback, closeParentCallback, saveRecipeCallback) {
+    super(openParentCallback, closeParentCallback);
     this.openToAdd = this.openToAdd.bind(this);
     this.openToEdit = this.openToEdit.bind(this);
     this.addStep = this.addStep.bind(this);
@@ -376,7 +396,7 @@ class EditorPopup extends PopupWindow {
     this.stepsElement = document.getElementById("input-steps-list");
     this.validationElement = document.getElementById("form-validation-warning");
     this.obj = undefined;
-    this.saveCallback = saveCallback;
+    this.saveRecipeCallback = saveRecipeCallback;
     document.getElementById("add-step-button").onclick = this.addStep;
     document.getElementById("remove-step-button").onclick = this.removeStep;
     document.getElementById("edit-ok-button").onclick = this.submit;
@@ -544,7 +564,7 @@ class EditorPopup extends PopupWindow {
   submit() {
     if (this.validate()) {
       this.close();
-      this.saveCallback(this.export());
+      this.saveRecipeCallback(this.export());
     }
   }
 }
@@ -553,15 +573,15 @@ class EditorPopup extends PopupWindow {
 // DELETE POPUP
 // -------------------------------------------------------
 class DeletePopup extends PopupWindow {
-  constructor(openCallback, closeCallback, deleteCallback) {
-    super(openCallback, closeCallback);
+  constructor(openParentCallback, closeParentCallback, deleteRecipeCallback) {
+    super(openParentCallback, closeParentCallback);
     this.open = this.open.bind(this);
     this.submit = this.submit.bind(this);
     this.element = document.getElementById("popup-delete");
     this.obj = undefined;
-    this.openCallback = openCallback;
-    this.closeCallback = closeCallback;
-    this.deleteCallback = deleteCallback;
+    this.openParentCallback = openParentCallback;
+    this.closeParentCallback = closeParentCallback;
+    this.deleteRecipeCallback = deleteRecipeCallback;
     document.getElementById("delete-ok-button").onclick = this.submit;
     document.getElementById("delete-cancel-button").onclick = this.close;
   }
@@ -573,7 +593,7 @@ class DeletePopup extends PopupWindow {
 
   submit() {
     this.close();
-    this.deleteCallback(this.obj);
+    this.deleteRecipeCallback(this.obj);
   }
 }
 
