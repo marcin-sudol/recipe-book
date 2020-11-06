@@ -77,13 +77,13 @@ class MainWindow {
   show(callback) {
     this.element.style.display = "flex";
     this.visible = true;
-    callback();
+    if (callback !== undefined) callback();
   }
 
   hide(callback) {
     this.element.style.display = "none";
     this.visible = false;
-    callback();
+    if (callback !== undefined) callback();
   }
 
   slideIn(callback) {
@@ -281,51 +281,6 @@ class Nav {
 
   clickedAdd() {
     this.openEditorToAddCallback();
-  }
-}
-
-// -------------------------------------------------------
-// RECIPE APP
-// -------------------------------------------------------
-class RecipeApp {
-  constructor(arr) {
-    this.deleteRecipe = this.deleteRecipe.bind(this);
-    this.saveRecipe = this.saveRecipe.bind(this);
-    this.arr = arr;
-    this.popups = new Popups(this.saveRecipe, this.deleteRecipe);
-    this.mainWindow = new MainWindow(
-      this.popups.editor.openToEdit,
-      this.popups.delete.open
-    );
-    this.nav = new Nav(
-      this.arr,
-      this.mainWindow.display,
-      this.popups.editor.openToAdd
-    );
-  }
-
-  addRecipe(obj) {
-    this.arr.push(obj);
-    this.nav.add(obj);
-    this.mainWindow.display(obj, "no", "fade");
-  }
-
-  deleteRecipe(obj) {
-    this.arr = this.arr.filter((item) => item !== obj);
-    this.mainWindow.close("fade");
-    this.nav.remove(obj);
-  }
-
-  saveRecipe(obj) {
-    if (!obj.hasOwnProperty("id")) {
-      obj.id = this.arr[this.arr.length - 1].id + 1;
-      this.addRecipe(obj);
-    } else {
-      const index = this.arr.findIndex((item) => item.id === obj.id);
-      this.arr[index] = obj;
-      this.nav.update(obj);
-      this.mainWindow.update(obj);
-    }
   }
 }
 
@@ -594,6 +549,63 @@ class DeletePopup extends PopupWindow {
   submit() {
     this.close();
     this.deleteRecipeCallback(this.obj);
+  }
+}
+
+// -------------------------------------------------------
+// RECIPE APP
+// -------------------------------------------------------
+class RecipeApp {
+  constructor(arr) {
+    this.deleteRecipe = this.deleteRecipe.bind(this);
+    this.saveRecipe = this.saveRecipe.bind(this);
+    this.startingArray = arr;
+    this.storage = window.localStorage;
+    const storedArr = this.storage.getItem("recipes");
+    if (storedArr === null) {
+      // no data in local storate
+      this.arr = this.startingArray.slice();
+      this.storage.setItem("recipes", JSON.stringify(this.arr));
+    } else {
+      // data in local storage
+      this.arr = JSON.parse(storedArr);
+    }
+    this.popups = new Popups(this.saveRecipe, this.deleteRecipe);
+    this.mainWindow = new MainWindow(
+      this.popups.editor.openToEdit,
+      this.popups.delete.open
+    );
+    this.nav = new Nav(
+      this.arr,
+      this.mainWindow.display,
+      this.popups.editor.openToAdd
+    );
+  }
+
+  addRecipe(obj) {
+    this.arr.push(obj);
+    this.storage.setItem("recipes", JSON.stringify(this.arr));
+    this.nav.add(obj);
+    this.mainWindow.display(obj, "no", "fade");
+  }
+
+  deleteRecipe(obj) {
+    this.arr = this.arr.filter((item) => item !== obj);
+    this.mainWindow.close("fade");
+    this.nav.remove(obj);
+  }
+
+  saveRecipe(obj) {
+    if (!obj.hasOwnProperty("id")) {
+      obj.id = this.arr[this.arr.length - 1].id + 1;
+      this.addRecipe(obj);
+    } else {
+      const index = this.arr.findIndex((item) => item.id === obj.id);
+      this.arr[index] = obj;
+      this.storage.setItem("recipes", JSON.stringify(this.arr));
+      this.nav.update(obj);
+      this.mainWindow.display(obj, "no", "fade");
+    }
   }
 }
 
