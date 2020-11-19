@@ -247,11 +247,13 @@ button:hover {
     color: white; }
 
 #recipe-menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   padding: 20px;
   width: 100%; }
 
 #recipe-edit-button {
-  float: left;
   padding: 10px;
   width: 100px;
   border-radius: 5px;
@@ -267,8 +269,25 @@ button:hover {
   #recipe-edit-button:hover i {
     color: #555; }
 
+#recipe-rating {
+  display: flex;
+  flex-direction: row-reverse;
+  padding: 0px 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px; }
+  #recipe-rating button {
+    padding: 5px;
+    border: none;
+    background: none; }
+    #recipe-rating button i {
+      font-size: 24px;
+      color: #ddd; }
+  #recipe-rating button:hover > i,
+  #recipe-rating button:hover ~ button > i {
+    color: #f8961e;
+    text-shadow: 0 0 4px #aaa; }
+
 #recipe-delete-button {
-  float: right;
   padding: 10px;
   width: 100px;
   border-radius: 5px;

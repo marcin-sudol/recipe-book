@@ -353,17 +353,40 @@ button:hover {
 }
 
 #recipe-menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   padding: 20px;
   width: 100%;
 }
 
 #recipe-edit-button {
-  float: left;
   @include btn($accent-ye1, $accent-ye1, $mono-dark1, $mono-dark1);
 }
 
+#recipe-rating {
+  display: flex;
+  flex-direction: row-reverse;
+  padding: 0px 10px;
+  border: 1px solid $mono-light2;
+  border-radius: 5px;
+  button {
+    padding: 5px;
+    border: none;
+    background: none;
+    i {
+      font-size: 24px;
+      color: $mono-light2;
+    }
+  }
+  button:hover > i,
+  button:hover ~ button > i {
+    color: $accent-or1;
+    text-shadow: 0 0 4px $mono-medium;
+  }
+}
+
 #recipe-delete-button {
-  float: right;
   @include btn($accent-re2, $accent-re2, white, $accent-re2);
 }
 
