@@ -82,7 +82,7 @@ button:hover {
 
 .rating-tooltip {
   position: absolute;
-  padding: 5px;
+  padding: 10px;
   width: 80px;
   right: -15px;
   bottom: -24px;
@@ -94,11 +94,12 @@ button:hover {
   color: white;
   border-radius: 5px;
   font-size: 12px;
+  box-shadow: 0px 0px 5px white;
   transition: opacity 0.2s 0.4s; }
 
 .nav-item-rating:hover .rating-tooltip {
   visibility: visible;
-  opacity: 1; }
+  opacity: 0.9; }
 
 #nav-add-button {
   display: block;
@@ -269,23 +270,25 @@ button:hover {
   #recipe-edit-button:hover i {
     color: #555; }
 
-#recipe-rating {
+#recipe-rating-box {
   display: flex;
   flex-direction: row-reverse;
   padding: 0px 10px;
   border: 1px solid #ddd;
   border-radius: 5px; }
-  #recipe-rating button {
-    padding: 5px;
-    border: none;
-    background: none; }
-    #recipe-rating button i {
-      font-size: 24px;
-      color: #ddd; }
-  #recipe-rating button:hover > i,
-  #recipe-rating button:hover ~ button > i {
-    color: #f8961e;
-    text-shadow: 0 0 4px #aaa; }
+
+.recipe-rating-button {
+  padding: 5px;
+  border: none;
+  background: none; }
+  .recipe-rating-button i {
+    font-size: 24px;
+    color: #ddd; }
+
+.recipe-rating-button:hover > i,
+.recipe-rating-button:hover ~ .recipe-rating-button > i {
+  color: #f8961e;
+  text-shadow: 0 0 4px #aaa; }
 
 #recipe-delete-button {
   padding: 10px;

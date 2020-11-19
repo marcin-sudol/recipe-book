@@ -20,7 +20,7 @@ class MainWindow {
     this.close = this.close.bind(this);
     this.clickedEdit = this.clickedEdit.bind(this);
     this.clickedDelete = this.clickedDelete.bind(this);
-    this.element = document.getElementById("recipe-window");
+    this.recipeWindow = document.getElementById("recipe-window");
     this.obj = "undefined";
     this.visible = false;
     this.changing = false;
@@ -45,7 +45,7 @@ class MainWindow {
     this.obj.ingredients.split(",").forEach((ingredient) => {
       const itemIngredient = document.createElement("li");
       itemIngredient.className = "ingredients-item";
-      itemIngredient.innerText = ingredient;
+      itemIngredient.textContent = ingredient;
       ingredients.appendChild(itemIngredient);
     });
 
@@ -54,41 +54,29 @@ class MainWindow {
     this.obj.steps.forEach((step) => {
       let itemStep = document.createElement("li");
       itemStep.className = "steps-item";
+      itemStep.innerHTML = `<span class="step-name">${step.name}</span>
+      <span class="step-time">
+      <i class="far fa-clock"></i> ${step.time} min.
+      </span>`;
       steps.appendChild(itemStep);
-
-      let stepSpan = document.createElement("span");
-      stepSpan.className = "step-name";
-      stepSpan.innerText = step.name;
-      itemStep.appendChild(stepSpan);
-
-      let timeSpan = document.createElement("span");
-      timeSpan.className = "step-time";
-      itemStep.appendChild(timeSpan);
-
-      let icon = document.createElement("i");
-      icon.className = "far fa-clock";
-      timeSpan.appendChild(icon);
-
-      let timeText = document.createTextNode(" " + step.time + " min.");
-      timeSpan.appendChild(timeText);
     });
   }
 
   show(callback) {
-    this.element.style.display = "flex";
+    this.recipeWindow.style.display = "flex";
     this.visible = true;
     if (callback !== undefined) callback();
   }
 
   hide(callback) {
-    this.element.style.display = "none";
+    this.recipeWindow.style.display = "none";
     this.visible = false;
     if (callback !== undefined) callback();
   }
 
   slideIn(callback) {
-    this.element.style.display = "flex";
-    this.element
+    this.recipeWindow.style.display = "flex";
+    this.recipeWindow
       .animate(
         { left: ["-30vw", "0px"], opacity: [0, 1] },
         { duration: this.animationTime, easing: "ease-out" }
@@ -99,7 +87,7 @@ class MainWindow {
   }
 
   slideOut(callback) {
-    this.element
+    this.recipeWindow
       .animate(
         { left: ["0px", "-30vw"], opacity: [1, 0] },
         { duration: this.animationTime, easing: "ease-out" }
@@ -110,8 +98,8 @@ class MainWindow {
   }
 
   fadeIn(callback) {
-    this.element.style.display = "flex";
-    this.element
+    this.recipeWindow.style.display = "flex";
+    this.recipeWindow
       .animate(
         { opacity: [0, 1] },
         { duration: this.animationTime, easing: "ease-out" }
@@ -122,7 +110,7 @@ class MainWindow {
   }
 
   fadeOut(callback) {
-    this.element
+    this.recipeWindow
       .animate(
         { opacity: [1, 0] },
         { duration: this.animationTime, easing: "ease-out" }
@@ -194,15 +182,15 @@ class Nav {
     this.hide = this.hide.bind(this);
     this.clickedAdd = this.clickedAdd.bind(this);
     this.nav = document.getElementById("nav");
-    this.bg = document.getElementById("nav-bg");
-    this.elemList = document.getElementById("nav-list");
+    this.navBg = document.getElementById("nav-bg");
+    this.navList = document.getElementById("nav-list");
     this.displayRecipeCallback = displayRecipeCallback;
     this.openEditorToAddCallback = openEditorToAddCallback;
     document.getElementById("nav-menu-button").onclick = this.hide;
     document.getElementById("bg-menu-button").onclick = this.show;
     document.getElementById("nav-add-button").onclick = this.clickedAdd;
     arr.forEach((obj) => this.add(obj));
-    this.elemList.animate(
+    this.navList.animate(
       {
         opacity: [0, 1],
       },
@@ -215,41 +203,35 @@ class Nav {
 
   show() {
     this.nav.classList.remove("hidden");
-    this.bg.classList.remove("collapsed");
+    this.navBg.classList.remove("collapsed");
   }
 
   hide() {
     this.nav.classList.add("hidden");
-    this.bg.classList.add("collapsed");
+    this.navBg.classList.add("collapsed");
   }
 
   add(obj) {
     const displayRecipeCallback = this.displayRecipeCallback;
+
     const item = document.createElement("li");
     item.className = "nav-item";
     item.id = "nav-item-" + obj.id;
 
-    const button = document.createElement("button");
-    button.className = "nav-item-button";
-    button.type = "button";
-    button.innerText = obj.name;
+    let rating;
+    if (obj.rating.votes > 0)
+      rating = (obj.rating.sum / obj.rating.votes).toFixed(1);
+    else rating = "-";
+
+    item.innerHTML = `<button class="nav-item-button" type="button">${obj.name}</button>
+    <div class="nav-item-rating">${rating}<div class="rating-tooltip">${obj.rating.votes} votes</div>
+    </div>`;
+    this.navList.appendChild(item);
+
+    const button = item.querySelector(".nav-item-button");
     button.onclick = function () {
       displayRecipeCallback(obj);
     };
-    item.appendChild(button);
-
-    const divRating = document.createElement("div");
-    divRating.className = "nav-item-rating";
-    if (obj.rating.votes > 0)
-      divRating.innerText = (obj.rating.sum / obj.rating.votes).toFixed(1);
-    else divRating.innerText = "-";
-    item.appendChild(divRating);
-
-    const divTooltip = document.createElement("div");
-    divTooltip.className = "rating-tooltip";
-    divTooltip.innerText = obj.rating.votes + " votes";
-    divRating.appendChild(divTooltip);
-    this.elemList.appendChild(item);
   }
 
   update(obj) {
@@ -257,7 +239,7 @@ class Nav {
     const button = document
       .getElementById("nav-item-" + obj.id)
       .querySelector(".nav-item-button");
-    button.innerText = obj.name;
+    button.textContent = obj.name;
     button.onclick = function () {
       displayRecipeCallback(obj);
     };
@@ -291,17 +273,17 @@ class Popups {
   constructor(saveRecipeCallback, deleteRecipeCallback) {
     this.open = this.open.bind(this);
     this.close = this.close.bind(this);
-    this.element = document.getElementById("popup");
+    this.popup = document.getElementById("popup");
     this.editor = new EditorPopup(this.open, this.close, saveRecipeCallback);
     this.delete = new DeletePopup(this.open, this.close, deleteRecipeCallback);
   }
 
   open() {
-    this.element.classList.add("visible");
+    this.popup.classList.add("visible");
   }
 
   close() {
-    this.element.classList.remove("visible");
+    this.popup.classList.remove("visible");
   }
 }
 
@@ -375,29 +357,10 @@ class EditorPopup extends PopupWindow {
   addStep() {
     const item = document.createElement("li");
     item.className = "input-steps-item";
-
-    const stepInput = document.createElement("input");
-    stepInput.type = "text";
-    stepInput.className = "input-step";
-    stepInput.id = "input-step-" + (this.stepsElement.childElementCount + 1);
-    item.appendChild(stepInput);
-
-    const timeLabel = document.createElement("label");
-    timeLabel.className = "input-time-label";
-    timeLabel.htmlFor =
-      "input-time-" + (this.stepsElement.childElementCount + 1);
-    timeLabel.innerText = "minutes:";
-    item.appendChild(timeLabel);
-
-    const timeInput = document.createElement("input");
-    timeInput.className = "input-time";
-    timeInput.id = "input-time-" + (this.stepsElement.childElementCount + 1);
-    timeInput.type = "number";
-    timeInput.min = "5";
-    timeInput.max = "180";
-    timeInput.step = "5";
-    item.appendChild(timeInput);
-
+    const nextId = this.stepsElement.childElementCount + 1;
+    item.innerHTML = `<input type="text" class="input-step" id="input-step-${nextId}">
+    <label class="input-time-label" for="input-time-${nextId}">minutes:</label>
+    <input class="input-time" id="input-time-${nextId}" type="number" min="5" max="180" step="5">`;
     this.stepsElement.appendChild(item);
 
     item.animate(
@@ -595,6 +558,7 @@ class RecipeApp {
 
   deleteRecipe(obj) {
     this.arr = this.arr.filter((item) => item !== obj);
+    this.saveRecipesToLocalMemory();
     this.mainWindow.close("fade");
     this.nav.remove(obj);
   }
