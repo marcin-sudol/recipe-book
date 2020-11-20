@@ -32,7 +32,8 @@ $z-index-nav: 5;
 $z-index-nav-tooltip: 10;
 $z-index-recipe-sm: 15;
 $z-index-add-edit: 20;
-$z-index-popup: 25;
+$z-index-popup-container: 25;
+$z-index-popup-window: 30;
 
 @mixin btn($bg-color, $border-color, $color, $hover-color) {
   padding: 10px;
@@ -52,6 +53,16 @@ $z-index-popup: 25;
   &:hover i {
     color: $hover-color;
   }
+}
+
+@mixin popup-window {
+  display: none;
+  padding: $main-spacing;
+  max-width: calc(100% - 2 * #{$main-spacing});
+  z-index: $z-index-popup-window;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0px 6px 10px $mono-dark2;
 }
 
 // ------------------------------------------
@@ -76,6 +87,38 @@ button:hover {
 }
 
 // ------------------------------------------
+// APP BACKGROUND
+// ------------------------------------------
+#bg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+#bg-menu-button {
+  position: fixed;
+  left: $main-spacing;
+  top: $main-spacing;
+  padding: 5px;
+  background: none;
+  border: none;
+  i {
+    color: $mono-dark1;
+    font-size: 20px;
+  }
+  &:hover i {
+    color: $mono-dark2;
+  }
+}
+
+#bg-icon {
+  color: $mono-light2;
+  font-size: 80px;
+}
+
+// ------------------------------------------
 // NAV
 // ------------------------------------------
 #nav {
@@ -83,7 +126,7 @@ button:hover {
   width: $nav-width;
   padding: $main-spacing;
   z-index: $z-index-nav;
-  position: absolute;
+  position: fixed;
   left: 0px;
   top: 0px;
   background-color: $accent-ye2;
@@ -197,52 +240,6 @@ button:hover {
 }
 
 // ------------------------------------------
-// MAIN CONTAINER
-// ------------------------------------------
-#main {
-  display: flex;
-  flex-direction: row;
-  height: 100vh;
-  width: 100vw;
-}
-
-#nav-bg {
-  flex: 0 0 $nav-width;
-  padding: $main-spacing;
-  position: relative;
-  transition: flex-basis $animation-time ease-out;
-  &.collapsed {
-    flex-basis: 0px;
-  }
-}
-
-#bg-menu-button {
-  padding: 5px;
-  background: none;
-  border: none;
-  i {
-    color: $mono-dark1;
-    font-size: 20px;
-  }
-  &:hover i {
-    color: $mono-dark2;
-  }
-}
-
-#recipe-bg {
-  flex: 1 1 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-}
-
-#bg-icon {
-  color: $mono-light2;
-  font-size: 80px;
-}
-
-// ------------------------------------------
 // RECIPE WINDOW
 // ------------------------------------------
 #recipe-window {
@@ -250,14 +247,19 @@ button:hover {
   flex-direction: row;
   flex-wrap: wrap;
   position: absolute;
-  left: 0px;
+  left: $main-spacing + 30px;
   top: 0px;
   margin: $main-spacing;
-  width: calc(100% - 2 * #{$main-spacing});
+  width: calc(100% - 30px - 3 * #{$main-spacing});
   background-color: white;
   border-radius: 5px;
   overflow: hidden;
   box-shadow: 0px 6px 10px $mono-medium;
+  transition: left $animation-time ease-out, width $animation-time ease-out;
+  &.narrower {
+    left: $nav-width;
+    width: calc(100% - #{$nav-width} - 2 * #{$main-spacing});
+  }
 }
 
 #recipe-header {
@@ -396,26 +398,6 @@ button:hover {
 // POPUP
 // ------------------------------------------
 
-#popup {
-  position: fixed;
-  left: 0;
-  top: 0;
-  height: 100vh;
-  width: 100vw;
-  z-index: $z-index-popup;
-  display: none;
-  &.visible {
-    display: block;
-  }
-}
-
-#popup-bg {
-  height: 100%;
-  width: 100%;
-  opacity: 0;
-  background-color: $mono-dark1;
-}
-
 @keyframes popup-bg {
   from {
     opacity: 0;
@@ -425,30 +407,39 @@ button:hover {
   }
 }
 
-#popup.visible #popup-bg {
+.popup-container {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: $z-index-popup-container;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  &.visible {
+    display: flex;
+  }
+}
+
+.popup-bg {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  opacity: 0;
+  background-color: $mono-dark1;
+}
+
+.popup-container.visible .popup-bg {
   animation: popup-bg $animation-time;
   opacity: 0.7;
 }
 
-#popup-container {
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-#popup-delete {
-  display: none;
-  padding: $main-spacing;
+#popup-delete-window {
+  @include popup-window();
   width: 300px;
-  max-width: calc(100% - 2 * #{$main-spacing});
-  background-color: white;
-  border-radius: 5px;
-  box-shadow: 0px 6px 10px $mono-dark2;
 }
 
 #popup-delete-message {
@@ -470,14 +461,9 @@ button:hover {
   @include btn($mono-dark1, $mono-dark1, white, $mono-dark1);
 }
 
-#popup-edit {
-  display: none;
-  padding: $main-spacing;
+#popup-edit-window {
+  @include popup-window();
   width: 800px;
-  max-width: calc(100% - 2 * #{$main-spacing});
-  background-color: white;
-  border-radius: 5px;
-  box-shadow: 0px 6px 10px $mono-dark2;
 }
 
 #popup-edit-title {
@@ -616,10 +602,6 @@ textarea {
 }
 
 @media (max-width: $breakdown-sm) {
-  #nav-bg {
-    display: none;
-  }
-
   #nav {
     width: 100vw;
     &.hidden {
@@ -629,6 +611,12 @@ textarea {
 
   #nav-menu-button {
     display: none;
+  }
+
+  #recipe-window,
+  #recipe-window.narrower {
+    left: 0px;
+    width: calc(100% - 2 * #{$main-spacing});
   }
 
   #recipe-window {

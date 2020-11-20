@@ -12,12 +12,36 @@ body {
 button:hover {
   cursor: pointer; }
 
+#bg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw; }
+
+#bg-menu-button {
+  position: fixed;
+  left: 20px;
+  top: 20px;
+  padding: 5px;
+  background: none;
+  border: none; }
+  #bg-menu-button i {
+    color: #555;
+    font-size: 20px; }
+  #bg-menu-button:hover i {
+    color: #333; }
+
+#bg-icon {
+  color: #ddd;
+  font-size: 80px; }
+
 #nav {
   height: 100vh;
   width: 300px;
   padding: 20px;
   z-index: 5;
-  position: absolute;
+  position: fixed;
   left: 0px;
   top: 0px;
   background-color: #f9c74f;
@@ -115,54 +139,23 @@ button:hover {
     background-color: #43aa8b;
     box-shadow: 0px 0px 4px 2px white; }
 
-#main {
-  display: flex;
-  flex-direction: row;
-  height: 100vh;
-  width: 100vw; }
-
-#nav-bg {
-  flex: 0 0 300px;
-  padding: 20px;
-  position: relative;
-  transition: flex-basis 0.4s ease-out; }
-  #nav-bg.collapsed {
-    flex-basis: 0px; }
-
-#bg-menu-button {
-  padding: 5px;
-  background: none;
-  border: none; }
-  #bg-menu-button i {
-    color: #555;
-    font-size: 20px; }
-  #bg-menu-button:hover i {
-    color: #333; }
-
-#recipe-bg {
-  flex: 1 1 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative; }
-
-#bg-icon {
-  color: #ddd;
-  font-size: 80px; }
-
 #recipe-window {
   display: none;
   flex-direction: row;
   flex-wrap: wrap;
   position: absolute;
-  left: 0px;
+  left: 50px;
   top: 0px;
   margin: 20px;
-  width: calc(100% - 2 * 20px);
+  width: calc(100% - 30px - 3 * 20px);
   background-color: white;
   border-radius: 5px;
   overflow: hidden;
-  box-shadow: 0px 6px 10px #aaa; }
+  box-shadow: 0px 6px 10px #aaa;
+  transition: left 0.4s ease-out, width 0.4s ease-out; }
+  #recipe-window.narrower {
+    left: 300px;
+    width: calc(100% - 300px - 2 * 20px); }
 
 #recipe-header {
   display: flex;
@@ -306,50 +299,46 @@ button:hover {
   #recipe-delete-button:hover i {
     color: #f94144; }
 
-#popup {
+@keyframes popup-bg {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 0.7; } }
+.popup-container {
   position: fixed;
   left: 0;
   top: 0;
   height: 100vh;
   width: 100vw;
   z-index: 25;
-  display: none; }
-  #popup.visible {
-    display: block; }
+  display: none;
+  justify-content: center;
+  align-items: center; }
+  .popup-container.visible {
+    display: flex; }
 
-#popup-bg {
-  height: 100%;
-  width: 100%;
+.popup-bg {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
   opacity: 0;
   background-color: #555; }
 
-@keyframes popup-bg {
-  from {
-    opacity: 0; }
-  to {
-    opacity: 0.7; } }
-#popup.visible #popup-bg {
+.popup-container.visible .popup-bg {
   animation: popup-bg 0.4s;
   opacity: 0.7; }
 
-#popup-container {
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center; }
-
-#popup-delete {
+#popup-delete-window {
   display: none;
   padding: 20px;
-  width: 300px;
   max-width: calc(100% - 2 * 20px);
+  z-index: 30;
   background-color: white;
   border-radius: 5px;
-  box-shadow: 0px 6px 10px #333; }
+  box-shadow: 0px 6px 10px #333;
+  width: 300px; }
 
 #popup-delete-message {
   margin-top: 20px;
@@ -392,14 +381,15 @@ button:hover {
   #delete-cancel-button:hover i {
     color: #555; }
 
-#popup-edit {
+#popup-edit-window {
   display: none;
   padding: 20px;
-  width: 800px;
   max-width: calc(100% - 2 * 20px);
+  z-index: 30;
   background-color: white;
   border-radius: 5px;
-  box-shadow: 0px 6px 10px #333; }
+  box-shadow: 0px 6px 10px #333;
+  width: 800px; }
 
 #popup-edit-title {
   margin-top: 20px;
@@ -548,9 +538,6 @@ textarea {
   #steps {
     width: 100%; } }
 @media (max-width: 800px) {
-  #nav-bg {
-    display: none; }
-
   #nav {
     width: 100vw; }
     #nav.hidden {
@@ -558,6 +545,11 @@ textarea {
 
   #nav-menu-button {
     display: none; }
+
+  #recipe-window,
+  #recipe-window.narrower {
+    left: 0px;
+    width: calc(100% - 2 * 20px); }
 
   #recipe-window {
     z-index: 15; } }
