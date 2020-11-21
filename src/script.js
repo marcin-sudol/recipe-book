@@ -13,6 +13,7 @@ class Nav {
     this.show = this.show.bind(this);
     this.hide = this.hide.bind(this);
     this.clickedAdd = this.clickedAdd.bind(this);
+    this.clickedDisplay = this.clickedDisplay.bind(this);
     this.nav = document.getElementById("nav");
     this.navList = document.getElementById("nav-list");
     this.recipeWindow = document.getElementById("recipe-window");
@@ -44,11 +45,10 @@ class Nav {
   }
 
   add(obj) {
-    const displayRecipeCallback = this.displayRecipeCallback;
-
     const item = document.createElement("li");
     item.className = "nav-item";
     item.id = "nav-item-" + obj.id;
+    item.dataset.id = obj.id;
 
     let rating;
     if (obj.rating.votes > 0)
@@ -60,21 +60,14 @@ class Nav {
     </div>`;
     this.navList.appendChild(item);
 
-    const button = item.querySelector(".nav-item-button");
-    button.onclick = function () {
-      displayRecipeCallback(obj);
-    };
+    item.querySelector(".nav-item-button").onclick = this.clickedDisplay;
   }
 
   update(obj) {
-    const displayRecipeCallback = this.displayRecipeCallback;
     const button = document
       .getElementById("nav-item-" + obj.id)
       .querySelector(".nav-item-button");
     button.textContent = obj.name;
-    button.onclick = function () {
-      displayRecipeCallback(obj);
-    };
   }
 
   remove(obj) {
@@ -96,11 +89,16 @@ class Nav {
   clickedAdd() {
     this.openEditorToAddCallback();
   }
+
+  clickedDisplay(event) {
+    const id = parseInt(event.target.parentElement.dataset.id);
+    this.displayRecipeCallback(id);
+  }
 }
 // -------------------------------------------------------
 // RECIPE WINDOW
 // -------------------------------------------------------
-class MainWindow {
+class RecipeWindow {
   constructor(openEditorToEditCallback, openDeleteCallback) {
     this.show = this.show.bind(this);
     this.hide = this.hide.bind(this);
@@ -110,6 +108,7 @@ class MainWindow {
     this.fadeOut = this.fadeOut.bind(this);
     this.display = this.display.bind(this);
     this.close = this.close.bind(this);
+    this.clickedClose = this.clickedClose.bind(this);
     this.clickedEdit = this.clickedEdit.bind(this);
     this.clickedDelete = this.clickedDelete.bind(this);
     this.recipeWindow = document.getElementById("recipe-window");
@@ -119,7 +118,7 @@ class MainWindow {
     this.animationTime = 400;
     this.openEditorToEditCallback = openEditorToEditCallback;
     this.openDeleteCallback = openDeleteCallback;
-    document.getElementById("recipe-close-button").onclick = this.close;
+    document.getElementById("recipe-close-button").onclick = this.clickedClose;
     document.getElementById("recipe-edit-button").onclick = this.clickedEdit;
     document.getElementById(
       "recipe-delete-button"
@@ -262,6 +261,10 @@ class MainWindow {
     }
   }
 
+  clickedClose() {
+    this.close("slide");
+  }
+
   clickedEdit() {
     this.openEditorToEditCallback(this.obj);
   }
@@ -272,7 +275,7 @@ class MainWindow {
 }
 
 // -------------------------------------------------------
-// POPUP GENERAL CLASS (TO BE EXTENDED)
+// POPUP - GENERAL CLASS (TO BE EXTENDED)
 // -------------------------------------------------------
 class Popup {
   constructor() {
@@ -315,8 +318,10 @@ class EditPopup extends Popup {
     this.submit = this.submit.bind(this);
     this.popupContainer = document.getElementById("popup-edit-container");
     this.popupWindow = document.getElementById("popup-edit-window");
-    this.stepsElement = document.getElementById("input-steps-list");
-    this.validationElement = document.getElementById("form-validation-warning");
+    this.inputStepsList = document.getElementById("input-steps-list");
+    this.formValidationWarning = document.getElementById(
+      "form-validation-warning"
+    );
     this.obj = undefined;
     this.saveRecipeCallback = saveRecipeCallback;
     document.getElementById("add-step-button").onclick = this.addStep;
@@ -342,11 +347,11 @@ class EditPopup extends Popup {
   addStep() {
     const item = document.createElement("li");
     item.className = "input-steps-item";
-    const nextId = this.stepsElement.childElementCount + 1;
+    const nextId = this.inputStepsList.childElementCount + 1;
     item.innerHTML = `<input type="text" class="input-step" id="input-step-${nextId}">
     <label class="input-time-label" for="input-time-${nextId}">minutes:</label>
     <input class="input-time" id="input-time-${nextId}" type="number" min="5" max="180" step="5">`;
-    this.stepsElement.appendChild(item);
+    this.inputStepsList.appendChild(item);
 
     item.animate(
       [
@@ -362,8 +367,8 @@ class EditPopup extends Popup {
   }
 
   removeStep() {
-    if (this.stepsElement.childElementCount > 1) {
-      const item = this.stepsElement.lastElementChild;
+    if (this.inputStepsList.childElementCount > 1) {
+      const item = this.inputStepsList.lastElementChild;
 
       item
         .animate(
@@ -378,14 +383,14 @@ class EditPopup extends Popup {
           }
         )
         .finished.then(() => {
-          this.stepsElement.removeChild(item);
+          this.inputStepsList.removeChild(item);
         });
     }
   }
 
   removeAllSteps() {
-    while (this.stepsElement.childElementCount > 1) {
-      this.stepsElement.removeChild(this.stepsElement.lastElementChild);
+    while (this.inputStepsList.childElementCount > 1) {
+      this.inputStepsList.removeChild(this.inputStepsList.lastElementChild);
     }
   }
 
@@ -410,7 +415,7 @@ class EditPopup extends Popup {
 
   clear() {
     this.removeAllSteps();
-    this.validationElement.classList.remove("visible");
+    this.formValidationWarning.classList.remove("visible");
     const fields = document
       .getElementById("popup-edit-form")
       .querySelectorAll("input, textarea");
@@ -441,8 +446,8 @@ class EditPopup extends Popup {
     //     result = false;
     //   }
     // }
-    if (!result) this.validationElement.classList.add("visible");
-    else this.validationElement.classList.remove("visible");
+    if (!result) this.formValidationWarning.classList.add("visible");
+    else this.formValidationWarning.classList.remove("visible");
     return result;
   }
 
@@ -504,12 +509,16 @@ class DeletePopup extends Popup {
 }
 
 // -------------------------------------------------------
-// RECIPE APP
+// MAIN APP
 // -------------------------------------------------------
-class RecipeApp {
+class MainApp {
   constructor(arr) {
     this.deleteRecipe = this.deleteRecipe.bind(this);
     this.saveRecipe = this.saveRecipe.bind(this);
+    this.displayRecipe = this.displayRecipe.bind(this);
+    this.openEditorToAdd = this.openEditorToAdd.bind(this);
+    this.openEditorToEdit = this.openEditorToEdit.bind(this);
+    this.openDelete = this.openDelete.bind(this);
     this.startingArray = arr;
     this.storage = window.localStorage;
     const storedArr = this.storage.getItem("recipes");
@@ -521,31 +530,28 @@ class RecipeApp {
       // data in local storage
       this.arr = JSON.parse(storedArr);
     }
+    this.nav = new Nav(this.arr, this.displayRecipe, this.openEditorToAdd);
+
+    this.recipeWindow = new RecipeWindow(
+      this.openEditorToEdit,
+      this.openDelete
+    );
+
     this.editPopup = new EditPopup(this.saveRecipe);
     this.deletePopup = new DeletePopup(this.deleteRecipe);
-
-    this.mainWindow = new MainWindow(
-      this.editPopup.openToEdit,
-      this.deletePopup.open
-    );
-    this.nav = new Nav(
-      this.arr,
-      this.mainWindow.display,
-      this.editPopup.openToAdd
-    );
   }
 
   addRecipe(obj) {
     this.arr.push(obj);
     this.saveRecipesToLocalMemory();
     this.nav.add(obj);
-    this.mainWindow.display(obj, "no", "fade");
+    this.recipeWindow.display(obj, "no", "fade");
   }
 
   deleteRecipe(obj) {
     this.arr = this.arr.filter((item) => item !== obj);
     this.saveRecipesToLocalMemory();
-    this.mainWindow.close("fade");
+    this.recipeWindow.close("fade");
     this.nav.remove(obj);
   }
 
@@ -558,12 +564,29 @@ class RecipeApp {
       this.arr[index] = obj;
       this.saveRecipesToLocalMemory();
       this.nav.update(obj);
-      this.mainWindow.display(obj, "no", "fade");
+      this.recipeWindow.display(obj, "no", "fade");
     }
   }
 
   saveRecipesToLocalMemory() {
     this.storage.setItem("recipes", JSON.stringify(this.arr));
+  }
+
+  displayRecipe(id) {
+    const obj = this.arr.find((item) => item.id === id);
+    this.recipeWindow.display(obj, "slide", "slide");
+  }
+
+  openEditorToAdd() {
+    this.editPopup.openToAdd();
+  }
+
+  openEditorToEdit(obj) {
+    this.editPopup.openToEdit(obj);
+  }
+
+  openDelete(obj) {
+    this.deletePopup.open(obj);
   }
 }
 
@@ -637,5 +660,5 @@ let recipes = [
 ];
 
 window.addEventListener("load", () => {
-  const app = new RecipeApp(recipes);
+  const app = new MainApp(recipes);
 });
