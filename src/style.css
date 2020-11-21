@@ -281,7 +281,7 @@ button:hover {
   #recipe-edit-button:hover i {
     color: #555; }
 
-#recipe-rating-box {
+#recipe-rating-container {
   display: flex;
   flex-direction: row;
   padding: 0px 10px;
