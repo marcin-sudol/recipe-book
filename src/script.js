@@ -43,7 +43,7 @@ class Nav {
     this.recipeWindow.classList.remove("narrower");
   }
 
-  formatRating(obj) {
+  getRating(obj) {
     let rating;
     if (obj.rating.votes > 0)
       rating = (obj.rating.sum / obj.rating.votes).toFixed(1);
@@ -60,9 +60,9 @@ class Nav {
     item.innerHTML = `<button class="nav-item-button" type="button">${
       obj.name
     }</button>
-    <div class="nav-item-rating">${this.formatRating(
+    <div class="nav-item-rating"><span class="rating-value">${this.getRating(
       obj
-    )}<div class="rating-tooltip">${obj.rating.votes} votes</div>
+    )}</span><div class="rating-tooltip">${obj.rating.votes} votes</div>
     </div>`;
     this.navList.appendChild(item);
 
@@ -72,12 +72,9 @@ class Nav {
   updateItem(obj) {
     const item = document.getElementById("nav-item-" + obj.id);
     item.querySelector(".nav-item-button").textContent = obj.name;
-
-    // fix this
-    // item.querySelector(".nav-item-rating").textContent = this.formatRating(obj);
-    // log(obj.rating.votes + " votes");
-    // item.querySelector(".rating-tooltip").textContent =
-    // //   obj.rating.votes + " votes";
+    item.querySelector(".rating-value").textContent = this.getRating(obj);
+    item.querySelector(".rating-tooltip").textContent =
+      obj.rating.votes + " votes";
   }
 
   removeItem(obj) {
@@ -522,7 +519,6 @@ class EditPopup extends Popup {
       let val = parseInt(elem.value);
       if (Number.isInteger(val))
         if (val < elem.min || val > elem.max) {
-          log(val);
           elem.classList.add("incorrect");
           result = false;
         }
@@ -601,12 +597,12 @@ class MainApp {
     this.displayRecipe = this.displayRecipe.bind(this);
     this.openEditor = this.openEditor.bind(this);
     this.openDelete = this.openDelete.bind(this);
-    this.startingArray = arr;
+    this.startingArrayString = JSON.stringify(arr);
     this.storage = window.localStorage;
     const storedArr = this.storage.getItem("recipes");
     if (storedArr === null) {
       // no data in local storate
-      this.arr = this.startingArray.slice();
+      this.arr = JSON.parse(this.startingArrayString);
       this.saveRecipesToLocalMemory();
     } else {
       // data in local storage
@@ -662,7 +658,7 @@ class MainApp {
 
   resetRecipes() {
     this.recipeWindow.close("fade");
-    this.arr = this.startingArray.slice();
+    this.arr = JSON.parse(this.startingArrayString);
     this.saveRecipesToLocalMemory();
     this.nav.updateList(this.arr, "fade");
   }

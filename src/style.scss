@@ -198,9 +198,9 @@ button:hover {
   text-align: center;
   position: relative;
   border-radius: 5px;
-  &:hover {
-    text-decoration: underline dotted;
-  }
+}
+.nav-item-rating:hover > .rating-value {
+  text-decoration: underline dotted;
 }
 
 .rating-tooltip {
@@ -221,7 +221,7 @@ button:hover {
   transition: opacity 0.2s 0.4s;
 }
 
-.nav-item-rating:hover .rating-tooltip {
+.nav-item-rating:hover > .rating-tooltip {
   visibility: visible;
   opacity: 0.9;
 }
