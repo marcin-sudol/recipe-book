@@ -153,9 +153,9 @@ button:hover {
   background: none; }
   #nav-reset-button i {
     font-size: 30px;
-    color: #555; }
+    color: #f4f4f4; }
     #nav-reset-button i:hover {
-      color: #333; }
+      color: white; }
 
 #recipe-window {
   display: none;

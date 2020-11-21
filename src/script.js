@@ -43,19 +43,26 @@ class Nav {
     this.recipeWindow.classList.remove("narrower");
   }
 
+  formatRating(obj) {
+    let rating;
+    if (obj.rating.votes > 0)
+      rating = (obj.rating.sum / obj.rating.votes).toFixed(1);
+    else rating = "-";
+    return rating;
+  }
+
   addItem(obj) {
     const item = document.createElement("li");
     item.className = "nav-item";
     item.id = "nav-item-" + obj.id;
     item.dataset.id = obj.id;
 
-    let rating;
-    if (obj.rating.votes > 0)
-      rating = (obj.rating.sum / obj.rating.votes).toFixed(1);
-    else rating = "-";
-
-    item.innerHTML = `<button class="nav-item-button" type="button">${obj.name}</button>
-    <div class="nav-item-rating">${rating}<div class="rating-tooltip">${obj.rating.votes} votes</div>
+    item.innerHTML = `<button class="nav-item-button" type="button">${
+      obj.name
+    }</button>
+    <div class="nav-item-rating">${this.formatRating(
+      obj
+    )}<div class="rating-tooltip">${obj.rating.votes} votes</div>
     </div>`;
     this.navList.appendChild(item);
 
@@ -63,10 +70,14 @@ class Nav {
   }
 
   updateItem(obj) {
-    const button = document
-      .getElementById("nav-item-" + obj.id)
-      .querySelector(".nav-item-button");
-    button.textContent = obj.name;
+    const item = document.getElementById("nav-item-" + obj.id);
+    item.querySelector(".nav-item-button").textContent = obj.name;
+
+    // fix this
+    // item.querySelector(".nav-item-rating").textContent = this.formatRating(obj);
+    // log(obj.rating.votes + " votes");
+    // item.querySelector(".rating-tooltip").textContent =
+    // //   obj.rating.votes + " votes";
   }
 
   removeItem(obj) {
@@ -128,7 +139,7 @@ class Nav {
 // RECIPE WINDOW
 // -------------------------------------------------------
 class RecipeWindow {
-  constructor(openEditorCallback, openDeleteCallback) {
+  constructor(openEditorCallback, openDeleteCallback, saveRecipeCallback) {
     this.show = this.show.bind(this);
     this.hide = this.hide.bind(this);
     this.slideIn = this.slideIn.bind(this);
@@ -140,6 +151,7 @@ class RecipeWindow {
     this.clickedClose = this.clickedClose.bind(this);
     this.clickedEdit = this.clickedEdit.bind(this);
     this.clickedDelete = this.clickedDelete.bind(this);
+    this.clickedLocalRating = this.clickedLocalRating.bind(this);
     this.recipeWindow = document.getElementById("recipe-window");
     this.recipeName = document.getElementById("recipe-name");
     this.ingredientsList = document.getElementById("ingredients-list");
@@ -156,13 +168,14 @@ class RecipeWindow {
     this.animationTime = 400;
     this.openEditorCallback = openEditorCallback;
     this.openDeleteCallback = openDeleteCallback;
+    this.saveRecipeCallback = saveRecipeCallback;
     document.getElementById("recipe-close-button").onclick = this.clickedClose;
     document.getElementById("recipe-edit-button").onclick = this.clickedEdit;
     document.getElementById(
       "recipe-delete-button"
     ).onclick = this.clickedDelete;
     for (let button of this.recipeRatingButtons)
-      button.onclick = this.clickedRating;
+      button.onclick = this.clickedLocalRating;
   }
 
   update(obj) {
@@ -323,8 +336,22 @@ class RecipeWindow {
     this.openDeleteCallback(this.obj);
   }
 
-  clickedRating() {
-    log("rated");
+  clickedLocalRating(event) {
+    let localRating;
+    if (event.target.tagName === "BUTTON")
+      localRating = parseInt(event.target.dataset.id);
+    else localRating = parseInt(event.target.parentElement.dataset.id);
+    if (this.obj.rating.hasOwnProperty("local")) {
+      this.obj.rating.sum -= this.obj.rating.local;
+      this.obj.rating.sum += localRating;
+      this.obj.rating.local = localRating;
+    } else {
+      this.obj.rating.sum += localRating;
+      this.obj.rating.local = localRating;
+      this.obj.rating.votes += 1;
+    }
+    this.updateLocalRating();
+    this.saveRecipeCallback(this.obj);
   }
 }
 
@@ -592,7 +619,11 @@ class MainApp {
       this.resetRecipes
     );
 
-    this.recipeWindow = new RecipeWindow(this.openEditor, this.openDelete);
+    this.recipeWindow = new RecipeWindow(
+      this.openEditor,
+      this.openDelete,
+      this.saveRecipe
+    );
 
     this.editPopup = new EditPopup(this.saveRecipe);
     this.deletePopup = new DeletePopup(this.deleteRecipe);
@@ -672,7 +703,7 @@ let recipes = [
     rating: {
       sum: 28,
       votes: 6,
-      local: 4,
+      local: 2,
     },
   },
 
@@ -697,7 +728,7 @@ let recipes = [
     rating: {
       sum: 45,
       votes: 12,
-      local: 1,
+      local: 4,
     },
   },
   {
