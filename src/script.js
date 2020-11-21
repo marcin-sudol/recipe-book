@@ -440,12 +440,17 @@ class EditPopup extends Popup {
         result = false;
       }
     }
-    // for (let elem of minutes) {
-    //   if (elem.value < elem.min || elem.value > elem.max) {
-    //     elem.classList.add("incorrect");
-    //     result = false;
-    //   }
-    // }
+
+    for (let elem of minutes) {
+      let val = parseInt(elem.value);
+      if (Number.isInteger(val))
+        if (val < elem.min || val > elem.max) {
+          log(val);
+          elem.classList.add("incorrect");
+          result = false;
+        }
+    }
+
     if (!result) this.formValidationWarning.classList.add("visible");
     else this.formValidationWarning.classList.remove("visible");
     return result;
