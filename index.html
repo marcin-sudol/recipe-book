@@ -59,6 +59,11 @@
       </header>
       <ul id="nav-list"></ul>
       <button id="nav-add-button" type="button">add new recipe</button>
+      <div id="nav-reset-container">
+        <button id="nav-reset-button" type="button">
+          <i class="fas fa-undo"></i>
+        </button>
+      </div>
     </nav>
 
     <!--------------------------------------------------------
@@ -86,19 +91,7 @@
         <div id="recipe-rating-box">
           <button
             class="recipe-rating-button"
-            id="recipe-rating-5"
-            type="button"
-          >
-            <i class="fas fa-star"></i></button
-          ><button
-            class="recipe-rating-button"
-            id="recipe-rating-4"
-            type="button"
-          >
-            <i class="fas fa-star"></i></button
-          ><button
-            class="recipe-rating-button"
-            id="recipe-rating-3"
+            id="recipe-rating-1"
             type="button"
           >
             <i class="fas fa-star"></i></button
@@ -110,7 +103,19 @@
             <i class="fas fa-star"></i></button
           ><button
             class="recipe-rating-button"
-            id="recipe-rating-1"
+            id="recipe-rating-3"
+            type="button"
+          >
+            <i class="fas fa-star"></i></button
+          ><button
+            class="recipe-rating-button"
+            id="recipe-rating-4"
+            type="button"
+          >
+            <i class="fas fa-star"></i></button
+          ><button
+            class="recipe-rating-button"
+            id="recipe-rating-5"
             type="button"
           >
             <i class="fas fa-star"></i>
@@ -123,25 +128,7 @@
     </div>
 
     <!--------------------------------------------------------
-    DELETE POPUP
-    --------------------------------------------------------->
-    <div id="popup-delete-container" class="popup-container">
-      <div id="popup-delete-bg" class="popup-bg"></div>
-      <div id="popup-delete-window" class="popup-window">
-        <p id="popup-delete-message">Remove recipe from the list?</p>
-        <div id="popup-delete-menu">
-          <button id="delete-ok-button" type="button">
-            <i class="fas fa-check"></i> OK
-          </button>
-          <button id="delete-cancel-button" type="button">
-            <i class="fas fa-times"></i> Cancel
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!--------------------------------------------------------
-    EDIT POPUP
+      EDIT POPUP
     --------------------------------------------------------->
     <div id="popup-edit-container" class="popup-container">
       <div id="popup-edit-bg" class="popup-bg"></div>
@@ -183,6 +170,24 @@
             <i class="fas fa-undo"></i> Clear
           </button>
           <button id="edit-cancel-button" type="button">
+            <i class="fas fa-times"></i> Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!--------------------------------------------------------
+        DELETE POPUP
+        --------------------------------------------------------->
+    <div id="popup-delete-container" class="popup-container">
+      <div id="popup-delete-bg" class="popup-bg"></div>
+      <div id="popup-delete-window" class="popup-window">
+        <p id="popup-delete-message">Remove recipe from the list?</p>
+        <div id="popup-delete-menu">
+          <button id="delete-ok-button" type="button">
+            <i class="fas fa-check"></i> OK
+          </button>
+          <button id="delete-cancel-button" type="button">
             <i class="fas fa-times"></i> Cancel
           </button>
         </div>

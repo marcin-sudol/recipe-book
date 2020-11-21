@@ -128,6 +128,7 @@ button:hover {
 #nav-add-button {
   display: block;
   padding: 15px;
+  margin-bottom: 20px;
   width: 100%;
   background-color: #555;
   color: white;
@@ -138,6 +139,23 @@ button:hover {
   #nav-add-button:hover {
     background-color: #43aa8b;
     box-shadow: 0px 0px 4px 2px white; }
+
+#nav-reset-container {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: 20px;
+  text-align: center; }
+
+#nav-reset-button {
+  padding: 10px;
+  border: none;
+  background: none; }
+  #nav-reset-button i {
+    font-size: 30px;
+    color: #555; }
+    #nav-reset-button i:hover {
+      color: #333; }
 
 #recipe-window {
   display: none;
@@ -265,7 +283,7 @@ button:hover {
 
 #recipe-rating-box {
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: row;
   padding: 0px 10px;
   border: 1px solid #ddd;
   border-radius: 5px; }
@@ -277,11 +295,8 @@ button:hover {
   .recipe-rating-button i {
     font-size: 24px;
     color: #ddd; }
-
-.recipe-rating-button:hover > i,
-.recipe-rating-button:hover ~ .recipe-rating-button > i {
-  color: #f8961e;
-  text-shadow: 0 0 4px #aaa; }
+  .recipe-rating-button.checked > i {
+    color: #43aa8b; }
 
 #recipe-delete-button {
   padding: 10px;
@@ -299,11 +314,6 @@ button:hover {
   #recipe-delete-button:hover i {
     color: #f94144; }
 
-@keyframes popup-bg {
-  from {
-    opacity: 0; }
-  to {
-    opacity: 0.7; } }
 .popup-container {
   position: fixed;
   left: 0;
@@ -317,6 +327,11 @@ button:hover {
   .popup-container.visible {
     display: flex; }
 
+@keyframes popup-bg {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 0.7; } }
 .popup-bg {
   position: fixed;
   left: 0;

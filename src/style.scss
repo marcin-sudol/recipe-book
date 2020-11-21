@@ -1,3 +1,7 @@
+// * {
+//   border: 1px solid;
+// }
+
 // ------------------------------------------
 // VARIABLES
 // ------------------------------------------
@@ -75,7 +79,6 @@ $z-index-popup-window: 30;
   font-family: $font-normal;
   font-size: 16px;
   color: $mono-dark1;
-  // border: 1px solid;
 }
 
 body {
@@ -171,7 +174,7 @@ button:hover {
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: $main-spacing;
   background-color: $accent-ye1;
   border-radius: 5px;
   transition: background-color 0.2s;
@@ -226,6 +229,7 @@ button:hover {
 #nav-add-button {
   display: block;
   padding: 15px;
+  margin-bottom: $main-spacing;
   width: 100%;
   background-color: $mono-dark1;
   color: white;
@@ -236,6 +240,27 @@ button:hover {
   &:hover {
     background-color: $accent-gr2;
     box-shadow: 0px 0px 4px 2px white;
+  }
+}
+
+#nav-reset-container {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: $main-spacing;
+  text-align: center;
+}
+
+#nav-reset-button {
+  padding: 10px;
+  border: none;
+  background: none;
+  i {
+    font-size: 30px;
+    color: $mono-dark1;
+    &:hover {
+      color: $mono-dark2;
+    }
   }
 }
 
@@ -369,7 +394,7 @@ button:hover {
 
 #recipe-rating-box {
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: row;
   padding: 0px 10px;
   border: 1px solid $mono-light2;
   border-radius: 5px;
@@ -383,11 +408,9 @@ button:hover {
     font-size: 24px;
     color: $mono-light2;
   }
-}
-.recipe-rating-button:hover > i,
-.recipe-rating-button:hover ~ .recipe-rating-button > i {
-  color: $accent-or1;
-  text-shadow: 0 0 4px $mono-medium;
+  &.checked > i {
+    color: $accent-gr2;
+  }
 }
 
 #recipe-delete-button {
@@ -397,15 +420,6 @@ button:hover {
 // ------------------------------------------
 // POPUP
 // ------------------------------------------
-
-@keyframes popup-bg {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 0.7;
-  }
-}
 
 .popup-container {
   position: fixed;
@@ -419,6 +433,15 @@ button:hover {
   align-items: center;
   &.visible {
     display: flex;
+  }
+}
+
+@keyframes popup-bg {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.7;
   }
 }
 

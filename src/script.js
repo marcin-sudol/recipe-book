@@ -9,29 +9,28 @@ function log(str) {
 // NAV
 // -------------------------------------------------------
 class Nav {
-  constructor(arr, displayRecipeCallback, openEditorToAddCallback) {
+  constructor(
+    arr,
+    displayRecipeCallback,
+    openEditorToAddCallback,
+    resetRecipesCallback
+  ) {
     this.show = this.show.bind(this);
     this.hide = this.hide.bind(this);
-    this.clickedAdd = this.clickedAdd.bind(this);
-    this.clickedDisplay = this.clickedDisplay.bind(this);
+    this.clickedAddRecipe = this.clickedAddRecipe.bind(this);
+    this.clickedDisplayRecipe = this.clickedDisplayRecipe.bind(this);
+    this.clickedResetList = this.clickedResetList.bind(this);
     this.nav = document.getElementById("nav");
     this.navList = document.getElementById("nav-list");
     this.recipeWindow = document.getElementById("recipe-window");
     this.displayRecipeCallback = displayRecipeCallback;
     this.openEditorToAddCallback = openEditorToAddCallback;
+    this.resetRecipesCallback = resetRecipesCallback;
     document.getElementById("nav-menu-button").onclick = this.hide;
     document.getElementById("bg-menu-button").onclick = this.show;
-    document.getElementById("nav-add-button").onclick = this.clickedAdd;
-    arr.forEach((obj) => this.add(obj));
-    this.navList.animate(
-      {
-        opacity: [0, 1],
-      },
-      {
-        duration: 400,
-        easing: "ease-out",
-      }
-    );
+    document.getElementById("nav-add-button").onclick = this.clickedAddRecipe;
+    document.getElementById("nav-reset-button").onclick = this.clickedResetList;
+    this.addList(arr, "fade");
   }
 
   show() {
@@ -44,7 +43,7 @@ class Nav {
     this.recipeWindow.classList.remove("narrower");
   }
 
-  add(obj) {
+  addItem(obj) {
     const item = document.createElement("li");
     item.className = "nav-item";
     item.id = "nav-item-" + obj.id;
@@ -60,17 +59,17 @@ class Nav {
     </div>`;
     this.navList.appendChild(item);
 
-    item.querySelector(".nav-item-button").onclick = this.clickedDisplay;
+    item.querySelector(".nav-item-button").onclick = this.clickedDisplayRecipe;
   }
 
-  update(obj) {
+  updateItem(obj) {
     const button = document
       .getElementById("nav-item-" + obj.id)
       .querySelector(".nav-item-button");
     button.textContent = obj.name;
   }
 
-  remove(obj) {
+  removeItem(obj) {
     const item = document.getElementById("nav-item-" + obj.id);
     item
       .animate(
@@ -86,13 +85,43 @@ class Nav {
       });
   }
 
-  clickedAdd() {
+  addList(arr, styleIn) {
+    arr.forEach((obj) => this.addItem(obj));
+    if (styleIn === "fade") {
+      this.navList.animate(
+        {
+          opacity: [0, 1],
+        },
+        {
+          duration: 400,
+          easing: "ease-out",
+        }
+      );
+    }
+  }
+
+  clearList() {
+    while (this.navList.childElementCount > 0) {
+      this.navList.removeChild(this.navList.lastElementChild);
+    }
+  }
+
+  updateList(arr, styleIn) {
+    this.clearList();
+    this.addList(arr, styleIn);
+  }
+
+  clickedAddRecipe() {
     this.openEditorToAddCallback();
   }
 
-  clickedDisplay(event) {
+  clickedDisplayRecipe(event) {
     const id = parseInt(event.target.parentElement.dataset.id);
     this.displayRecipeCallback(id);
+  }
+
+  clickedResetList() {
+    this.resetRecipesCallback();
   }
 }
 // -------------------------------------------------------
@@ -520,6 +549,7 @@ class MainApp {
   constructor(arr) {
     this.deleteRecipe = this.deleteRecipe.bind(this);
     this.saveRecipe = this.saveRecipe.bind(this);
+    this.resetRecipes = this.resetRecipes.bind(this);
     this.displayRecipe = this.displayRecipe.bind(this);
     this.openEditorToAdd = this.openEditorToAdd.bind(this);
     this.openEditorToEdit = this.openEditorToEdit.bind(this);
@@ -535,7 +565,12 @@ class MainApp {
       // data in local storage
       this.arr = JSON.parse(storedArr);
     }
-    this.nav = new Nav(this.arr, this.displayRecipe, this.openEditorToAdd);
+    this.nav = new Nav(
+      this.arr,
+      this.displayRecipe,
+      this.openEditorToAdd,
+      this.resetRecipes
+    );
 
     this.recipeWindow = new RecipeWindow(
       this.openEditorToEdit,
@@ -549,15 +584,15 @@ class MainApp {
   addRecipe(obj) {
     this.arr.push(obj);
     this.saveRecipesToLocalMemory();
-    this.nav.add(obj);
-    this.recipeWindow.display(obj, "no", "fade");
+    this.nav.addItem(obj);
+    this.recipeWindow.display(obj, "slide", "slide");
   }
 
   deleteRecipe(obj) {
     this.arr = this.arr.filter((item) => item !== obj);
     this.saveRecipesToLocalMemory();
     this.recipeWindow.close("fade");
-    this.nav.remove(obj);
+    this.nav.removeItem(obj);
   }
 
   saveRecipe(obj) {
@@ -568,13 +603,20 @@ class MainApp {
       const index = this.arr.findIndex((item) => item.id === obj.id);
       this.arr[index] = obj;
       this.saveRecipesToLocalMemory();
-      this.nav.update(obj);
+      this.nav.updateItem(obj);
       this.recipeWindow.display(obj, "no", "fade");
     }
   }
 
   saveRecipesToLocalMemory() {
     this.storage.setItem("recipes", JSON.stringify(this.arr));
+  }
+
+  resetRecipes() {
+    this.recipeWindow.close("fade");
+    this.arr = this.startingArray.slice();
+    this.saveRecipesToLocalMemory();
+    this.nav.updateList(this.arr, "fade");
   }
 
   displayRecipe(id) {
@@ -641,6 +683,7 @@ let recipes = [
     rating: {
       sum: 45,
       votes: 12,
+      localRating: 4,
     },
   },
   {
