@@ -334,21 +334,28 @@ class RecipeWindow {
   }
 
   clickedLocalRating(event) {
+    let button;
     let localRating;
-    if (event.target.tagName === "BUTTON")
-      localRating = parseInt(event.target.dataset.id);
-    else localRating = parseInt(event.target.parentElement.dataset.id);
-    if (this.obj.rating.hasOwnProperty("local")) {
-      this.obj.rating.sum -= this.obj.rating.local;
-      this.obj.rating.sum += localRating;
-      this.obj.rating.local = localRating;
-    } else {
-      this.obj.rating.sum += localRating;
-      this.obj.rating.local = localRating;
-      this.obj.rating.votes += 1;
+    if (event.target.tagName === "BUTTON") {
+      button = event.target;
+    } else if (event.target.parentElement.tagName === "BUTTON") {
+      button = event.target.parentElement;
     }
-    this.updateLocalRating();
-    this.saveRecipeCallback(this.obj);
+
+    if (button !== undefined) {
+      localRating = parseInt(button.dataset.id);
+      if (this.obj.rating.hasOwnProperty("local")) {
+        this.obj.rating.sum -= this.obj.rating.local;
+        this.obj.rating.sum += localRating;
+        this.obj.rating.local = localRating;
+      } else {
+        this.obj.rating.sum += localRating;
+        this.obj.rating.local = localRating;
+        this.obj.rating.votes += 1;
+      }
+      this.updateLocalRating();
+      this.saveRecipeCallback(this.obj);
+    }
   }
 }
 
