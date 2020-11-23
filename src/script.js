@@ -20,6 +20,8 @@ class Nav {
     this.clickedAddRecipe = this.clickedAddRecipe.bind(this);
     this.clickedDisplayRecipe = this.clickedDisplayRecipe.bind(this);
     this.clickedResetList = this.clickedResetList.bind(this);
+    this.showTooltip = this.showTooltip.bind(this);
+    this.hideTooltip = this.hideTooltip.bind(this);
     this.nav = document.getElementById("nav");
     this.navList = document.getElementById("nav-list");
     this.recipeWindow = document.getElementById("recipe-window");
@@ -67,6 +69,9 @@ class Nav {
     this.navList.appendChild(item);
 
     item.querySelector(".nav-item-button").onclick = this.clickedDisplayRecipe;
+
+    item.querySelector(".nav-item-rating").onmouseenter = this.showTooltip;
+    item.querySelector(".nav-item-rating").onmouseleave = this.hideTooltip;
   }
 
   updateItem(obj) {
@@ -130,6 +135,19 @@ class Nav {
 
   clickedResetList() {
     this.resetRecipesCallback();
+  }
+
+  showTooltip(event) {
+    const tooltip = event.target.querySelector(".rating-tooltip");
+    const rect = event.target.getBoundingClientRect();
+    tooltip.style.left = rect.right - 10 + "px";
+    tooltip.style.top = rect.bottom - 10 + "px";
+    tooltip.classList.add("visible");
+  }
+
+  hideTooltip(event) {
+    const tooltip = event.target.querySelector(".rating-tooltip");
+    tooltip.classList.remove("visible");
   }
 }
 // -------------------------------------------------------

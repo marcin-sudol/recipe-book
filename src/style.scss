@@ -215,12 +215,16 @@ button:hover {
   text-decoration: underline dotted;
 }
 
+.rating-value {
+  cursor: default;
+}
+
 .rating-tooltip {
-  position: absolute;
+  position: fixed;
   padding: 10px;
   width: 80px;
-  right: 0;
-  bottom: 0;
+  left: 0;
+  top: 0;
   white-space: nowrap;
   z-index: $z-index-nav-tooltip;
   visibility: hidden;
@@ -231,11 +235,10 @@ button:hover {
   font-size: 12px;
   box-shadow: 0px 0px 5px white;
   transition: opacity 0.2s 0.4s;
-}
-
-.nav-item-rating:hover > .rating-tooltip {
-  visibility: visible;
-  opacity: 0.9;
+  &.visible {
+    visibility: visible;
+    opacity: 0.9;
+  }
 }
 
 #nav-add-button {
@@ -266,7 +269,7 @@ button:hover {
   border: none;
   background: none;
   i {
-    font-size: 30px;
+    font-size: 20px;
     color: $mono-light1;
     &:hover {
       color: white;
@@ -445,15 +448,6 @@ button:hover {
   }
 }
 
-@keyframes popup-bg {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 0.7;
-  }
-}
-
 .popup-bg {
   position: fixed;
   left: 0;
@@ -467,6 +461,15 @@ button:hover {
 .popup-container.visible .popup-bg {
   animation: popup-bg $animation-time;
   opacity: 0.7;
+}
+
+@keyframes popup-bg {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.7;
+  }
 }
 
 #popup-delete-window {
