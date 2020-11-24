@@ -308,6 +308,9 @@ button:hover {
     color: #ddd; }
   .recipe-rating-button.checked > i {
     color: #43aa8b; }
+  .recipe-rating-button.hovered > i {
+    color: #f9c74f;
+    text-shadow: 0px 0px 5px #f3722c; }
 
 #recipe-delete-button {
   padding: 10px;

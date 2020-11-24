@@ -423,6 +423,10 @@ button:hover {
   &.checked > i {
     color: $accent-gr2;
   }
+  &.hovered > i {
+    color: $accent-ye2;
+    text-shadow: 0px 0px 5px $accent-or2;
+  }
 }
 
 #recipe-delete-button {

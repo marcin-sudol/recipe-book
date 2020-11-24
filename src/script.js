@@ -167,6 +167,8 @@ class RecipeWindow {
     this.clickedEdit = this.clickedEdit.bind(this);
     this.clickedDelete = this.clickedDelete.bind(this);
     this.clickedLocalRating = this.clickedLocalRating.bind(this);
+    this.hoverRatingOn = this.hoverRatingOn.bind(this);
+    this.hoverRatingOff = this.hoverRatingOff.bind(this);
     this.recipeWindow = document.getElementById("recipe-window");
     this.recipeName = document.getElementById("recipe-name");
     this.ingredientsList = document.getElementById("ingredients-list");
@@ -189,8 +191,11 @@ class RecipeWindow {
     document.getElementById(
       "recipe-delete-button"
     ).onclick = this.clickedDelete;
-    for (let button of this.recipeRatingButtons)
+    for (let button of this.recipeRatingButtons) {
       button.onclick = this.clickedLocalRating;
+      button.onmouseenter = this.hoverRatingOn;
+      button.onmouseleave = this.hoverRatingOff;
+    }
   }
 
   update(obj) {
@@ -219,14 +224,26 @@ class RecipeWindow {
     this.updateLocalRating();
   }
 
-  updateLocalRating() {
+  updateLocalRating(style) {
     for (let i = 0; i < 5; i++)
       this.recipeRatingButtons[i].classList.remove("checked");
 
     if (this.obj.rating.hasOwnProperty("local")) {
       const localRating = parseInt(this.obj.rating.local);
       for (let i = 0; i < localRating; i++) {
-        this.recipeRatingButtons[i].classList.add("checked");
+        const button = this.recipeRatingButtons[i];
+        button.classList.add("checked");
+
+        if (style === "fade") {
+          button.classList.remove("hovered");
+          button.animate(
+            {
+              transform: ["scale(1.6)", "scale(1.0)"],
+              opacity: [0, 1],
+            },
+            { duration: 800, easing: "ease-out" }
+          );
+        }
       }
     }
   }
@@ -371,9 +388,21 @@ class RecipeWindow {
         this.obj.rating.local = localRating;
         this.obj.rating.votes += 1;
       }
-      this.updateLocalRating();
+      this.updateLocalRating("fade");
       this.saveRecipeCallback(this.obj);
     }
+  }
+
+  hoverRatingOn(event) {
+    const rating = event.target.dataset.id;
+    for (let i = 0; i < rating; i++)
+      this.recipeRatingButtons[i].classList.add("hovered");
+  }
+
+  hoverRatingOff(event) {
+    const rating = event.target.dataset.id;
+    for (let i = 0; i < rating; i++)
+      this.recipeRatingButtons[i].classList.remove("hovered");
   }
 }
 
