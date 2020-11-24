@@ -238,10 +238,10 @@ class RecipeWindow {
           button.classList.remove("hovered");
           button.animate(
             {
-              transform: ["scale(1.6)", "scale(1.0)"],
+              transform: ["scale(1.4)", "scale(1.0)"],
               opacity: [0, 1],
             },
-            { duration: 800, easing: "ease-out" }
+            { duration: 600, easing: "ease-out" }
           );
         }
       }
@@ -424,7 +424,7 @@ class Popup {
     this.popupWindow.animate(
       {
         opacity: [0, 1],
-        transform: ["translateY(-200px)", "translateY(0px)"],
+        transform: ["translateY(-100px)", "translateY(0px)"],
       },
       { duration: 400, easing: "ease-out" }
     );
