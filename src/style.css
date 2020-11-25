@@ -19,7 +19,7 @@ button:hover {
   align-items: center;
   height: 100vh;
   width: 100vw;
-  background: white; }
+  background: #f4f4f4; }
 
 #bg-menu-button {
   position: fixed;
@@ -33,7 +33,7 @@ button:hover {
     font-size: 20px; }
 
 #bg-icon {
-  color: #ddd;
+  color: #aaa;
   font-size: 40px; }
 
 #nav {
@@ -159,9 +159,7 @@ button:hover {
   background: none; }
   #nav-reset-button i {
     font-size: 20px;
-    color: #586ba4; }
-    #nav-reset-button i:hover {
-      color: white; }
+    color: white; }
 
 #recipe-window {
   display: none;
