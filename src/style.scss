@@ -20,7 +20,6 @@ $mono-medium: #aaa;
 $mono-dark1: #555;
 $mono-dark2: #333;
 
-// $font-em: "Comfortaa", cursive;
 $font-normal: "Open Sans", sans-serif;
 
 $breakdown-md: 1200px;
@@ -223,7 +222,6 @@ button:hover {
   visibility: hidden;
   opacity: 0;
   background-color: white;
-  // color: white;
   border-radius: 5px;
   font-size: 12px;
   transition: opacity 0.2s 0.4s;
@@ -273,18 +271,18 @@ button:hover {
 // ------------------------------------------
 #recipe-window {
   display: none;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: start;
   position: absolute;
-  left: $main-spacing + 30px;
+  left: 70px;
   top: 0px;
-  margin: $main-spacing;
-  width: calc(100% - 30px - 3 * #{$main-spacing});
+  min-height: 100%;
+  width: calc(100% - 70px);
   background-color: white;
   transition: left $animation-time ease-out, width $animation-time ease-out;
   &.narrower {
     left: $nav-width;
-    width: calc(100% - #{$nav-width} - 2 * #{$main-spacing});
+    width: calc(100% - #{$nav-width});
   }
 }
 
@@ -294,20 +292,26 @@ button:hover {
   padding: $main-spacing;
   width: 100%;
   text-align: center;
-  background-color: $accent-blue2;
+  border-bottom: 3px solid $accent-blue2;
 }
 
 #recipe-close-button {
   flex: 0 0 auto;
   position: absolute;
   right: $main-spacing;
-  @include btn(white, white, $accent-dark, $accent-dark);
+  @include btn($accent-blue2, $accent-blue2, white, $accent-dark);
 }
 
 #recipe-name {
   flex: 1 1 100%;
-  color: white;
+  color: $accent-blue2;
   font-size: 24px;
+}
+
+#recipe-content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 #ingredients {
@@ -374,7 +378,7 @@ button:hover {
   padding: 5px 10px;
   text-align: center;
   font-size: 14px;
-  background-color: $mono-light2;
+  background-color: $mono-light1;
   color: $accent-dark;
   border-radius: 999px;
   i {
@@ -384,6 +388,7 @@ button:hover {
 }
 
 #recipe-menu {
+  margin-top: auto;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -399,8 +404,6 @@ button:hover {
   display: flex;
   flex-direction: row;
   padding: 0px 10px;
-  // border: 1px solid $mono-light2;
-  // border-radius: 999px;
 }
 
 .recipe-rating-button {
@@ -416,7 +419,7 @@ button:hover {
   }
   &.hovered > i {
     color: $accent-yellow;
-    text-shadow: 0px 0px 5px $accent-orange;
+    text-shadow: 0px 0px 5px $accent-red;
   }
 }
 
@@ -520,8 +523,8 @@ textarea {
   border: none;
   border-radius: 5px;
   &.incorrect {
-    border: 1px solid $accent-orange;
-    box-shadow: 0px 0px 2px $accent-orange;
+    border: 1px solid $accent-red;
+    box-shadow: 0px 0px 2px $accent-red;
   }
 }
 
@@ -594,7 +597,7 @@ textarea {
   margin: 5px;
   margin-bottom: $main-spacing;
   padding: 10px;
-  background-color: $accent-white;
+  border: 1px solid $accent-red;
   border-radius: 5px;
   &.visible {
     display: block;
@@ -643,7 +646,7 @@ textarea {
   #recipe-window,
   #recipe-window.narrower {
     left: 0px;
-    width: calc(100% - 2 * #{$main-spacing});
+    width: 100%;
   }
 
   #recipe-window {
