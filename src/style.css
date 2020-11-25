@@ -2,12 +2,11 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 16px;
-  color: #555; }
+  color: #333; }
 
 body {
-  background: #f4f4f4;
   overflow-x: hidden;
   overflow-y: auto; }
 
@@ -19,7 +18,8 @@ button:hover {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  width: 100vw; }
+  width: 100vw;
+  background: white; }
 
 #bg-menu-button {
   position: fixed;
@@ -29,10 +29,8 @@ button:hover {
   background: none;
   border: none; }
   #bg-menu-button i {
-    color: #555;
+    color: #324376;
     font-size: 20px; }
-  #bg-menu-button:hover i {
-    color: #333; }
 
 #bg-icon {
   color: #ddd;
@@ -48,8 +46,7 @@ button:hover {
   position: fixed;
   left: 0px;
   top: 0px;
-  background-color: #f9c74f;
-  box-shadow: 2px 0px 8px #aaa;
+  background-color: #324376;
   transition: left 0.4s ease-out; }
   #nav.hidden {
     left: -300px; }
@@ -60,7 +57,7 @@ button:hover {
   text-align: center;
   height: 35px;
   line-height: 35px;
-  color: #555;
+  color: white;
   text-transform: uppercase;
   font-size: 20px;
   font-weight: bold; }
@@ -72,14 +69,12 @@ button:hover {
   background: none;
   border: none; }
   #nav-menu-button i {
-    color: #555;
+    color: white;
     font-size: 20px; }
-  #nav-menu-button:hover i {
-    color: #333; }
 
 #nav-list {
   flex: 0 1 auto;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   list-style: none;
   overflow-x: hidden;
   overflow-y: auto; }
@@ -88,21 +83,23 @@ button:hover {
   display: flex;
   flex-direction: row;
   align-items: center;
-  background-color: #fad275;
-  border-radius: 5px;
+  color: white;
+  border: 1px solid #586ba4;
+  border-radius: 999px;
   overflow: hidden;
   transition: background-color 0.2s; }
   .nav-item:not(:last-child) {
     margin-bottom: 20px; }
   .nav-item:hover {
-    background-color: white; }
+    background-color: #586ba4; }
 
 .nav-item-button {
   flex: 1 1 100%;
-  padding: 10px;
+  padding: 10px 20px;
   text-align: left;
   background: none;
-  border: none; }
+  border: none;
+  color: inherit; }
 
 .nav-item-rating {
   flex: 0 0 auto;
@@ -110,14 +107,14 @@ button:hover {
   padding: 5px;
   width: 50px;
   text-align: center;
-  position: relative;
-  border-radius: 5px; }
+  color: inherit; }
 
 .nav-item-rating:hover > .rating-value {
   text-decoration: underline dotted; }
 
 .rating-value {
-  cursor: default; }
+  cursor: default;
+  color: inherit; }
 
 .rating-tooltip {
   position: fixed;
@@ -129,30 +126,27 @@ button:hover {
   z-index: 10;
   visibility: hidden;
   opacity: 0;
-  background-color: #43aa8b;
-  color: white;
+  background-color: white;
   border-radius: 5px;
   font-size: 12px;
-  box-shadow: 0px 0px 5px white;
   transition: opacity 0.2s 0.4s; }
   .rating-tooltip.visible {
     visibility: visible;
-    opacity: 0.9; }
+    opacity: 1; }
 
 #nav-add-button {
   flex: 0 0 auto;
-  padding: 15px;
+  padding: 10px;
   margin-bottom: 20px;
   width: 100%;
-  background-color: #555;
-  color: white;
+  background-color: white;
+  color: #324376;
   border: none;
-  border-radius: 5px;
+  border-radius: 999px;
   font-weight: bold;
   transition: background-color 0.2s; }
   #nav-add-button:hover {
-    background-color: #43aa8b;
-    box-shadow: 0px 0px 4px 2px white; }
+    background-color: #f5dd90; }
 
 #nav-reset-container {
   flex: 0 0 auto;
@@ -165,7 +159,7 @@ button:hover {
   background: none; }
   #nav-reset-button i {
     font-size: 20px;
-    color: #f4f4f4; }
+    color: #586ba4; }
     #nav-reset-button i:hover {
       color: white; }
 
@@ -179,8 +173,6 @@ button:hover {
   margin: 20px;
   width: calc(100% - 30px - 3 * 20px);
   background-color: white;
-  border-radius: 5px;
-  box-shadow: 0px 6px 10px #aaa;
   transition: left 0.4s ease-out, width 0.4s ease-out; }
   #recipe-window.narrower {
     left: 300px;
@@ -192,25 +184,26 @@ button:hover {
   padding: 20px;
   width: 100%;
   text-align: center;
-  background-color: #43aa8b; }
+  background-color: #324376; }
 
 #recipe-close-button {
   flex: 0 0 auto;
   position: absolute;
+  right: 20px;
   padding: 10px;
   width: 100px;
   border-radius: 5px;
-  background: #43aa8b;
+  background: white;
   border: 1px solid white;
-  color: white;
+  color: #242423;
   transition: background-color 0.2s, color 0.2s; }
   #recipe-close-button:hover {
     background: white;
-    color: #43aa8b; }
+    color: #242423; }
   #recipe-close-button i {
-    color: white; }
+    color: #242423; }
   #recipe-close-button:hover i {
-    color: #43aa8b; }
+    color: #242423; }
 
 #recipe-name {
   flex: 1 1 100%;
@@ -225,19 +218,19 @@ button:hover {
   padding: 10px;
   margin-bottom: 20px;
   text-align: center;
-  color: #555;
+  color: #242423;
   font-size: 20px; }
 
 #ingredients-list {
   list-style: none;
   text-align: center;
-  border: 1px solid #43aa8b;
-  border-radius: 5px; }
+  border: 1px solid #aaa;
+  border-radius: 20px; }
 
 .ingredients-item {
   padding: 10px; }
   .ingredients-item:not(:last-child) {
-    border-bottom: 1px solid #43aa8b; }
+    border-bottom: 1px solid #aaa; }
 
 #steps-list {
   counter-reset: steps-counter; }
@@ -247,7 +240,7 @@ button:hover {
   flex-direction: row;
   align-items: center; }
   .steps-item:not(:last-child) {
-    border-bottom: 1px solid #43aa8b; }
+    border-bottom: 1px solid #aaa; }
   .steps-item::before {
     counter-increment: steps-counter;
     content: counter(steps-counter) ".";
@@ -262,12 +255,13 @@ button:hover {
   margin: 5px;
   padding: 5px 10px;
   text-align: center;
-  background-color: #43aa8b;
-  color: white;
-  border-radius: 5px; }
+  font-size: 14px;
+  background-color: #ddd;
+  color: #242423;
+  border-radius: 999px; }
   .step-time i {
     float: left;
-    color: white; }
+    color: #324376; }
 
 #recipe-menu {
   display: flex;
@@ -280,24 +274,22 @@ button:hover {
   padding: 10px;
   width: 100px;
   border-radius: 5px;
-  background: #fad275;
-  border: 1px solid #fad275;
-  color: #555;
+  background: #ddd;
+  border: 1px solid #ddd;
+  color: #242423;
   transition: background-color 0.2s, color 0.2s; }
   #recipe-edit-button:hover {
     background: white;
-    color: #555; }
+    color: #242423; }
   #recipe-edit-button i {
-    color: #555; }
+    color: #242423; }
   #recipe-edit-button:hover i {
-    color: #555; }
+    color: #242423; }
 
 #recipe-rating-container {
   display: flex;
   flex-direction: row;
-  padding: 0px 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px; }
+  padding: 0px 10px; }
 
 .recipe-rating-button {
   padding: 5px;
@@ -307,26 +299,26 @@ button:hover {
     font-size: 24px;
     color: #ddd; }
   .recipe-rating-button.checked > i {
-    color: #43aa8b; }
+    color: #324376; }
   .recipe-rating-button.hovered > i {
-    color: #f9c74f;
-    text-shadow: 0px 0px 5px #f3722c; }
+    color: #f5dd90;
+    text-shadow: 0px 0px 5px #f68e5f; }
 
 #recipe-delete-button {
   padding: 10px;
   width: 100px;
   border-radius: 5px;
-  background: #f94144;
-  border: 1px solid #f94144;
+  background: #f76c5e;
+  border: 1px solid #f76c5e;
   color: white;
   transition: background-color 0.2s, color 0.2s; }
   #recipe-delete-button:hover {
     background: white;
-    color: #f94144; }
+    color: #242423; }
   #recipe-delete-button i {
     color: white; }
   #recipe-delete-button:hover i {
-    color: #f94144; }
+    color: #242423; }
 
 .popup-container {
   position: fixed;
@@ -365,8 +357,6 @@ button:hover {
   max-width: calc(100% - 2 * 20px);
   z-index: 30;
   background-color: white;
-  border-radius: 5px;
-  box-shadow: 0px 6px 10px #333;
   width: 300px; }
 
 #popup-delete-message {
@@ -382,17 +372,17 @@ button:hover {
   padding: 10px;
   width: 100px;
   border-radius: 5px;
-  background: #f94144;
-  border: 1px solid #f94144;
+  background: #f76c5e;
+  border: 1px solid #f76c5e;
   color: white;
   transition: background-color 0.2s, color 0.2s; }
   #delete-ok-button:hover {
     background: white;
-    color: #f94144; }
+    color: #242423; }
   #delete-ok-button i {
     color: white; }
   #delete-ok-button:hover i {
-    color: #f94144; }
+    color: #242423; }
 
 #delete-cancel-button {
   padding: 10px;
@@ -417,8 +407,6 @@ button:hover {
   max-width: calc(100% - 2 * 20px);
   z-index: 30;
   background-color: white;
-  border-radius: 5px;
-  box-shadow: 0px 6px 10px #333;
   width: 800px; }
 
 #popup-edit-title {
@@ -441,12 +429,12 @@ label,
 input,
 textarea {
   background-color: #f4f4f4;
-  border: 1px solid #aaa;
+  border: none;
   border-radius: 5px; }
   input.incorrect,
   textarea.incorrect {
-    border: 1px solid #f94144;
-    box-shadow: 0px 0px 3px #f94144; }
+    border: 1px solid #f68e5f;
+    box-shadow: 0px 0px 2px #f68e5f; }
 
 #input-name,
 #input-ingredients {
@@ -496,17 +484,17 @@ textarea {
   font-weight: bold; }
 
 #add-step-button {
-  background-color: #43aa8b; }
+  background-color: #324376; }
 
 #remove-step-button {
-  background-color: #f9c74f; }
+  background-color: #f76c5e; }
 
 #form-validation-warning {
   display: none;
   margin: 5px;
   margin-bottom: 20px;
   padding: 10px;
-  background-color: #ffeaea;
+  background-color: #f4f1de;
   border-radius: 5px; }
   #form-validation-warning.visible {
     display: block; }
@@ -519,24 +507,24 @@ textarea {
   padding: 10px;
   width: 100px;
   border-radius: 5px;
-  background: #43aa8b;
-  border: 1px solid #43aa8b;
+  background: #324376;
+  border: 1px solid #324376;
   color: white;
   transition: background-color 0.2s, color 0.2s; }
   #edit-ok-button:hover {
     background: white;
-    color: #43aa8b; }
+    color: #324376; }
   #edit-ok-button i {
     color: white; }
   #edit-ok-button:hover i {
-    color: #43aa8b; }
+    color: #324376; }
 
 #edit-clear-button {
   padding: 10px;
   width: 100px;
   border-radius: 5px;
-  background: #f9c74f;
-  border: 1px solid #f9c74f;
+  background: #ddd;
+  border: 1px solid #ddd;
   color: #555;
   transition: background-color 0.2s, color 0.2s; }
   #edit-clear-button:hover {
