@@ -139,10 +139,10 @@ class Nav {
 
   showTooltip(event) {
     const tooltip = event.target.querySelector(".rating-tooltip");
-    const rect = event.target.getBoundingClientRect();
-    tooltip.style.left = rect.right - 10 + "px";
-    tooltip.style.top = rect.bottom - 10 + "px";
+    const targetRect = event.target.getBoundingClientRect();
     tooltip.classList.add("visible");
+    tooltip.style.left = targetRect.left - tooltip.clientWidth + 10 + "px";
+    tooltip.style.top = targetRect.bottom - 25 + "px";
   }
 
   hideTooltip(event) {
