@@ -94,7 +94,7 @@ button {
   display: flex;
   flex-direction: row;
   background-color: white;
-  border-radius: 999px;
+  border-radius: 0.5em;
   align-items: center;
   overflow: hidden; }
   .nav-item:not(:last-child) {
@@ -142,7 +142,7 @@ button {
   width: 100%;
   background-color: #00a6fb;
   color: white;
-  border-radius: 999px;
+  border-radius: 0.5em;
   font-weight: bold;
   transition: background-color 0.2s; }
   #nav-add-button:hover {
@@ -178,37 +178,24 @@ button {
 
 #recipe-header {
   display: flex;
+  justify-content: center;
   align-items: center;
   padding: 1em;
   width: 100%;
-  text-align: center;
   border-bottom: 3px solid #00a6fb;
   color: #00a6fb; }
 
+#recipe-name {
+  font-size: 1.2em;
+  text-align: center; }
+
 #recipe-close-button {
-  flex: 0 0 auto;
   position: absolute;
   right: 1em;
-  margin: 0.5em;
-  padding: 0.5em 1em;
-  border-radius: 5px;
-  background: #00a6fb;
-  border: 1px solid #00a6fb;
-  font-size: 1.5rem;
-  color: white;
-  transition: background-color 0.2s, color 0.2s; }
+  padding: 0.5em;
+  color: #aaa; }
   #recipe-close-button:hover {
-    background: white;
-    color: #00a6fb;
-    box-shadow: 0 2px 4px #aaa; }
-  #recipe-close-button i {
-    color: white; }
-  #recipe-close-button:hover i {
-    color: #00a6fb; }
-
-#recipe-name {
-  flex: 1 1 100%;
-  font-size: 1.6em; }
+    color: #555; }
 
 #recipe-content {
   display: flex;
@@ -222,13 +209,13 @@ button {
 #ingredients-header, #steps-header {
   margin-bottom: 1em;
   text-align: center;
-  font-size: 1.2em; }
+  font-size: 1.1em; }
 
 #ingredients-list {
   list-style: none;
   text-align: center;
   border: 1px solid #aaa;
-  border-radius: 20px; }
+  border-radius: 1em; }
 
 .ingredients-item {
   padding: 0.5em; }
@@ -272,7 +259,7 @@ button {
 #recipe-edit-button {
   margin: 0.5em;
   padding: 0.5em 1em;
-  border-radius: 5px;
+  border-radius: 0.5em;
   background: #ddd;
   border: 1px solid #ddd;
   font-size: 1.5rem;
@@ -304,7 +291,7 @@ button {
 #recipe-delete-button {
   margin: 0.5em;
   padding: 0.5em 1em;
-  border-radius: 5px;
+  border-radius: 0.5em;
   background: #d72638;
   border: 1px solid #d72638;
   font-size: 1.5rem;
@@ -370,7 +357,7 @@ button {
 #delete-ok-button {
   margin: 0.5em;
   padding: 0.5em 1em;
-  border-radius: 5px;
+  border-radius: 0.5em;
   background: #d72638;
   border: 1px solid #d72638;
   font-size: 1.5rem;
@@ -388,7 +375,7 @@ button {
 #delete-cancel-button {
   margin: 0.5em;
   padding: 0.5em 1em;
-  border-radius: 5px;
+  border-radius: 0.5em;
   background: #aaa;
   border: 1px solid #aaa;
   font-size: 1.5rem;
@@ -430,9 +417,8 @@ input,
 textarea {
   display: inline-block;
   padding: 0.3em;
-  background-color: #f4f4f4;
-  border: none;
-  border-radius: 5px; }
+  background-color: #ddd;
+  border: none; }
   input.incorrect,
   textarea.incorrect {
     border: 1px solid #d72638;
@@ -463,7 +449,7 @@ textarea {
     text-align: center; }
 
 .input-step-name {
-  flex: 1 1 auto; }
+  flex: 1 1 0; }
 
 .input-time-label {
   display: inline-block;
@@ -506,7 +492,7 @@ textarea {
 #edit-ok-button {
   margin: 0.5em;
   padding: 0.5em 1em;
-  border-radius: 5px;
+  border-radius: 0.5em;
   background: #00a6fb;
   border: 1px solid #00a6fb;
   font-size: 1.5rem;
@@ -524,7 +510,7 @@ textarea {
 #edit-clear-button {
   margin: 0.5em;
   padding: 0.5em 1em;
-  border-radius: 5px;
+  border-radius: 0.5em;
   background: #ffe066;
   border: 1px solid #ffe066;
   font-size: 1.5rem;
@@ -542,7 +528,7 @@ textarea {
 #edit-cancel-button {
   margin: 0.5em;
   padding: 0.5em 1em;
-  border-radius: 5px;
+  border-radius: 0.5em;
   background: #aaa;
   border: 1px solid #aaa;
   font-size: 1.5rem;
