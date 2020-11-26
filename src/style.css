@@ -189,12 +189,12 @@ button {
   font-size: 1.2em;
   text-align: center; }
 
-#recipe-close-button {
+#recipe-close-button, #edit-cancel-button {
   position: absolute;
   right: 1em;
   padding: 0.5em;
   color: #aaa; }
-  #recipe-close-button:hover {
+  #recipe-close-button:hover, #edit-cancel-button:hover {
     color: #555; }
 
 #recipe-content {
@@ -400,10 +400,16 @@ button {
   background-color: white;
   display: flex;
   width: 800px;
-  padding: 1em; }
+  padding: 1em;
+  position: relative; }
+
+#popup-edit-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1em; }
 
 #popup-edit-title {
-  margin-bottom: 1em;
   text-align: center;
   font-size: 1.2em;
   font-weight: bold; }
@@ -536,24 +542,6 @@ textarea {
     color: #333; }
   #edit-clear-button:hover i {
     color: #333; }
-
-#edit-cancel-button {
-  margin: 0.5em;
-  padding: 0.5em 1em;
-  border-radius: 0.5em;
-  background: #aaa;
-  border: 1px solid #aaa;
-  font-size: 1.5rem;
-  color: white;
-  transition: background-color 0.2s, color 0.2s; }
-  #edit-cancel-button:hover {
-    background: white;
-    color: #aaa;
-    box-shadow: 0 2px 4px #aaa; }
-  #edit-cancel-button i {
-    color: white; }
-  #edit-cancel-button:hover i {
-    color: #aaa; }
 
 @media (max-width: 1200px) {
   #ingredients, #steps,

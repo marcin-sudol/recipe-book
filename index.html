@@ -141,8 +141,12 @@
     <div id="popup-edit-container" class="popup-container">
       <div id="popup-edit-bg" class="popup-bg"></div>
       <div id="popup-edit-window" class="popup-window">
-        <p id="popup-edit-title">Insert recipe</p>
-
+        <header id="popup-edit-header">
+          <p id="popup-edit-title">Edit recipe</p>
+          <button id="edit-cancel-button" type="button">
+            <i class="fas fa-times"></i>
+          </button>
+        </header>
         <form id="popup-edit-form" novalidate>
           <label id="input-name-label" for="input-name">Name:</label>
           <input type="text" id="input-name" placeholder="Enter name" />
@@ -176,9 +180,6 @@
           </button>
           <button id="edit-clear-button" type="button">
             <i class="fas fa-undo"></i> Clear
-          </button>
-          <button id="edit-cancel-button" type="button">
-            <i class="fas fa-times"></i> Cancel
           </button>
         </div>
       </div>

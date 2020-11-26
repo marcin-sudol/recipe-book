@@ -493,13 +493,24 @@ button {
   display: flex;
   width: 800px;
   padding: 1em;
+  position: relative;
+}
+
+#popup-edit-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1em;
 }
 
 #popup-edit-title {
-  margin-bottom: 1em;
   text-align: center;
   font-size: 1.2em;
   font-weight: bold;
+}
+
+#edit-cancel-button {
+  @extend #recipe-close-button;
 }
 
 #input-name-label,
@@ -618,10 +629,6 @@ textarea {
 
 #edit-clear-button {
   @include btn($accent-yellow, $mono-dark2, white, $mono-dark2);
-}
-
-#edit-cancel-button {
-  @include btn($mono-medium, white, white, $mono-medium);
 }
 
 // ------------------------------------------
