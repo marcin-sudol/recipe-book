@@ -5,14 +5,11 @@
 // ------------------------------------------
 // VARIABLES
 // ------------------------------------------
-$accent-white: #f4f1de;
-$accent-yellow: #f5dd90;
-$accent-orange: #f68e5f;
-$accent-red: #f76c5e;
-$accent-green: #81b29a;
-$accent-blue1: #586ba4;
-$accent-blue2: #324376;
-$accent-dark: #242423;
+$accent-red: #d72638;
+$accent-yellow: #ffe066;
+$accent-blue1: #00a6fb;
+$accent-blue2: #0394e3;
+$accent-blue3: #003554;
 
 $mono-light1: #f4f4f4;
 $mono-light2: #ddd;
@@ -37,16 +34,16 @@ $z-index-add-edit: 20;
 $z-index-popup-container: 25;
 $z-index-popup-window: 30;
 
-@mixin btn($bg-color, $border-color, $color, $hover-color) {
+@mixin btn($bg-color, $color, $hover-bg-color, $hover-color) {
   padding: 10px;
   width: 100px;
   border-radius: 5px;
   background: $bg-color;
-  border: 1px solid $border-color;
+  border: 1px solid $bg-color;
   color: $color;
   transition: background-color 0.2s, color 0.2s;
   &:hover {
-    background: white;
+    background: $hover-bg-color;
     color: $hover-color;
   }
   i {
@@ -130,7 +127,7 @@ button:hover {
   position: fixed;
   left: 0px;
   top: 0px;
-  background-color: $accent-blue2;
+  background-color: $accent-blue3;
   transition: left $animation-time ease-out;
   &.hidden {
     left: -$nav-width;
@@ -237,7 +234,7 @@ button:hover {
   margin-bottom: $main-spacing;
   width: 100%;
   background-color: white;
-  color: $accent-blue2;
+  color: $accent-blue3;
   border: none;
   border-radius: 999px;
   font-weight: bold;
@@ -296,7 +293,7 @@ button:hover {
   flex: 0 0 auto;
   position: absolute;
   right: $main-spacing;
-  @include btn($accent-blue2, $accent-blue2, white, $accent-dark);
+  @include btn($accent-blue2, white, white, $accent-blue2);
 }
 
 #recipe-name {
@@ -320,7 +317,7 @@ button:hover {
   padding: 10px;
   margin-bottom: $main-spacing;
   text-align: center;
-  color: $accent-dark;
+  color: $mono-dark2;
   font-size: 20px;
 }
 
@@ -374,13 +371,13 @@ button:hover {
   margin: 5px;
   padding: 5px 10px;
   text-align: center;
-  font-size: 14px;
-  background-color: $mono-light1;
-  color: $accent-dark;
-  border-radius: 999px;
+  // font-size: 14px;
+  // background-color: $accent-blue1;
+  color: $accent-blue1;
+  // border-radius: 999px;
   i {
     float: left;
-    color: $accent-blue2;
+    color: $accent-blue1;
   }
 }
 
@@ -394,7 +391,7 @@ button:hover {
 }
 
 #recipe-edit-button {
-  @include btn($mono-light2, $mono-light2, $accent-dark, $accent-dark);
+  @include btn($mono-light2, $mono-dark2, white, $mono-dark2);
 }
 
 #recipe-rating-container {
@@ -412,16 +409,15 @@ button:hover {
     color: $mono-light2;
   }
   &.checked > i {
-    color: $accent-blue2;
+    color: $accent-blue1;
   }
   &.hovered > i {
     color: $accent-yellow;
-    text-shadow: 0px 0px 5px $accent-red;
   }
 }
 
 #recipe-delete-button {
-  @include btn($accent-red, $accent-red, white, $accent-dark);
+  @include btn($accent-red, white, white, $accent-red);
 }
 
 // ------------------------------------------
@@ -482,11 +478,11 @@ button:hover {
 }
 
 #delete-ok-button {
-  @include btn($accent-red, $accent-red, white, $accent-dark);
+  @include btn($accent-red, white, white, $accent-red);
 }
 
 #delete-cancel-button {
-  @include btn($mono-dark1, $mono-dark1, white, $mono-dark1);
+  @include btn($mono-medium, white, white, $mono-medium);
 }
 
 #popup-edit-window {
@@ -547,12 +543,11 @@ textarea {
   &::before {
     content: counter(editor-counter);
     display: inline-block;
-    margin: 5px;
     padding: 5px;
     width: 20px;
     text-align: center;
-    background-color: $mono-light2;
-    border-radius: 5px;
+    // background-color: $mono-light2;
+    // border-radius: 5px;
   }
 }
 
@@ -565,7 +560,7 @@ textarea {
 }
 
 #input-steps-menu {
-  text-align: center;
+  text-align: left;
 }
 
 #add-step-button,
@@ -575,18 +570,11 @@ textarea {
   width: 30px;
   line-height: 30px;
   text-align: center;
-  color: white;
-  border: none;
+  background-color: white;
+  border: 1px solid $mono-medium;
   border-radius: 999px;
+  color: $mono-medium;
   font-weight: bold;
-}
-
-#add-step-button {
-  background-color: $accent-blue2;
-}
-
-#remove-step-button {
-  background-color: $accent-red;
 }
 
 #form-validation-warning {
@@ -603,19 +591,22 @@ textarea {
 
 #popup-edit-menu {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
 }
 
 #edit-ok-button {
-  @include btn($accent-blue2, $accent-blue2, white, $accent-blue2);
+  @include btn($accent-blue2, white, white, $accent-blue2);
+  margin: $main-spacing;
 }
 
 #edit-clear-button {
-  @include btn($mono-light2, $mono-light2, $mono-dark1, $mono-dark1);
+  @include btn($accent-yellow, $mono-dark2, white, $accent-yellow);
+  margin: $main-spacing;
 }
 
 #edit-cancel-button {
-  @include btn($mono-dark1, $mono-dark1, white, $mono-dark1);
+  @include btn($mono-medium, white, white, $mono-medium);
+  margin: $main-spacing;
 }
 
 // ------------------------------------------
