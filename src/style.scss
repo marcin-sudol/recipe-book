@@ -8,9 +8,8 @@
 $accent-red: #d72638;
 $accent-yellow: #ffe066;
 $accent-blue1: #00a6fb;
-$accent-blue2: #0394e3;
-$accent-blue3: #003554;
-
+$accent-blue2: #0582ca;
+$accent-gray: #413c58;
 $mono-light1: #f4f4f4;
 $mono-light2: #ddd;
 $mono-medium: #aaa;
@@ -21,6 +20,7 @@ $font-normal: "Open Sans", sans-serif;
 
 $breakdown-md: 1200px;
 $breakdown-sm: 800px;
+$breakdown-xs: 600px;
 
 $nav-width: 300px;
 $main-spacing: 20px;
@@ -36,15 +36,16 @@ $z-index-popup-window: 30;
 
 @mixin btn($bg-color, $color, $hover-bg-color, $hover-color) {
   padding: 10px;
-  width: 100px;
   border-radius: 5px;
   background: $bg-color;
   border: 1px solid $bg-color;
+  font-size: 1.5rem;
   color: $color;
   transition: background-color 0.2s, color 0.2s;
   &:hover {
     background: $hover-bg-color;
     color: $hover-color;
+    box-shadow: 0 2px 4px $mono-medium;
   }
   i {
     color: $color;
@@ -66,22 +67,43 @@ $z-index-popup-window: 30;
 // ------------------------------------------
 // DEFAULT VALUES
 // ------------------------------------------
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: $font-normal;
-  font-size: 16px;
-  color: $mono-dark2;
+html {
+  font-size: 62.5%;
+}
+
+@media (max-width: $breakdown-sm) {
+  html {
+    font-size: 58%;
+  }
+}
+
+@media (max-width: $breakdown-xs) {
+  html {
+    font-size: 54%;
+  }
 }
 
 body {
   overflow-x: hidden;
   overflow-y: auto;
+  color: $mono-dark2;
 }
 
-button:hover {
-  cursor: pointer;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: $font-normal;
+  font-size: 1em;
+  color: inherit;
+}
+
+button {
+  background: none;
+  border: none;
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 // ------------------------------------------
@@ -93,7 +115,8 @@ button:hover {
   align-items: center;
   height: 100vh;
   width: 100vw;
-  background: $mono-light1;
+  font-size: 1.6rem;
+  background: white;
 }
 
 #bg-menu-button {
@@ -101,17 +124,15 @@ button:hover {
   left: $main-spacing;
   top: $main-spacing;
   padding: 5px;
-  background: none;
-  border: none;
+  font-size: 2rem;
   i {
     color: $accent-blue2;
-    font-size: 20px;
   }
 }
 
 #bg-icon {
+  font-size: 2em;
   color: $mono-medium;
-  font-size: 40px;
 }
 
 // ------------------------------------------
@@ -127,7 +148,9 @@ button:hover {
   position: fixed;
   left: 0px;
   top: 0px;
-  background-color: $accent-blue3;
+  font-size: 1.6rem;
+  background-color: $accent-gray;
+  box-shadow: 0 0 6px $mono-medium;
   transition: left $animation-time ease-out;
   &.hidden {
     left: -$nav-width;
@@ -137,12 +160,12 @@ button:hover {
 #nav-header {
   flex: 0 0 auto;
   margin-bottom: $main-spacing;
+  font-size: 1.4em;
   text-align: center;
   height: 35px;
   line-height: 35px;
   color: white;
   text-transform: uppercase;
-  font-size: 20px;
   font-weight: bold;
 }
 
@@ -150,12 +173,7 @@ button:hover {
   padding: 5px;
   height: 100%;
   float: left;
-  background: none;
-  border: none;
-  i {
-    color: white;
-    font-size: 20px;
-  }
+  font-size: 2rem;
 }
 
 #nav-list {
@@ -169,26 +187,19 @@ button:hover {
 .nav-item {
   display: flex;
   flex-direction: row;
-  align-items: center;
-  color: white;
-  border: 1px solid $accent-blue1;
+  background-color: white;
   border-radius: 999px;
+  align-items: center;
   overflow: hidden;
-  transition: background-color 0.2s;
   &:not(:last-child) {
     margin-bottom: $main-spacing;
   }
-  &:hover {
-    background-color: $accent-blue1;
-  }
 }
+
 .nav-item-button {
   flex: 1 1 100%;
   padding: 10px 20px;
   text-align: left;
-  background: none;
-  border: none;
-  color: inherit;
 }
 
 .nav-item-rating {
@@ -197,15 +208,15 @@ button:hover {
   padding: 5px;
   width: 50px;
   text-align: center;
-  color: inherit;
 }
+
 .nav-item-rating:hover > .rating-value {
   text-decoration: underline dotted;
 }
 
 .rating-value {
   cursor: default;
-  color: inherit;
+  color: $accent-blue1;
 }
 
 .rating-tooltip {
@@ -220,7 +231,6 @@ button:hover {
   opacity: 0;
   background-color: white;
   border-radius: 5px;
-  font-size: 12px;
   transition: opacity 0.2s 0.4s;
   &.visible {
     visibility: visible;
@@ -233,14 +243,16 @@ button:hover {
   padding: 10px;
   margin-bottom: $main-spacing;
   width: 100%;
-  background-color: white;
-  color: $accent-blue3;
-  border: none;
+  background-color: $accent-blue1;
+  border: 1px solid $accent-blue1;
+  color: white;
   border-radius: 999px;
   font-weight: bold;
   transition: background-color 0.2s;
   &:hover {
-    background-color: $accent-yellow;
+    background-color: white;
+    color: $accent-blue1;
+    box-shadow: 0 2px 4px $mono-medium;
   }
 }
 
@@ -248,16 +260,11 @@ button:hover {
   flex: 0 0 auto;
   margin-top: auto;
   text-align: center;
+  color: white;
 }
 
 #nav-reset-button {
   padding: 10px;
-  border: none;
-  background: none;
-  i {
-    font-size: 20px;
-    color: white;
-  }
 }
 
 // ------------------------------------------
@@ -272,6 +279,7 @@ button:hover {
   top: 0px;
   min-height: 100%;
   width: calc(100% - 70px);
+  font-size: 1.6rem;
   background-color: white;
   transition: left $animation-time ease-out, width $animation-time ease-out;
   &.narrower {
@@ -286,20 +294,20 @@ button:hover {
   padding: $main-spacing;
   width: 100%;
   text-align: center;
-  border-bottom: 3px solid $accent-blue2;
+  border-bottom: 3px solid $accent-blue1;
+  color: $accent-blue1;
 }
 
 #recipe-close-button {
   flex: 0 0 auto;
   position: absolute;
   right: $main-spacing;
-  @include btn($accent-blue2, white, white, $accent-blue2);
+  @include btn($accent-blue1, white, white, $accent-blue1);
 }
 
 #recipe-name {
   flex: 1 1 100%;
-  color: $accent-blue2;
-  font-size: 24px;
+  font-size: 1.6em;
 }
 
 #recipe-content {
@@ -317,8 +325,7 @@ button:hover {
   padding: 10px;
   margin-bottom: $main-spacing;
   text-align: center;
-  color: $mono-dark2;
-  font-size: 20px;
+  font-size: 1.2em;
 }
 
 #ingredients-list {
@@ -370,14 +377,11 @@ button:hover {
   flex: 0 0 110px;
   margin: 5px;
   padding: 5px 10px;
+  font-size: 0.9em;
   text-align: center;
-  // font-size: 14px;
-  // background-color: $accent-blue1;
   color: $accent-blue1;
-  // border-radius: 999px;
   i {
     float: left;
-    color: $accent-blue1;
   }
 }
 
@@ -397,21 +401,17 @@ button:hover {
 #recipe-rating-container {
   display: flex;
   flex-direction: row;
+  font-size: 1.3em;
   padding: 0px 10px;
 }
 
 .recipe-rating-button {
   padding: 5px;
-  border: none;
-  background: none;
-  i {
-    font-size: 24px;
-    color: $mono-light2;
-  }
-  &.checked > i {
+  color: $mono-light2;
+  &.checked {
     color: $accent-blue1;
   }
-  &.hovered > i {
+  &.hovered {
     color: $accent-yellow;
   }
 }
@@ -432,6 +432,7 @@ button:hover {
   overflow: auto;
   z-index: $z-index-popup-container;
   display: none;
+  font-size: 1.6rem;
   &.visible {
     display: flex;
   }
@@ -494,7 +495,7 @@ button:hover {
   margin-top: $main-spacing;
   margin-bottom: $main-spacing;
   text-align: center;
-  font-size: 20px;
+  font-size: 1.2em;
   font-weight: bold;
 }
 
@@ -546,8 +547,6 @@ textarea {
     padding: 5px;
     width: 20px;
     text-align: center;
-    // background-color: $mono-light2;
-    // border-radius: 5px;
   }
 }
 
@@ -573,7 +572,7 @@ textarea {
   background-color: white;
   border: 1px solid $mono-medium;
   border-radius: 999px;
-  color: $mono-medium;
+  color: $mono-dark1;
   font-weight: bold;
 }
 
@@ -595,12 +594,12 @@ textarea {
 }
 
 #edit-ok-button {
-  @include btn($accent-blue2, white, white, $accent-blue2);
+  @include btn($accent-blue1, white, white, $accent-blue1);
   margin: $main-spacing;
 }
 
 #edit-clear-button {
-  @include btn($accent-yellow, $mono-dark2, white, $accent-yellow);
+  @include btn($accent-yellow, $mono-dark2, white, $mono-dark2);
   margin: $main-spacing;
 }
 

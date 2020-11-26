@@ -1,17 +1,30 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Open Sans", sans-serif;
-  font-size: 16px;
-  color: #333; }
+html {
+  font-size: 62.5%; }
 
+@media (max-width: 800px) {
+  html {
+    font-size: 58%; } }
+@media (max-width: 600px) {
+  html {
+    font-size: 54%; } }
 body {
   overflow-x: hidden;
-  overflow-y: auto; }
+  overflow-y: auto;
+  color: #333; }
 
-button:hover {
-  cursor: pointer; }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Open Sans", sans-serif;
+  font-size: 1em;
+  color: inherit; }
+
+button {
+  background: none;
+  border: none; }
+  button:hover {
+    cursor: pointer; }
 
 #bg {
   display: flex;
@@ -19,22 +32,21 @@ button:hover {
   align-items: center;
   height: 100vh;
   width: 100vw;
-  background: #f4f4f4; }
+  font-size: 1.6rem;
+  background: white; }
 
 #bg-menu-button {
   position: fixed;
   left: 20px;
   top: 20px;
   padding: 5px;
-  background: none;
-  border: none; }
+  font-size: 2rem; }
   #bg-menu-button i {
-    color: #0394e3;
-    font-size: 20px; }
+    color: #0582ca; }
 
 #bg-icon {
-  color: #aaa;
-  font-size: 40px; }
+  font-size: 2em;
+  color: #aaa; }
 
 #nav {
   display: flex;
@@ -46,7 +58,9 @@ button:hover {
   position: fixed;
   left: 0px;
   top: 0px;
-  background-color: #003554;
+  font-size: 1.6rem;
+  background-color: #413c58;
+  box-shadow: 0 0 6px #aaa;
   transition: left 0.4s ease-out; }
   #nav.hidden {
     left: -300px; }
@@ -54,23 +68,19 @@ button:hover {
 #nav-header {
   flex: 0 0 auto;
   margin-bottom: 20px;
+  font-size: 1.4em;
   text-align: center;
   height: 35px;
   line-height: 35px;
   color: white;
   text-transform: uppercase;
-  font-size: 20px;
   font-weight: bold; }
 
 #nav-menu-button {
   padding: 5px;
   height: 100%;
   float: left;
-  background: none;
-  border: none; }
-  #nav-menu-button i {
-    color: white;
-    font-size: 20px; }
+  font-size: 2rem; }
 
 #nav-list {
   flex: 0 1 auto;
@@ -82,39 +92,31 @@ button:hover {
 .nav-item {
   display: flex;
   flex-direction: row;
-  align-items: center;
-  color: white;
-  border: 1px solid #00a6fb;
+  background-color: white;
   border-radius: 999px;
-  overflow: hidden;
-  transition: background-color 0.2s; }
+  align-items: center;
+  overflow: hidden; }
   .nav-item:not(:last-child) {
     margin-bottom: 20px; }
-  .nav-item:hover {
-    background-color: #00a6fb; }
 
 .nav-item-button {
   flex: 1 1 100%;
   padding: 10px 20px;
-  text-align: left;
-  background: none;
-  border: none;
-  color: inherit; }
+  text-align: left; }
 
 .nav-item-rating {
   flex: 0 0 auto;
   margin: 5px;
   padding: 5px;
   width: 50px;
-  text-align: center;
-  color: inherit; }
+  text-align: center; }
 
 .nav-item-rating:hover > .rating-value {
   text-decoration: underline dotted; }
 
 .rating-value {
   cursor: default;
-  color: inherit; }
+  color: #00a6fb; }
 
 .rating-tooltip {
   position: fixed;
@@ -128,7 +130,6 @@ button:hover {
   opacity: 0;
   background-color: white;
   border-radius: 5px;
-  font-size: 12px;
   transition: opacity 0.2s 0.4s; }
   .rating-tooltip.visible {
     visibility: visible;
@@ -139,27 +140,25 @@ button:hover {
   padding: 10px;
   margin-bottom: 20px;
   width: 100%;
-  background-color: white;
-  color: #003554;
-  border: none;
+  background-color: #00a6fb;
+  border: 1px solid #00a6fb;
+  color: white;
   border-radius: 999px;
   font-weight: bold;
   transition: background-color 0.2s; }
   #nav-add-button:hover {
-    background-color: #ffe066; }
+    background-color: white;
+    color: #00a6fb;
+    box-shadow: 0 2px 4px #aaa; }
 
 #nav-reset-container {
   flex: 0 0 auto;
   margin-top: auto;
-  text-align: center; }
+  text-align: center;
+  color: white; }
 
 #nav-reset-button {
-  padding: 10px;
-  border: none;
-  background: none; }
-  #nav-reset-button i {
-    font-size: 20px;
-    color: white; }
+  padding: 10px; }
 
 #recipe-window {
   display: none;
@@ -170,6 +169,7 @@ button:hover {
   top: 0px;
   min-height: 100%;
   width: calc(100% - 70px);
+  font-size: 1.6rem;
   background-color: white;
   transition: left 0.4s ease-out, width 0.4s ease-out; }
   #recipe-window.narrower {
@@ -182,31 +182,32 @@ button:hover {
   padding: 20px;
   width: 100%;
   text-align: center;
-  border-bottom: 3px solid #0394e3; }
+  border-bottom: 3px solid #00a6fb;
+  color: #00a6fb; }
 
 #recipe-close-button {
   flex: 0 0 auto;
   position: absolute;
   right: 20px;
   padding: 10px;
-  width: 100px;
   border-radius: 5px;
-  background: #0394e3;
-  border: 1px solid #0394e3;
+  background: #00a6fb;
+  border: 1px solid #00a6fb;
+  font-size: 1.5rem;
   color: white;
   transition: background-color 0.2s, color 0.2s; }
   #recipe-close-button:hover {
     background: white;
-    color: #0394e3; }
+    color: #00a6fb;
+    box-shadow: 0 2px 4px #aaa; }
   #recipe-close-button i {
     color: white; }
   #recipe-close-button:hover i {
-    color: #0394e3; }
+    color: #00a6fb; }
 
 #recipe-name {
   flex: 1 1 100%;
-  color: #0394e3;
-  font-size: 24px; }
+  font-size: 1.6em; }
 
 #recipe-content {
   display: flex;
@@ -221,8 +222,7 @@ button:hover {
   padding: 10px;
   margin-bottom: 20px;
   text-align: center;
-  color: #333;
-  font-size: 20px; }
+  font-size: 1.2em; }
 
 #ingredients-list {
   list-style: none;
@@ -257,11 +257,11 @@ button:hover {
   flex: 0 0 110px;
   margin: 5px;
   padding: 5px 10px;
+  font-size: 0.9em;
   text-align: center;
   color: #00a6fb; }
   .step-time i {
-    float: left;
-    color: #00a6fb; }
+    float: left; }
 
 #recipe-menu {
   margin-top: auto;
@@ -273,15 +273,16 @@ button:hover {
 
 #recipe-edit-button {
   padding: 10px;
-  width: 100px;
   border-radius: 5px;
   background: #ddd;
   border: 1px solid #ddd;
+  font-size: 1.5rem;
   color: #333;
   transition: background-color 0.2s, color 0.2s; }
   #recipe-edit-button:hover {
     background: white;
-    color: #333; }
+    color: #333;
+    box-shadow: 0 2px 4px #aaa; }
   #recipe-edit-button i {
     color: #333; }
   #recipe-edit-button:hover i {
@@ -290,31 +291,29 @@ button:hover {
 #recipe-rating-container {
   display: flex;
   flex-direction: row;
+  font-size: 1.3em;
   padding: 0px 10px; }
 
 .recipe-rating-button {
   padding: 5px;
-  border: none;
-  background: none; }
-  .recipe-rating-button i {
-    font-size: 24px;
-    color: #ddd; }
-  .recipe-rating-button.checked > i {
+  color: #ddd; }
+  .recipe-rating-button.checked {
     color: #00a6fb; }
-  .recipe-rating-button.hovered > i {
+  .recipe-rating-button.hovered {
     color: #ffe066; }
 
 #recipe-delete-button {
   padding: 10px;
-  width: 100px;
   border-radius: 5px;
   background: #d72638;
   border: 1px solid #d72638;
+  font-size: 1.5rem;
   color: white;
   transition: background-color 0.2s, color 0.2s; }
   #recipe-delete-button:hover {
     background: white;
-    color: #d72638; }
+    color: #d72638;
+    box-shadow: 0 2px 4px #aaa; }
   #recipe-delete-button i {
     color: white; }
   #recipe-delete-button:hover i {
@@ -328,7 +327,8 @@ button:hover {
   width: 100vw;
   overflow: auto;
   z-index: 25;
-  display: none; }
+  display: none;
+  font-size: 1.6rem; }
   .popup-container.visible {
     display: flex; }
 
@@ -370,15 +370,16 @@ button:hover {
 
 #delete-ok-button {
   padding: 10px;
-  width: 100px;
   border-radius: 5px;
   background: #d72638;
   border: 1px solid #d72638;
+  font-size: 1.5rem;
   color: white;
   transition: background-color 0.2s, color 0.2s; }
   #delete-ok-button:hover {
     background: white;
-    color: #d72638; }
+    color: #d72638;
+    box-shadow: 0 2px 4px #aaa; }
   #delete-ok-button i {
     color: white; }
   #delete-ok-button:hover i {
@@ -386,15 +387,16 @@ button:hover {
 
 #delete-cancel-button {
   padding: 10px;
-  width: 100px;
   border-radius: 5px;
   background: #aaa;
   border: 1px solid #aaa;
+  font-size: 1.5rem;
   color: white;
   transition: background-color 0.2s, color 0.2s; }
   #delete-cancel-button:hover {
     background: white;
-    color: #aaa; }
+    color: #aaa;
+    box-shadow: 0 2px 4px #aaa; }
   #delete-cancel-button i {
     color: white; }
   #delete-cancel-button:hover i {
@@ -413,7 +415,7 @@ button:hover {
   margin-top: 20px;
   margin-bottom: 20px;
   text-align: center;
-  font-size: 20px;
+  font-size: 1.2em;
   font-weight: bold; }
 
 #popup-edit-form {
@@ -478,7 +480,7 @@ textarea {
   background-color: white;
   border: 1px solid #aaa;
   border-radius: 999px;
-  color: #aaa;
+  color: #555;
   font-weight: bold; }
 
 #form-validation-warning {
@@ -497,50 +499,53 @@ textarea {
 
 #edit-ok-button {
   padding: 10px;
-  width: 100px;
   border-radius: 5px;
-  background: #0394e3;
-  border: 1px solid #0394e3;
+  background: #00a6fb;
+  border: 1px solid #00a6fb;
+  font-size: 1.5rem;
   color: white;
   transition: background-color 0.2s, color 0.2s;
   margin: 20px; }
   #edit-ok-button:hover {
     background: white;
-    color: #0394e3; }
+    color: #00a6fb;
+    box-shadow: 0 2px 4px #aaa; }
   #edit-ok-button i {
     color: white; }
   #edit-ok-button:hover i {
-    color: #0394e3; }
+    color: #00a6fb; }
 
 #edit-clear-button {
   padding: 10px;
-  width: 100px;
   border-radius: 5px;
   background: #ffe066;
   border: 1px solid #ffe066;
+  font-size: 1.5rem;
   color: #333;
   transition: background-color 0.2s, color 0.2s;
   margin: 20px; }
   #edit-clear-button:hover {
     background: white;
-    color: #ffe066; }
+    color: #333;
+    box-shadow: 0 2px 4px #aaa; }
   #edit-clear-button i {
     color: #333; }
   #edit-clear-button:hover i {
-    color: #ffe066; }
+    color: #333; }
 
 #edit-cancel-button {
   padding: 10px;
-  width: 100px;
   border-radius: 5px;
   background: #aaa;
   border: 1px solid #aaa;
+  font-size: 1.5rem;
   color: white;
   transition: background-color 0.2s, color 0.2s;
   margin: 20px; }
   #edit-cancel-button:hover {
     background: white;
-    color: #aaa; }
+    color: #aaa;
+    box-shadow: 0 2px 4px #aaa; }
   #edit-cancel-button i {
     color: white; }
   #edit-cancel-button:hover i {
