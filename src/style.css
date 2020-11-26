@@ -6,7 +6,7 @@ html {
     font-size: 58%; } }
 @media (max-width: 450px) {
   html {
-    font-size: 54%; } }
+    font-size: 56%; } }
 body {
   overflow-x: hidden;
   overflow-y: auto;
@@ -339,6 +339,7 @@ button {
     opacity: 0.7; } }
 #popup-delete-window {
   display: none;
+  flex-direction: column;
   margin: auto;
   max-width: 96%;
   z-index: 30;
@@ -392,10 +393,12 @@ button {
 
 #popup-edit-window {
   display: none;
+  flex-direction: column;
   margin: auto;
   max-width: 96%;
   z-index: 30;
   background-color: white;
+  display: flex;
   width: 800px;
   padding: 1em; }
 
@@ -409,16 +412,17 @@ button {
 #input-ingredients-label,
 #steps-label {
   display: block;
-  padding: 0.3em;
+  padding: 0.5em;
   width: 100%;
   text-align: center; }
 
 input,
 textarea {
   display: inline-block;
-  padding: 0.3em;
+  padding: 0.5em;
   background-color: #ddd;
-  border: none; }
+  border: none;
+  border-radius: 0.5em; }
   input.incorrect,
   textarea.incorrect {
     border: 1px solid #d72638;
@@ -439,8 +443,10 @@ textarea {
 
 .input-steps-item {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
-  margin-bottom: 0.3em;
+  margin-bottom: 1em;
   counter-increment: editor-counter; }
   .input-steps-item::before {
     content: counter(editor-counter);
@@ -451,9 +457,14 @@ textarea {
 .input-step-name {
   flex: 1 1 0; }
 
+.input-step-break {
+  display: none;
+  height: 0.5em;
+  width: 100%; }
+
 .input-time-label {
   display: inline-block;
-  padding: 0.3em; }
+  padding: 0.3em 1em; }
   .input-time-label i {
     display: none; }
 
@@ -486,6 +497,7 @@ textarea {
     display: block; }
 
 #popup-edit-menu {
+  margin-top: auto;
   display: flex;
   justify-content: space-between; }
 
@@ -561,12 +573,13 @@ textarea {
     left: 0px;
     width: 100%; }
 
+  #popup-edit-window {
+    max-width: 100%;
+    min-height: 100%; }
+
   #recipe-window {
     z-index: 15; } }
 @media (max-width: 600px) {
-  .input-steps-item::before {
-    display: none; }
-
   .input-time-label i {
     display: inline; }
   .input-time-label span {
@@ -574,6 +587,9 @@ textarea {
 @media (max-width: 450px) {
   #recipe-rating-container {
     order: -1;
-    flex: 0 0 100%; } }
+    flex: 0 0 100%; }
+
+  .input-step-break {
+    display: inline-block; } }
 
 /*# sourceMappingURL=style.css.map */

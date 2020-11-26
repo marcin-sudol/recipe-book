@@ -56,6 +56,7 @@ $z-index-popup-window: 30;
 
 @mixin popup-window {
   display: none;
+  flex-direction: column;
   margin: auto;
   max-width: 96%;
   z-index: $z-index-popup-window;
@@ -77,7 +78,7 @@ html {
 
 @media (max-width: $breakdown-xs) {
   html {
-    font-size: 54%;
+    font-size: 56%;
   }
 }
 
@@ -489,6 +490,7 @@ button {
 
 #popup-edit-window {
   @include popup-window();
+  display: flex;
   width: 800px;
   padding: 1em;
 }
@@ -504,7 +506,7 @@ button {
 #input-ingredients-label,
 #steps-label {
   display: block;
-  padding: 0.3em;
+  padding: 0.5em;
   width: 100%;
   text-align: center;
 }
@@ -512,9 +514,10 @@ button {
 input,
 textarea {
   display: inline-block;
-  padding: 0.3em;
+  padding: 0.5em;
   background-color: $mono-light2;
   border: none;
+  border-radius: 0.5em;
   &.incorrect {
     border: 1px solid $accent-red;
     box-shadow: 0px 0px 2px $accent-red;
@@ -539,8 +542,10 @@ textarea {
 
 .input-steps-item {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
-  margin-bottom: 0.3em;
+  margin-bottom: 1em;
   counter-increment: editor-counter;
   &::before {
     content: counter(editor-counter);
@@ -554,9 +559,15 @@ textarea {
   flex: 1 1 0;
 }
 
+.input-step-break {
+  display: none;
+  height: 0.5em;
+  width: 100%;
+}
+
 .input-time-label {
   display: inline-block;
-  padding: 0.3em;
+  padding: 0.3em 1em;
   i {
     display: none;
   }
@@ -596,6 +607,7 @@ textarea {
 }
 
 #popup-edit-menu {
+  margin-top: auto;
   display: flex;
   justify-content: space-between;
 }
@@ -640,15 +652,17 @@ textarea {
     width: 100%;
   }
 
+  #popup-edit-window {
+    max-width: 100%;
+    min-height: 100%;
+  }
+
   #recipe-window {
     z-index: $z-index-recipe-sm;
   }
 }
 
 @media (max-width: $breakdown-sm) {
-  .input-steps-item::before {
-    display: none;
-  }
   .input-time-label {
     i {
       display: inline;
@@ -663,5 +677,9 @@ textarea {
   #recipe-rating-container {
     order: -1;
     flex: 0 0 100%;
+  }
+
+  .input-step-break {
+    display: inline-block;
   }
 }
