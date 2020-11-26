@@ -448,6 +448,7 @@ class EditPopup extends Popup {
     this.submit = this.submit.bind(this);
     this.popupContainer = document.getElementById("popup-edit-container");
     this.popupWindow = document.getElementById("popup-edit-window");
+    this.popupEditForm = document.getElementById("popup-edit-form");
     this.inputStepsList = document.getElementById("input-steps-list");
     this.formValidationWarning = document.getElementById(
       "form-validation-warning"
@@ -467,6 +468,7 @@ class EditPopup extends Popup {
     if (obj === undefined) {
       this.clear();
     } else {
+      this.clearValidation();
       this.load();
     }
     super.open();
@@ -542,24 +544,17 @@ class EditPopup extends Popup {
   }
 
   clear() {
+    this.clearValidation();
     this.removeAllSteps();
-    this.formValidationWarning.classList.remove("visible");
-    const fields = document
-      .getElementById("popup-edit-form")
-      .querySelectorAll("input, textarea");
+    const fields = this.popupEditForm.querySelectorAll("input, textarea");
     for (let elem of fields) {
       elem.value = "";
-      elem.classList.remove("incorrect");
     }
   }
 
   validate() {
-    const fields = document
-      .getElementById("popup-edit-form")
-      .querySelectorAll("input, textarea");
-    const minutes = document
-      .getElementById("popup-edit-form")
-      .getElementsByClassName("input-time");
+    const fields = this.popupEditForm.querySelectorAll("input, textarea");
+    const minutes = this.popupEditForm.getElementsByClassName("input-time");
     let result = true;
     for (let elem of fields) {
       elem.classList.remove("incorrect");
@@ -583,6 +578,14 @@ class EditPopup extends Popup {
     return result;
   }
 
+  clearValidation() {
+    this.formValidationWarning.classList.remove("visible");
+    const fields = this.popupEditForm.querySelectorAll("input, textarea");
+    for (let elem of fields) {
+      elem.classList.remove("incorrect");
+    }
+  }
+
   export() {
     const newObj = {
       name: document.getElementById("input-name").value,
@@ -595,8 +598,7 @@ class EditPopup extends Popup {
     } else {
       newObj.rating = { sum: 0, votes: 0 };
     }
-    const steps = document.getElementById("input-steps-list");
-    for (let i = 0; i < steps.childElementCount; i++) {
+    for (let i = 0; i < this.inputStepsList.childElementCount; i++) {
       newObj.steps.push({
         name: document.getElementById("input-step-" + (i + 1)).value,
         time: document.getElementById("input-time-" + (i + 1)).value,
