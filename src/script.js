@@ -476,9 +476,10 @@ class EditPopup extends Popup {
     const item = document.createElement("li");
     item.className = "input-steps-item";
     const nextId = this.inputStepsList.childElementCount + 1;
-    item.innerHTML = `<input type="text" class="input-step" id="input-step-${nextId}" placeholder="Enter step">
+    item.innerHTML = `<input type="text" class="input-step-name" id="input-step-${nextId}" placeholder="Enter step">
+    <div class="input-step-break"></div>
     <label class="input-time-label" for="input-time-${nextId}">minutes:</label>
-    <input class="input-time" id="input-time-${nextId}" type="number" placeholder="min" min="5" max="180" step="5">`;
+    <input class="input-step-time" id="input-time-${nextId}" type="number" placeholder="min" min="5" max="180" step="5">`;
     this.inputStepsList.appendChild(item);
 
     item.animate(

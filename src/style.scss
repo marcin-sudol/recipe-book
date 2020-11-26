@@ -23,9 +23,6 @@ $breakdown-sm: 800px;
 $breakdown-xs: 600px;
 
 $nav-width: 300px;
-$main-spacing: 20px;
-
-$animation-time: 0.4s;
 
 $z-index-nav: 5;
 $z-index-nav-tooltip: 10;
@@ -35,7 +32,8 @@ $z-index-popup-container: 25;
 $z-index-popup-window: 30;
 
 @mixin btn($bg-color, $color, $hover-bg-color, $hover-color) {
-  padding: 10px;
+  margin: 0.5em;
+  padding: 0.5em 1em;
   border-radius: 5px;
   background: $bg-color;
   border: 1px solid $bg-color;
@@ -58,8 +56,7 @@ $z-index-popup-window: 30;
 @mixin popup-window {
   display: none;
   margin: auto;
-  padding: $main-spacing;
-  max-width: calc(100% - 2 * #{$main-spacing});
+  max-width: 96%;
   z-index: $z-index-popup-window;
   background-color: white;
 }
@@ -121,12 +118,12 @@ button {
 
 #bg-menu-button {
   position: fixed;
-  left: $main-spacing;
-  top: $main-spacing;
-  padding: 5px;
+  left: 1em;
+  top: 1em;
   font-size: 2rem;
-  i {
-    color: $accent-blue2;
+  color: $accent-blue2;
+  &:hover {
+    color: $accent-yellow;
   }
 }
 
@@ -143,7 +140,7 @@ button {
   flex-direction: column;
   height: 100vh;
   width: $nav-width;
-  padding: $main-spacing;
+  padding: 1em;
   z-index: $z-index-nav;
   position: fixed;
   left: 0px;
@@ -151,7 +148,7 @@ button {
   font-size: 1.6rem;
   background-color: $accent-gray;
   box-shadow: 0 0 6px $mono-medium;
-  transition: left $animation-time ease-out;
+  transition: left 0.4s ease-out;
   &.hidden {
     left: -$nav-width;
   }
@@ -159,7 +156,7 @@ button {
 
 #nav-header {
   flex: 0 0 auto;
-  margin-bottom: $main-spacing;
+  margin-bottom: 1em;
   font-size: 1.4em;
   text-align: center;
   height: 35px;
@@ -170,15 +167,17 @@ button {
 }
 
 #nav-menu-button {
-  padding: 5px;
   height: 100%;
   float: left;
   font-size: 2rem;
+  &:hover {
+    color: $accent-yellow;
+  }
 }
 
 #nav-list {
   flex: 0 1 auto;
-  margin-bottom: 2 * $main-spacing;
+  margin-bottom: 1em;
   list-style: none;
   overflow-x: hidden;
   overflow-y: auto;
@@ -192,21 +191,22 @@ button {
   align-items: center;
   overflow: hidden;
   &:not(:last-child) {
-    margin-bottom: $main-spacing;
+    margin-bottom: 1em;
+  }
+  &:hover {
+    background-color: $mono-light1;
   }
 }
 
 .nav-item-button {
   flex: 1 1 100%;
-  padding: 10px 20px;
+  padding: 0.5em 1em;
   text-align: left;
 }
 
 .nav-item-rating {
   flex: 0 0 auto;
-  margin: 5px;
-  padding: 5px;
-  width: 50px;
+  padding: 0.5em 1em;
   text-align: center;
 }
 
@@ -221,8 +221,7 @@ button {
 
 .rating-tooltip {
   position: fixed;
-  padding: 10px;
-  width: 80px;
+  padding: 0.5em;
   left: 0;
   top: 0;
   white-space: nowrap;
@@ -240,19 +239,17 @@ button {
 
 #nav-add-button {
   flex: 0 0 auto;
-  padding: 10px;
-  margin-bottom: $main-spacing;
+  padding: 0.5em;
+  margin-bottom: 1em;
   width: 100%;
   background-color: $accent-blue1;
-  border: 1px solid $accent-blue1;
   color: white;
   border-radius: 999px;
   font-weight: bold;
   transition: background-color 0.2s;
   &:hover {
-    background-color: white;
-    color: $accent-blue1;
-    box-shadow: 0 2px 4px $mono-medium;
+    background-color: $accent-yellow;
+    color: $mono-dark2;
   }
 }
 
@@ -260,11 +257,14 @@ button {
   flex: 0 0 auto;
   margin-top: auto;
   text-align: center;
-  color: white;
 }
 
 #nav-reset-button {
-  padding: 10px;
+  padding: 0.5em;
+  color: white;
+  &:hover {
+    color: $accent-yellow;
+  }
 }
 
 // ------------------------------------------
@@ -281,7 +281,7 @@ button {
   width: calc(100% - 70px);
   font-size: 1.6rem;
   background-color: white;
-  transition: left $animation-time ease-out, width $animation-time ease-out;
+  transition: left 0.4s ease-out, width 0.4s ease-out;
   &.narrower {
     left: $nav-width;
     width: calc(100% - #{$nav-width});
@@ -291,7 +291,7 @@ button {
 #recipe-header {
   display: flex;
   align-items: center;
-  padding: $main-spacing;
+  padding: 1em;
   width: 100%;
   text-align: center;
   border-bottom: 3px solid $accent-blue1;
@@ -301,7 +301,7 @@ button {
 #recipe-close-button {
   flex: 0 0 auto;
   position: absolute;
-  right: $main-spacing;
+  right: 1em;
   @include btn($accent-blue1, white, white, $accent-blue1);
 }
 
@@ -317,13 +317,12 @@ button {
 }
 
 #ingredients {
-  padding: $main-spacing;
+  padding: 1em;
   width: 50%;
 }
 
 #ingredients-header {
-  padding: 10px;
-  margin-bottom: $main-spacing;
+  margin-bottom: 1em;
   text-align: center;
   font-size: 1.2em;
 }
@@ -336,7 +335,7 @@ button {
 }
 
 .ingredients-item {
-  padding: 10px;
+  padding: 0.5em;
   &:not(:last-child) {
     border-bottom: 1px solid $mono-medium;
   }
@@ -364,24 +363,21 @@ button {
   &::before {
     counter-increment: steps-counter;
     content: counter(steps-counter) ".";
-    padding: 5px;
   }
 }
 
 .step-name {
   flex: 1 1 100%;
-  padding: 10px;
+  padding: 0.5em;
 }
 
 .step-time {
-  flex: 0 0 110px;
-  margin: 5px;
-  padding: 5px 10px;
+  flex: 0 0 auto;
   font-size: 0.9em;
-  text-align: center;
   color: $accent-blue1;
+  font-weight: bold;
   i {
-    float: left;
+    font-weight: inherit;
   }
 }
 
@@ -390,7 +386,7 @@ button {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 20px;
+  padding: 1em;
   width: 100%;
 }
 
@@ -402,11 +398,10 @@ button {
   display: flex;
   flex-direction: row;
   font-size: 1.3em;
-  padding: 0px 10px;
 }
 
 .recipe-rating-button {
-  padding: 5px;
+  padding: 0.3em;
   color: $mono-light2;
   &.checked {
     color: $accent-blue1;
@@ -427,8 +422,8 @@ button {
   position: fixed;
   left: 0;
   top: 0;
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   overflow: auto;
   z-index: $z-index-popup-container;
   display: none;
@@ -442,14 +437,14 @@ button {
   position: fixed;
   left: 0;
   top: 0;
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   opacity: 0;
   background-color: $mono-dark1;
 }
 
 .popup-container.visible .popup-bg {
-  animation: popup-bg $animation-time;
+  animation: popup-bg 0.4s;
   opacity: 0.7;
 }
 
@@ -465,17 +460,17 @@ button {
 #popup-delete-window {
   @include popup-window();
   width: 300px;
+  padding: 1em;
 }
 
 #popup-delete-message {
-  margin-top: $main-spacing;
-  margin-bottom: 2 * $main-spacing;
+  margin-bottom: 1em;
   text-align: center;
 }
 
 #popup-delete-menu {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
 }
 
 #delete-ok-button {
@@ -489,30 +484,29 @@ button {
 #popup-edit-window {
   @include popup-window();
   width: 800px;
+  padding: 1em;
 }
 
 #popup-edit-title {
-  margin-top: $main-spacing;
-  margin-bottom: $main-spacing;
+  margin-bottom: 1em;
   text-align: center;
   font-size: 1.2em;
   font-weight: bold;
 }
 
-#popup-edit-form {
-  margin-bottom: $main-spacing;
-}
-
-input,
-textarea,
-label,
+#input-name-label,
+#input-ingredients-label,
 #steps-label {
-  margin: 5px;
-  padding: 5px;
+  display: block;
+  padding: 0.3em;
+  width: 100%;
+  text-align: center;
 }
 
 input,
 textarea {
+  display: inline-block;
+  padding: 0.3em;
   background-color: $mono-light1;
   border: none;
   border-radius: 5px;
@@ -522,14 +516,12 @@ textarea {
   }
 }
 
-#input-name,
-#input-ingredients {
-  display: block;
-  width: calc(100% - 15px);
-  margin-bottom: $main-spacing;
+#input-name {
+  width: 100%;
 }
 
 #input-ingredients {
+  width: 100%;
   resize: none;
 }
 
@@ -539,35 +531,49 @@ textarea {
 }
 
 .input-steps-item {
-  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 0.3em;
+  align-items: center;
   counter-increment: editor-counter;
   &::before {
     content: counter(editor-counter);
     display: inline-block;
-    padding: 5px;
-    width: 20px;
+    width: 2em;
     text-align: center;
   }
 }
 
-.input-step {
-  width: calc(100% - 230px);
+.input-step-name {
+  flex: 1 1 auto;
 }
 
-.input-time {
-  width: 70px;
+.input-step-break {
+  flex: 0 0 100%;
+  display: none;
+  height: 0.3em;
+}
+
+.input-time-label {
+  display: inline-block;
+  padding: 0.3em;
+}
+
+.input-step-time {
+  width: 4em;
 }
 
 #input-steps-menu {
+  padding: 0.5em;
   text-align: left;
 }
 
 #add-step-button,
 #remove-step-button {
-  margin: 5px;
-  height: 30px;
-  width: 30px;
-  line-height: 30px;
+  margin: 0.2em;
+  height: 2em;
+  width: 2em;
   text-align: center;
   background-color: white;
   border: 1px solid $mono-medium;
@@ -578,9 +584,8 @@ textarea {
 
 #form-validation-warning {
   display: none;
-  margin: 5px;
-  margin-bottom: $main-spacing;
-  padding: 10px;
+  margin: 0.5em;
+  padding: 0.5em;
   border: 1px solid $accent-red;
   border-radius: 5px;
   &.visible {
@@ -590,22 +595,19 @@ textarea {
 
 #popup-edit-menu {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
 }
 
 #edit-ok-button {
   @include btn($accent-blue1, white, white, $accent-blue1);
-  margin: $main-spacing;
 }
 
 #edit-clear-button {
   @include btn($accent-yellow, $mono-dark2, white, $mono-dark2);
-  margin: $main-spacing;
 }
 
 #edit-cancel-button {
   @include btn($mono-medium, white, white, $mono-medium);
-  margin: $main-spacing;
 }
 
 // ------------------------------------------
@@ -638,5 +640,11 @@ textarea {
 
   #recipe-window {
     z-index: $z-index-recipe-sm;
+  }
+}
+
+@media (max-width: $breakdown-xs) {
+  .input-step-break {
+    display: inline-block;
   }
 }

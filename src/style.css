@@ -37,12 +37,12 @@ button {
 
 #bg-menu-button {
   position: fixed;
-  left: 20px;
-  top: 20px;
-  padding: 5px;
-  font-size: 2rem; }
-  #bg-menu-button i {
-    color: #0582ca; }
+  left: 1em;
+  top: 1em;
+  font-size: 2rem;
+  color: #0582ca; }
+  #bg-menu-button:hover {
+    color: #ffe066; }
 
 #bg-icon {
   font-size: 2em;
@@ -53,7 +53,7 @@ button {
   flex-direction: column;
   height: 100vh;
   width: 300px;
-  padding: 20px;
+  padding: 1em;
   z-index: 5;
   position: fixed;
   left: 0px;
@@ -67,7 +67,7 @@ button {
 
 #nav-header {
   flex: 0 0 auto;
-  margin-bottom: 20px;
+  margin-bottom: 1em;
   font-size: 1.4em;
   text-align: center;
   height: 35px;
@@ -77,14 +77,15 @@ button {
   font-weight: bold; }
 
 #nav-menu-button {
-  padding: 5px;
   height: 100%;
   float: left;
   font-size: 2rem; }
+  #nav-menu-button:hover {
+    color: #ffe066; }
 
 #nav-list {
   flex: 0 1 auto;
-  margin-bottom: 40px;
+  margin-bottom: 1em;
   list-style: none;
   overflow-x: hidden;
   overflow-y: auto; }
@@ -97,18 +98,18 @@ button {
   align-items: center;
   overflow: hidden; }
   .nav-item:not(:last-child) {
-    margin-bottom: 20px; }
+    margin-bottom: 1em; }
+  .nav-item:hover {
+    background-color: #f4f4f4; }
 
 .nav-item-button {
   flex: 1 1 100%;
-  padding: 10px 20px;
+  padding: 0.5em 1em;
   text-align: left; }
 
 .nav-item-rating {
   flex: 0 0 auto;
-  margin: 5px;
-  padding: 5px;
-  width: 50px;
+  padding: 0.5em 1em;
   text-align: center; }
 
 .nav-item-rating:hover > .rating-value {
@@ -120,8 +121,7 @@ button {
 
 .rating-tooltip {
   position: fixed;
-  padding: 10px;
-  width: 80px;
+  padding: 0.5em;
   left: 0;
   top: 0;
   white-space: nowrap;
@@ -137,28 +137,28 @@ button {
 
 #nav-add-button {
   flex: 0 0 auto;
-  padding: 10px;
-  margin-bottom: 20px;
+  padding: 0.5em;
+  margin-bottom: 1em;
   width: 100%;
   background-color: #00a6fb;
-  border: 1px solid #00a6fb;
   color: white;
   border-radius: 999px;
   font-weight: bold;
   transition: background-color 0.2s; }
   #nav-add-button:hover {
-    background-color: white;
-    color: #00a6fb;
-    box-shadow: 0 2px 4px #aaa; }
+    background-color: #ffe066;
+    color: #333; }
 
 #nav-reset-container {
   flex: 0 0 auto;
   margin-top: auto;
-  text-align: center;
-  color: white; }
+  text-align: center; }
 
 #nav-reset-button {
-  padding: 10px; }
+  padding: 0.5em;
+  color: white; }
+  #nav-reset-button:hover {
+    color: #ffe066; }
 
 #recipe-window {
   display: none;
@@ -179,7 +179,7 @@ button {
 #recipe-header {
   display: flex;
   align-items: center;
-  padding: 20px;
+  padding: 1em;
   width: 100%;
   text-align: center;
   border-bottom: 3px solid #00a6fb;
@@ -188,8 +188,9 @@ button {
 #recipe-close-button {
   flex: 0 0 auto;
   position: absolute;
-  right: 20px;
-  padding: 10px;
+  right: 1em;
+  margin: 0.5em;
+  padding: 0.5em 1em;
   border-radius: 5px;
   background: #00a6fb;
   border: 1px solid #00a6fb;
@@ -215,12 +216,11 @@ button {
   flex-wrap: wrap; }
 
 #ingredients, #steps {
-  padding: 20px;
+  padding: 1em;
   width: 50%; }
 
 #ingredients-header, #steps-header {
-  padding: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 1em;
   text-align: center;
   font-size: 1.2em; }
 
@@ -231,7 +231,7 @@ button {
   border-radius: 20px; }
 
 .ingredients-item {
-  padding: 10px; }
+  padding: 0.5em; }
   .ingredients-item:not(:last-child) {
     border-bottom: 1px solid #aaa; }
 
@@ -246,33 +246,31 @@ button {
     border-bottom: 1px solid #aaa; }
   .steps-item::before {
     counter-increment: steps-counter;
-    content: counter(steps-counter) ".";
-    padding: 5px; }
+    content: counter(steps-counter) "."; }
 
 .step-name {
   flex: 1 1 100%;
-  padding: 10px; }
+  padding: 0.5em; }
 
 .step-time {
-  flex: 0 0 110px;
-  margin: 5px;
-  padding: 5px 10px;
+  flex: 0 0 auto;
   font-size: 0.9em;
-  text-align: center;
-  color: #00a6fb; }
+  color: #00a6fb;
+  font-weight: bold; }
   .step-time i {
-    float: left; }
+    font-weight: inherit; }
 
 #recipe-menu {
   margin-top: auto;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 20px;
+  padding: 1em;
   width: 100%; }
 
 #recipe-edit-button {
-  padding: 10px;
+  margin: 0.5em;
+  padding: 0.5em 1em;
   border-radius: 5px;
   background: #ddd;
   border: 1px solid #ddd;
@@ -291,11 +289,10 @@ button {
 #recipe-rating-container {
   display: flex;
   flex-direction: row;
-  font-size: 1.3em;
-  padding: 0px 10px; }
+  font-size: 1.3em; }
 
 .recipe-rating-button {
-  padding: 5px;
+  padding: 0.3em;
   color: #ddd; }
   .recipe-rating-button.checked {
     color: #00a6fb; }
@@ -303,7 +300,8 @@ button {
     color: #ffe066; }
 
 #recipe-delete-button {
-  padding: 10px;
+  margin: 0.5em;
+  padding: 0.5em 1em;
   border-radius: 5px;
   background: #d72638;
   border: 1px solid #d72638;
@@ -323,8 +321,8 @@ button {
   position: fixed;
   left: 0;
   top: 0;
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   overflow: auto;
   z-index: 25;
   display: none;
@@ -336,8 +334,8 @@ button {
   position: fixed;
   left: 0;
   top: 0;
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   opacity: 0;
   background-color: #555; }
 
@@ -353,23 +351,23 @@ button {
 #popup-delete-window {
   display: none;
   margin: auto;
-  padding: 20px;
-  max-width: calc(100% - 2 * 20px);
+  max-width: 96%;
   z-index: 30;
   background-color: white;
-  width: 300px; }
+  width: 300px;
+  padding: 1em; }
 
 #popup-delete-message {
-  margin-top: 20px;
-  margin-bottom: 40px;
+  margin-bottom: 1em;
   text-align: center; }
 
 #popup-delete-menu {
   display: flex;
-  justify-content: space-evenly; }
+  justify-content: center; }
 
 #delete-ok-button {
-  padding: 10px;
+  margin: 0.5em;
+  padding: 0.5em 1em;
   border-radius: 5px;
   background: #d72638;
   border: 1px solid #d72638;
@@ -386,7 +384,8 @@ button {
     color: #d72638; }
 
 #delete-cancel-button {
-  padding: 10px;
+  margin: 0.5em;
+  padding: 0.5em 1em;
   border-radius: 5px;
   background: #aaa;
   border: 1px solid #aaa;
@@ -405,31 +404,30 @@ button {
 #popup-edit-window {
   display: none;
   margin: auto;
-  padding: 20px;
-  max-width: calc(100% - 2 * 20px);
+  max-width: 96%;
   z-index: 30;
   background-color: white;
-  width: 800px; }
+  width: 800px;
+  padding: 1em; }
 
 #popup-edit-title {
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 1em;
   text-align: center;
   font-size: 1.2em;
   font-weight: bold; }
 
-#popup-edit-form {
-  margin-bottom: 20px; }
-
-input,
-textarea,
-label,
+#input-name-label,
+#input-ingredients-label,
 #steps-label {
-  margin: 5px;
-  padding: 5px; }
+  display: block;
+  padding: 0.3em;
+  width: 100%;
+  text-align: center; }
 
 input,
 textarea {
+  display: inline-block;
+  padding: 0.3em;
   background-color: #f4f4f4;
   border: none;
   border-radius: 5px; }
@@ -438,13 +436,11 @@ textarea {
     border: 1px solid #d72638;
     box-shadow: 0px 0px 2px #d72638; }
 
-#input-name,
-#input-ingredients {
-  display: block;
-  width: calc(100% - 15px);
-  margin-bottom: 20px; }
+#input-name {
+  width: 100%; }
 
 #input-ingredients {
+  width: 100%;
   resize: none; }
 
 #input-steps-list {
@@ -452,30 +448,42 @@ textarea {
   counter-reset: editor-counter; }
 
 .input-steps-item {
-  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 0.3em;
+  align-items: center;
   counter-increment: editor-counter; }
   .input-steps-item::before {
     content: counter(editor-counter);
     display: inline-block;
-    padding: 5px;
-    width: 20px;
+    width: 2em;
     text-align: center; }
 
-.input-step {
-  width: calc(100% - 230px); }
+.input-step-name {
+  flex: 1 1 auto; }
 
-.input-time {
-  width: 70px; }
+.input-step-break {
+  flex: 0 0 100%;
+  display: none;
+  height: 0.3em; }
+
+.input-time-label {
+  display: inline-block;
+  padding: 0.3em; }
+
+.input-step-time {
+  width: 4em; }
 
 #input-steps-menu {
+  padding: 0.5em;
   text-align: left; }
 
 #add-step-button,
 #remove-step-button {
-  margin: 5px;
-  height: 30px;
-  width: 30px;
-  line-height: 30px;
+  margin: 0.2em;
+  height: 2em;
+  width: 2em;
   text-align: center;
   background-color: white;
   border: 1px solid #aaa;
@@ -485,9 +493,8 @@ textarea {
 
 #form-validation-warning {
   display: none;
-  margin: 5px;
-  margin-bottom: 20px;
-  padding: 10px;
+  margin: 0.5em;
+  padding: 0.5em;
   border: 1px solid #d72638;
   border-radius: 5px; }
   #form-validation-warning.visible {
@@ -495,17 +502,17 @@ textarea {
 
 #popup-edit-menu {
   display: flex;
-  justify-content: center; }
+  justify-content: space-between; }
 
 #edit-ok-button {
-  padding: 10px;
+  margin: 0.5em;
+  padding: 0.5em 1em;
   border-radius: 5px;
   background: #00a6fb;
   border: 1px solid #00a6fb;
   font-size: 1.5rem;
   color: white;
-  transition: background-color 0.2s, color 0.2s;
-  margin: 20px; }
+  transition: background-color 0.2s, color 0.2s; }
   #edit-ok-button:hover {
     background: white;
     color: #00a6fb;
@@ -516,14 +523,14 @@ textarea {
     color: #00a6fb; }
 
 #edit-clear-button {
-  padding: 10px;
+  margin: 0.5em;
+  padding: 0.5em 1em;
   border-radius: 5px;
   background: #ffe066;
   border: 1px solid #ffe066;
   font-size: 1.5rem;
   color: #333;
-  transition: background-color 0.2s, color 0.2s;
-  margin: 20px; }
+  transition: background-color 0.2s, color 0.2s; }
   #edit-clear-button:hover {
     background: white;
     color: #333;
@@ -534,14 +541,14 @@ textarea {
     color: #333; }
 
 #edit-cancel-button {
-  padding: 10px;
+  margin: 0.5em;
+  padding: 0.5em 1em;
   border-radius: 5px;
   background: #aaa;
   border: 1px solid #aaa;
   font-size: 1.5rem;
   color: white;
-  transition: background-color 0.2s, color 0.2s;
-  margin: 20px; }
+  transition: background-color 0.2s, color 0.2s; }
   #edit-cancel-button:hover {
     background: white;
     color: #aaa;
@@ -571,5 +578,8 @@ textarea {
 
   #recipe-window {
     z-index: 15; } }
+@media (max-width: 600px) {
+  .input-step-break {
+    display: inline-block; } }
 
 /*# sourceMappingURL=style.css.map */
