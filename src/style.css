@@ -1,10 +1,10 @@
 html {
   font-size: 62.5%; }
 
-@media (max-width: 800px) {
+@media (max-width: 600px) {
   html {
     font-size: 58%; } }
-@media (max-width: 600px) {
+@media (max-width: 450px) {
   html {
     font-size: 54%; } }
 body {
@@ -264,6 +264,7 @@ button {
   margin-top: auto;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: space-between;
   padding: 1em;
   width: 100%; }
@@ -289,6 +290,7 @@ button {
 #recipe-rating-container {
   display: flex;
   flex-direction: row;
+  justify-content: center;
   font-size: 1.3em; }
 
 .recipe-rating-button {
@@ -451,10 +453,8 @@ textarea {
 
 .input-steps-item {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-bottom: 0.3em;
   align-items: center;
+  margin-bottom: 0.3em;
   counter-increment: editor-counter; }
   .input-steps-item::before {
     content: counter(editor-counter);
@@ -585,5 +585,9 @@ textarea {
     display: inline; }
   .input-time-label span {
     display: none; } }
+@media (max-width: 450px) {
+  #recipe-rating-container {
+    order: -1;
+    flex: 0 0 100%; } }
 
 /*# sourceMappingURL=style.css.map */

@@ -18,9 +18,10 @@ $mono-dark2: #333;
 
 $font-normal: "Open Sans", sans-serif;
 
-$breakdown-md: 1200px;
-$breakdown-sm: 800px;
-$breakdown-xs: 600px;
+$breakdown-lg: 1200px;
+$breakdown-md: 800px;
+$breakdown-sm: 600px;
+$breakdown-xs: 450px;
 
 $nav-width: 300px;
 
@@ -385,6 +386,7 @@ button {
   margin-top: auto;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: space-between;
   padding: 1em;
   width: 100%;
@@ -397,6 +399,7 @@ button {
 #recipe-rating-container {
   display: flex;
   flex-direction: row;
+  justify-content: center;
   font-size: 1.3em;
 }
 
@@ -534,10 +537,8 @@ textarea {
 
 .input-steps-item {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-bottom: 0.3em;
   align-items: center;
+  margin-bottom: 0.3em;
   counter-increment: editor-counter;
   &::before {
     content: counter(editor-counter);
@@ -612,14 +613,14 @@ textarea {
 // ------------------------------------------
 // MEDIA QUERIES
 // ------------------------------------------
-@media (max-width: $breakdown-md) {
+@media (max-width: $breakdown-lg) {
   #ingredients,
   #steps {
     width: 100%;
   }
 }
 
-@media (max-width: $breakdown-sm) {
+@media (max-width: $breakdown-md) {
   #nav {
     width: 100vw;
     &.hidden {
@@ -642,7 +643,7 @@ textarea {
   }
 }
 
-@media (max-width: $breakdown-xs) {
+@media (max-width: $breakdown-sm) {
   .input-steps-item::before {
     display: none;
   }
@@ -653,5 +654,12 @@ textarea {
     span {
       display: none;
     }
+  }
+}
+
+@media (max-width: $breakdown-xs) {
+  #recipe-rating-container {
+    order: -1;
+    flex: 0 0 100%;
   }
 }
