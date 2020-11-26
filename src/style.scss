@@ -518,10 +518,12 @@ textarea {
 
 #input-name {
   width: 100%;
+  margin-bottom: 1em;
 }
 
 #input-ingredients {
   width: 100%;
+  margin-bottom: 1em;
   resize: none;
 }
 
@@ -549,24 +551,21 @@ textarea {
   flex: 1 1 auto;
 }
 
-.input-step-break {
-  flex: 0 0 100%;
-  display: none;
-  height: 0.3em;
-}
-
 .input-time-label {
   display: inline-block;
   padding: 0.3em;
+  i {
+    display: none;
+  }
 }
 
 .input-step-time {
-  width: 4em;
+  width: 6em;
 }
 
 #input-steps-menu {
   padding: 0.5em;
-  text-align: left;
+  text-align: center;
 }
 
 #add-step-button,
@@ -644,7 +643,15 @@ textarea {
 }
 
 @media (max-width: $breakdown-xs) {
-  .input-step-break {
-    display: inline-block;
+  .input-steps-item::before {
+    display: none;
+  }
+  .input-time-label {
+    i {
+      display: inline;
+    }
+    span {
+      display: none;
+    }
   }
 }
