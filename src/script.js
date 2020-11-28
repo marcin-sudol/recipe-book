@@ -45,6 +45,10 @@ class Nav {
     this.recipeWindow.classList.remove("narrower");
   }
 
+  isVisible() {
+    return !this.nav.classList.contains("hidden");
+  }
+
   getRating(obj) {
     let rating;
     if (obj.rating.votes > 0)
@@ -356,6 +360,10 @@ class RecipeWindow {
     }
   }
 
+  isVisible() {
+    return this.visible;
+  }
+
   clickedClose() {
     this.close("slide");
   }
@@ -433,6 +441,10 @@ class Popup {
   close() {
     this.popupWindow.style.display = "none";
     this.popupContainer.classList.remove("visible");
+  }
+
+  isOpened() {
+    return this.popupContainer.classList.contains("visible");
   }
 }
 
@@ -654,6 +666,7 @@ class MainApp {
     this.displayRecipe = this.displayRecipe.bind(this);
     this.openEditor = this.openEditor.bind(this);
     this.openDelete = this.openDelete.bind(this);
+    this.keyPressed = this.keyPressed.bind(this);
     this.startingArrayString = JSON.stringify(arr);
     this.storage = window.localStorage;
     const storedArr = this.storage.getItem("recipes");
@@ -680,6 +693,8 @@ class MainApp {
 
     this.editPopup = new EditPopup(this.saveRecipe);
     this.deletePopup = new DeletePopup(this.deleteRecipe);
+
+    document.addEventListener("keydown", this.keyPressed);
   }
 
   addRecipe(obj) {
@@ -731,6 +746,24 @@ class MainApp {
 
   openDelete(obj) {
     this.deletePopup.open(obj);
+  }
+
+  keyPressed(event) {
+    if ((event.code === "Escape") & !this.recipeWindow.changing) {
+      if (this.editPopup.isOpened()) {
+        event.preventDefault();
+        this.editPopup.close();
+      } else if (this.deletePopup.isOpened()) {
+        event.preventDefault();
+        this.deletePopup.close();
+      } else if (this.recipeWindow.isVisible()) {
+        event.preventDefault();
+        this.recipeWindow.close("slide");
+      } else if (this.nav.isVisible()) {
+        event.preventDefault();
+        this.nav.hide();
+      }
+    }
   }
 }
 
