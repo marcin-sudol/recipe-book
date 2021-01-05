@@ -1,0 +1,140 @@
+#nav {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: $nav-width;
+  @include mq($breakdown-md) {
+    width: 100vw;
+    &.hidden {
+      transform: translateX($nav-width);
+    }
+  }
+
+  padding: 1em;
+  z-index: $z-index-nav;
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  font-size: 1.6rem;
+  background-color: $accent-gray;
+  box-shadow: 0 0 6px $mono-dark1;
+  transition: left 0.4s ease-out;
+  &.hidden {
+    left: -$nav-width;
+  }
+}
+
+#nav-header {
+  flex: 0 0 auto;
+  margin-bottom: 1em;
+  font-size: 1.4em;
+  text-align: center;
+  height: 35px;
+  line-height: 35px;
+  color: white;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+#nav-menu-button {
+  height: 100%;
+  float: left;
+  font-size: 2rem;
+  &:hover {
+    color: $accent-yellow;
+  }
+  @include mq($breakdown-md) {
+    display: none;
+  }
+}
+
+#nav-list {
+  flex: 0 1 auto;
+  margin-bottom: 1em;
+  list-style: none;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+  border-radius: 0.5em;
+  align-items: center;
+  overflow: hidden;
+  &:not(:last-child) {
+    margin-bottom: 1em;
+  }
+  &:hover {
+    background-color: $mono-light1;
+  }
+}
+
+.nav-item-button {
+  flex: 1 1 100%;
+  padding: 0.5em 1em;
+  text-align: left;
+}
+
+.nav-item-rating {
+  flex: 0 0 auto;
+  padding: 0.5em 1em;
+  text-align: center;
+}
+
+.nav-item-rating:hover > .rating-value {
+  text-decoration: underline dotted;
+}
+
+.rating-value {
+  cursor: default;
+  color: $accent-blue1;
+}
+
+.rating-tooltip {
+  position: fixed;
+  padding: 0.5em;
+  white-space: nowrap;
+  z-index: $z-index-nav-tooltip;
+  display: none;
+  opacity: 0;
+  background-color: $accent-yellow;
+  border-radius: 5px;
+  font-size: 0.9em;
+  box-shadow: 0 2px 4px $mono-medium;
+  &.visible {
+    display: block;
+    opacity: 1;
+  }
+}
+
+#nav-add-button {
+  flex: 0 0 auto;
+  padding: 0.5em;
+  margin-bottom: 1em;
+  width: 100%;
+  background-color: $accent-blue1;
+  color: white;
+  border-radius: 0.5em;
+  font-weight: bold;
+  transition: background-color 0.2s;
+  &:hover {
+    background-color: $accent-yellow;
+    color: $mono-dark2;
+  }
+}
+
+#nav-reset-container {
+  flex: 0 0 auto;
+  margin-top: auto;
+  text-align: center;
+}
+
+#nav-reset-button {
+  padding: 0.5em;
+  color: white;
+  &:hover {
+    color: $accent-yellow;
+  }
+}

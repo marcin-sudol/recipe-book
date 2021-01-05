@@ -1,0 +1,220 @@
+.popup-container {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  z-index: $z-index-popup-container;
+  display: none;
+  font-size: 1.6rem;
+  &.visible {
+    display: flex;
+  }
+}
+
+.popup-bg {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  background-color: $mono-dark1;
+}
+
+.popup-container.visible .popup-bg {
+  animation: popup-bg 0.4s;
+  opacity: 0.7;
+}
+
+@keyframes popup-bg {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.7;
+  }
+}
+
+#popup-delete-window {
+  @include popup-window();
+  width: 300px;
+  padding: 1em;
+}
+
+#popup-delete-message {
+  margin-bottom: 1em;
+  text-align: center;
+}
+
+#popup-delete-menu {
+  display: flex;
+  justify-content: center;
+}
+
+#delete-ok-button {
+  @include btn($accent-red, white, white, $accent-red);
+}
+
+#delete-cancel-button {
+  @include btn($mono-medium, white, white, $mono-medium);
+}
+
+#popup-edit-window {
+  @include popup-window();
+  display: flex;
+  width: 800px;
+  @include mq($breakdown-md) {
+    max-width: 100%;
+    min-height: 100%;
+  }
+  padding: 1em;
+  position: relative;
+}
+
+#popup-edit-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1em;
+}
+
+#popup-edit-title {
+  text-align: center;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+#edit-cancel-button {
+  @extend #recipe-close-button;
+}
+
+#input-name-label,
+#input-ingredients-label,
+#steps-label {
+  display: block;
+  padding: 0.5em;
+  width: 100%;
+  text-align: center;
+}
+
+input,
+textarea {
+  display: inline-block;
+  padding: 0.5em;
+  background-color: $mono-light2;
+  border: none;
+  border-radius: 0.5em;
+  &.incorrect {
+    border: 1px solid $accent-red;
+    box-shadow: 0px 0px 2px $accent-red;
+  }
+}
+
+#input-name {
+  width: 100%;
+  margin-bottom: 1em;
+}
+
+#input-ingredients {
+  width: 100%;
+  margin-bottom: 1em;
+  resize: none;
+}
+
+#input-steps-list {
+  list-style: none;
+  counter-reset: editor-counter;
+}
+
+.input-steps-item {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1em;
+  counter-increment: editor-counter;
+  &::before {
+    content: counter(editor-counter);
+    display: inline-block;
+    width: 2em;
+    text-align: center;
+  }
+}
+
+.input-step-name {
+  flex: 1 1 0;
+}
+
+.input-step-break {
+  display: none;
+  @include mq($breakdown-xs) {
+    display: inline-block;
+  }
+  height: 0.5em;
+  width: 100%;
+}
+
+.input-time-label {
+  display: inline-block;
+  padding: 0.3em 1em;
+  i {
+    display: none;
+    @include mq($breakdown-sm) {
+      display: inline;
+    }
+  }
+  span {
+    @include mq($breakdown-sm) {
+      display: none;
+    }
+  }
+}
+
+.input-step-time {
+  width: 6em;
+}
+
+#input-steps-menu {
+  padding: 0.5em;
+  text-align: center;
+}
+
+#add-step-button,
+#remove-step-button {
+  margin: 0.2em;
+  height: 2em;
+  width: 2em;
+  text-align: center;
+  background-color: white;
+  border: 1px solid $mono-medium;
+  border-radius: 999px;
+  color: $mono-dark1;
+  font-weight: bold;
+}
+
+#form-validation-warning {
+  display: none;
+  margin: 0.5em;
+  padding: 0.5em;
+  border: 1px solid $accent-red;
+  border-radius: 5px;
+  &.visible {
+    display: block;
+  }
+}
+
+#popup-edit-menu {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+#edit-ok-button {
+  @include btn($accent-blue1, white, white, $accent-blue1);
+}
+
+#edit-clear-button {
+  @include btn($accent-yellow, $mono-dark2, white, $mono-dark2);
+}
