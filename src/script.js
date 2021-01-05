@@ -484,6 +484,7 @@ class EditPopup extends Popup {
       this.load();
     }
     super.open();
+    document.getElementById("input-name").focus();
   }
 
   addStep() {
@@ -647,6 +648,7 @@ class DeletePopup extends Popup {
   open(obj) {
     this.obj = obj;
     super.open();
+    document.getElementById("delete-ok-button").focus();
   }
 
   submit() {
