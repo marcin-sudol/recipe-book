@@ -60,16 +60,16 @@ button:hover {
   left: 1em;
   top: 1em;
   font-size: 2rem;
-  color: #0582ca;
+  color: #4d908e;
 }
 
 #bg-menu-button:hover {
-  color: #ffe066;
+  color: #f9c74f;
 }
 
 #bg-icon {
   font-size: 2em;
-  color: #aaa;
+  color: #f9c74f;
 }
 
 #nav {
@@ -88,7 +88,7 @@ button:hover {
   left: 0px;
   top: 0px;
   font-size: 1.6rem;
-  background-color: #413c58;
+  background-color: #4d908e;
   -webkit-box-shadow: 0 0 6px #555;
           box-shadow: 0 0 6px #555;
   -webkit-transition: left 0.4s ease-out;
@@ -130,7 +130,7 @@ button:hover {
 }
 
 #nav-menu-button:hover {
-  color: #ffe066;
+  color: #f9c74f;
 }
 
 @media (max-width: 800px) {
@@ -196,7 +196,7 @@ button:hover {
 
 .rating-value {
   cursor: default;
-  color: #00a6fb;
+  color: #43aa8b;
 }
 
 .rating-tooltip {
@@ -206,7 +206,8 @@ button:hover {
   z-index: 10;
   display: none;
   opacity: 0;
-  background-color: #ffe066;
+  background-color: #90be6d;
+  color: white;
   border-radius: 5px;
   font-size: 0.9em;
   -webkit-box-shadow: 0 2px 4px #aaa;
@@ -225,17 +226,17 @@ button:hover {
   padding: 0.5em;
   margin-bottom: 1em;
   width: 100%;
-  background-color: #00a6fb;
-  color: white;
+  background-color: #f9c74f;
+  color: #333;
   border-radius: 0.5em;
   font-weight: bold;
-  -webkit-transition: background-color 0.2s;
-  transition: background-color 0.2s;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
 }
 
 #nav-add-button:hover {
-  background-color: #ffe066;
-  color: #333;
+  background-color: #f3722c;
+  color: white;
 }
 
 #nav-reset-container {
@@ -252,7 +253,7 @@ button:hover {
 }
 
 #nav-reset-button:hover {
-  color: #ffe066;
+  color: #f9c74f;
 }
 
 #recipe-window {
@@ -307,8 +308,8 @@ button:hover {
           align-items: center;
   padding: 1em;
   width: 100%;
-  border-bottom: 3px solid #00a6fb;
-  color: #00a6fb;
+  border-bottom: 3px solid #43aa8b;
+  color: #43aa8b;
 }
 
 #recipe-name {
@@ -409,7 +410,7 @@ button:hover {
       -ms-flex: 0 0 auto;
           flex: 0 0 auto;
   font-size: 0.9em;
-  color: #00a6fb;
+  color: #43aa8b;
   font-weight: bold;
 }
 
@@ -493,19 +494,19 @@ button:hover {
 }
 
 .recipe-rating-button.checked {
-  color: #00a6fb;
+  color: #43aa8b;
 }
 
 .recipe-rating-button.hovered {
-  color: #ffe066;
+  color: #f9c74f;
 }
 
 #recipe-delete-button {
   margin: 0.5em;
   padding: 0.5em 1em;
   border-radius: 0.5em;
-  background: #d72638;
-  border: 1px solid #d72638;
+  background: #f94144;
+  border: 1px solid #f94144;
   font-size: 1.5rem;
   color: white;
   -webkit-transition: background-color 0.2s, color 0.2s;
@@ -514,7 +515,7 @@ button:hover {
 
 #recipe-delete-button:hover {
   background: white;
-  color: #d72638;
+  color: #f94144;
   -webkit-box-shadow: 0 2px 4px #aaa;
           box-shadow: 0 2px 4px #aaa;
 }
@@ -524,7 +525,7 @@ button:hover {
 }
 
 #recipe-delete-button:hover i {
-  color: #d72638;
+  color: #f94144;
 }
 
 .popup-container {
@@ -611,8 +612,8 @@ button:hover {
   margin: 0.5em;
   padding: 0.5em 1em;
   border-radius: 0.5em;
-  background: #d72638;
-  border: 1px solid #d72638;
+  background: #f94144;
+  border: 1px solid #f94144;
   font-size: 1.5rem;
   color: white;
   -webkit-transition: background-color 0.2s, color 0.2s;
@@ -621,7 +622,7 @@ button:hover {
 
 #delete-ok-button:hover {
   background: white;
-  color: #d72638;
+  color: #f94144;
   -webkit-box-shadow: 0 2px 4px #aaa;
           box-shadow: 0 2px 4px #aaa;
 }
@@ -631,7 +632,7 @@ button:hover {
 }
 
 #delete-ok-button:hover i {
-  color: #d72638;
+  color: #f94144;
 }
 
 #delete-cancel-button {
@@ -725,9 +726,9 @@ textarea {
 
 input.incorrect,
 textarea.incorrect {
-  border: 1px solid #d72638;
-  -webkit-box-shadow: 0px 0px 2px #d72638;
-          box-shadow: 0px 0px 2px #d72638;
+  border: 1px solid #f94144;
+  -webkit-box-shadow: 0px 0px 2px #f94144;
+          box-shadow: 0px 0px 2px #f94144;
 }
 
 #input-name {
@@ -834,7 +835,7 @@ textarea.incorrect {
   display: none;
   margin: 0.5em;
   padding: 0.5em;
-  border: 1px solid #d72638;
+  border: 1px solid #f94144;
   border-radius: 5px;
 }
 
@@ -856,8 +857,8 @@ textarea.incorrect {
   margin: 0.5em;
   padding: 0.5em 1em;
   border-radius: 0.5em;
-  background: #00a6fb;
-  border: 1px solid #00a6fb;
+  background: #43aa8b;
+  border: 1px solid #43aa8b;
   font-size: 1.5rem;
   color: white;
   -webkit-transition: background-color 0.2s, color 0.2s;
@@ -866,7 +867,7 @@ textarea.incorrect {
 
 #edit-ok-button:hover {
   background: white;
-  color: #00a6fb;
+  color: #43aa8b;
   -webkit-box-shadow: 0 2px 4px #aaa;
           box-shadow: 0 2px 4px #aaa;
 }
@@ -876,15 +877,15 @@ textarea.incorrect {
 }
 
 #edit-ok-button:hover i {
-  color: #00a6fb;
+  color: #43aa8b;
 }
 
 #edit-clear-button {
   margin: 0.5em;
   padding: 0.5em 1em;
   border-radius: 0.5em;
-  background: #ffe066;
-  border: 1px solid #ffe066;
+  background: #f9c74f;
+  border: 1px solid #f9c74f;
   font-size: 1.5rem;
   color: #333;
   -webkit-transition: background-color 0.2s, color 0.2s;

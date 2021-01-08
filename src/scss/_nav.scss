@@ -16,7 +16,7 @@
   left: 0px;
   top: 0px;
   font-size: 1.6rem;
-  background-color: $accent-gray;
+  background-color: $accent-green3;
   box-shadow: 0 0 6px $mono-dark1;
   transition: left 0.4s ease-out;
   &.hidden {
@@ -89,7 +89,7 @@
 
 .rating-value {
   cursor: default;
-  color: $accent-blue1;
+  color: $accent-green2;
 }
 
 .rating-tooltip {
@@ -99,7 +99,8 @@
   z-index: $z-index-nav-tooltip;
   display: none;
   opacity: 0;
-  background-color: $accent-yellow;
+  background-color: $accent-green1;
+  color: white;
   border-radius: 5px;
   font-size: 0.9em;
   box-shadow: 0 2px 4px $mono-medium;
@@ -114,14 +115,14 @@
   padding: 0.5em;
   margin-bottom: 1em;
   width: 100%;
-  background-color: $accent-blue1;
-  color: white;
+  background-color: $accent-yellow;
+  color: $mono-dark2;
   border-radius: 0.5em;
   font-weight: bold;
-  transition: background-color 0.2s;
+  transition: all 0.2s;
   &:hover {
-    background-color: $accent-yellow;
-    color: $mono-dark2;
+    background-color: $accent-orange;
+    color: white;
   }
 }
 
