@@ -104,6 +104,7 @@
   border-radius: 5px;
   font-size: 0.9em;
   box-shadow: 0 2px 4px $mono-medium;
+  cursor: default;
   &.visible {
     display: block;
     opacity: 1;

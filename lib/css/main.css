@@ -212,6 +212,7 @@ button:hover {
   font-size: 0.9em;
   -webkit-box-shadow: 0 2px 4px #aaa;
           box-shadow: 0 2px 4px #aaa;
+  cursor: default;
 }
 
 .rating-tooltip.visible {
