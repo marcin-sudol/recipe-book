@@ -199,6 +199,26 @@ button:hover {
   color: #43aa8b;
 }
 
+@-webkit-keyframes show-tooltip {
+  0%,
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes show-tooltip {
+  0%,
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 .rating-tooltip {
   position: fixed;
   padding: 0.5em;
@@ -218,6 +238,10 @@ button:hover {
 .rating-tooltip.visible {
   display: block;
   opacity: 1;
+  -webkit-animation-name: show-tooltip;
+          animation-name: show-tooltip;
+  -webkit-animation-duration: 0.8s;
+          animation-duration: 0.8s;
 }
 
 #nav-add-button {
