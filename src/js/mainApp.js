@@ -6,6 +6,7 @@ class MainApp {
     this.displayRecipe = this.displayRecipe.bind(this);
     this.openEditor = this.openEditor.bind(this);
     this.openDelete = this.openDelete.bind(this);
+    this.popupClosed = this.popupClosed.bind(this);
     this.keyPressed = this.keyPressed.bind(this);
     this.startingArrayString = JSON.stringify(arr);
     this.storage = window.localStorage;
@@ -31,8 +32,9 @@ class MainApp {
       this.saveRecipe
     );
 
-    this.editPopup = new EditPopup(this.saveRecipe);
-    this.deletePopup = new DeletePopup(this.deleteRecipe);
+    this.editPopup = new EditPopup(this.popupClosed, this.saveRecipe);
+
+    this.deletePopup = new DeletePopup(this.popupClosed, this.deleteRecipe);
 
     document.addEventListener("keydown", this.keyPressed);
   }
@@ -81,11 +83,20 @@ class MainApp {
   }
 
   openEditor(obj) {
+    this.nav.disableTab();
+    this.recipeWindow.disableTab();
     this.editPopup.open(obj);
   }
 
   openDelete(obj) {
+    this.nav.disableTab();
+    this.recipeWindow.disableTab();
     this.deletePopup.open(obj);
+  }
+
+  popupClosed() {
+    this.nav.enableTab();
+    this.recipeWindow.enableTab();
   }
 
   keyPressed(event) {

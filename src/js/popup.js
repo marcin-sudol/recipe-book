@@ -1,7 +1,9 @@
 class Popup {
-  constructor() {
+  constructor(popupClosedCallback) {
     this.open = this.open.bind(this);
     this.close = this.close.bind(this);
+    // callback function executed efter closing popup
+    this.popupClosedCallback = popupClosedCallback;
     // should be assigned in extending class
     this.popupContainer = undefined;
     this.popupWindow = undefined;
@@ -22,6 +24,7 @@ class Popup {
   close() {
     this.popupWindow.style.display = "none";
     this.popupContainer.classList.remove("visible");
+    this.popupClosedCallback();
   }
 
   isOpened() {
@@ -33,8 +36,9 @@ class Popup {
 // EDIT POPUP
 // -------------------------------------------------------
 class EditPopup extends Popup {
-  constructor(saveRecipeCallback) {
-    super();
+  constructor(popupClosedCallback, saveRecipeCallback) {
+    super(popupClosedCallback);
+
     this.addStep = this.addStep.bind(this);
     this.removeStep = this.removeStep.bind(this);
     this.clear = this.clear.bind(this);
@@ -214,8 +218,8 @@ class EditPopup extends Popup {
 // DELETE POPUP
 // -------------------------------------------------------
 class DeletePopup extends Popup {
-  constructor(deleteRecipeCallback) {
-    super();
+  constructor(popupClosedCallback, deleteRecipeCallback) {
+    super(popupClosedCallback);
     this.open = this.open.bind(this);
     this.submit = this.submit.bind(this);
     this.popupContainer = document.getElementById("popup-delete-container");

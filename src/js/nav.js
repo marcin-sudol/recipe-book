@@ -28,11 +28,42 @@ class Nav {
   show() {
     this.nav.classList.remove("hidden");
     this.recipeWindow.classList.add("narrower");
+    this.setNavTabIndex("0");
+    this.setBgTabIndex("-1");
   }
 
   hide() {
     this.nav.classList.add("hidden");
     this.recipeWindow.classList.remove("narrower");
+    this.setNavTabIndex("-1");
+    this.setBgTabIndex("0");
+  }
+
+  setNavTabIndex(tabIndex) {
+    const buttons = this.nav.querySelectorAll("button");
+    buttons.forEach((button) => {
+      button.setAttribute("tabindex", tabIndex);
+    });
+  }
+
+  setBgTabIndex(tabIndex) {
+    const button = document.getElementById("bg-menu-button");
+    button.setAttribute("tabindex", tabIndex);
+  }
+
+  enableTab() {
+    if (this.nav.classList.contains("hidden")) {
+      this.setNavTabIndex("-1");
+      this.setBgTabIndex("0");
+    } else {
+      this.setNavTabIndex("0");
+      this.setBgTabIndex("-1");
+    }
+  }
+
+  disableTab() {
+    this.setNavTabIndex("-1");
+    this.setBgTabIndex("-1");
   }
 
   isVisible() {

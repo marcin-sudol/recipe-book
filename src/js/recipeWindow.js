@@ -201,6 +201,21 @@ class RecipeWindow {
     }
   }
 
+  setTabIndex(tabIndex) {
+    const buttons = this.recipeWindow.querySelectorAll("button");
+    buttons.forEach((button) => {
+      button.setAttribute("tabindex", tabIndex);
+    });
+  }
+
+  enableTab() {
+    this.setTabIndex("0");
+  }
+
+  disableTab() {
+    this.setTabIndex("-1");
+  }
+
   isVisible() {
     return this.visible;
   }
