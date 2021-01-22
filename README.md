@@ -1,4 +1,4 @@
-# Recipes application.
+# Recipes
 
 _Application written to learn vanilla javascript._
 
@@ -13,8 +13,14 @@ _Application written to learn vanilla javascript._
 ### Selected programming features
 
 - responsive design
-- collapsable nav menu
+- collapsable menu
+- multiple animations (css `transition`, `animation`, js `animate`)
 - popups on hover
-- multiple animations (css `transition` / `animation`, js `animate`)
-- saving data to and reading from local storage
-- accessibility features: dynamically changing elements' tabindex depending on what components are visible to user
+- mutliple java script classes
+- classes inhertance, composition
+- saving to and reading from local storage
+
+### Accessibility features
+
+- dynamically changing elements' tabindex depending on what components are visible to user
+- closing components with <kbd>Escape</kbd> key
