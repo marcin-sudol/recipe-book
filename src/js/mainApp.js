@@ -7,8 +7,8 @@ class MainApp {
     this.showNav = this.showNav.bind(this);
     this.openEditor = this.openEditor.bind(this);
     this.openDelete = this.openDelete.bind(this);
-    this.popupClosed = this.popupClosed.bind(this);
     this.keyPressed = this.keyPressed.bind(this);
+    this.updateTabIndex = this.updateTabIndex.bind(this);
     this.startingArrayString = JSON.stringify(arr);
     this.storage = window.localStorage;
     const storedArr = this.storage.getItem("recipes");
@@ -27,18 +27,20 @@ class MainApp {
       this.arr,
       this.displayRecipe,
       this.openEditor,
-      this.resetRecipes
+      this.resetRecipes,
+      this.updateTabIndex
     );
 
     this.recipeWindow = new RecipeWindow(
       this.openEditor,
       this.openDelete,
-      this.saveRecipe
+      this.saveRecipe,
+      this.updateTabIndex
     );
 
-    this.editPopup = new EditPopup(this.popupClosed, this.saveRecipe);
+    this.editPopup = new EditPopup(this.saveRecipe, this.updateTabIndex);
 
-    this.deletePopup = new DeletePopup(this.popupClosed, this.deleteRecipe);
+    this.deletePopup = new DeletePopup(this.deleteRecipe, this.updateTabIndex);
 
     document.addEventListener("keydown", this.keyPressed);
   }
@@ -91,17 +93,11 @@ class MainApp {
   }
 
   openEditor(obj) {
-    // manage tabs
     this.editPopup.open(obj);
   }
 
   openDelete(obj) {
-    // manage tabs
     this.deletePopup.open(obj);
-  }
-
-  popupClosed() {
-    // manage tabs
   }
 
   keyPressed(event) {
@@ -120,5 +116,10 @@ class MainApp {
         this.nav.hide();
       }
     }
+  }
+
+  // manage tabs for entire application here
+  updateTabIndex() {
+    log("update");
   }
 }

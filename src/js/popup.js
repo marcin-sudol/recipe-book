@@ -1,9 +1,8 @@
 class Popup {
-  constructor(popupClosedCallback) {
+  constructor(updateTabIndexCallback) {
     this.open = this.open.bind(this);
     this.close = this.close.bind(this);
-    // callback function executed efter closing popup
-    this.popupClosedCallback = popupClosedCallback;
+    this.updateTabIndexCallback = updateTabIndexCallback;
     // should be assigned in extending class
     this.popupContainer = undefined;
     this.popupWindow = undefined;
@@ -12,19 +11,21 @@ class Popup {
   open() {
     this.popupContainer.classList.add("visible");
     this.popupWindow.style.display = "flex";
-    this.popupWindow.animate(
-      {
-        opacity: [0, 1],
-        transform: ["translateY(-100px)", "translateY(0px)"],
-      },
-      { duration: 400, easing: "ease-out" }
-    );
+    this.popupWindow
+      .animate(
+        {
+          opacity: [0, 1],
+          transform: ["translateY(-100px)", "translateY(0px)"],
+        },
+        { duration: 400, easing: "ease-out" }
+      )
+      .finished.then(this.updateTabIndexCallback);
   }
 
   close() {
     this.popupWindow.style.display = "none";
     this.popupContainer.classList.remove("visible");
-    this.popupClosedCallback();
+    this.updateTabIndexCallback();
   }
 
   isOpened() {
@@ -36,8 +37,8 @@ class Popup {
 // EDIT POPUP
 // -------------------------------------------------------
 class EditPopup extends Popup {
-  constructor(popupClosedCallback, saveRecipeCallback) {
-    super(popupClosedCallback);
+  constructor(saveRecipeCallback, updateTabIndexCallback) {
+    super(updateTabIndexCallback);
 
     this.addStep = this.addStep.bind(this);
     this.removeStep = this.removeStep.bind(this);
@@ -218,8 +219,8 @@ class EditPopup extends Popup {
 // DELETE POPUP
 // -------------------------------------------------------
 class DeletePopup extends Popup {
-  constructor(popupClosedCallback, deleteRecipeCallback) {
-    super(popupClosedCallback);
+  constructor(deleteRecipeCallback, updateTabIndexCallback) {
+    super(updateTabIndexCallback);
     this.open = this.open.bind(this);
     this.submit = this.submit.bind(this);
     this.popupContainer = document.getElementById("popup-delete-container");

@@ -3,7 +3,8 @@ class Nav {
     arr,
     displayRecipeCallback,
     openEditorCallback,
-    resetRecipesCallback
+    resetRecipesCallback,
+    updateTabIndexCallback
   ) {
     this.show = this.show.bind(this);
     this.hide = this.hide.bind(this);
@@ -18,6 +19,7 @@ class Nav {
     this.displayRecipeCallback = displayRecipeCallback;
     this.openEditorCallback = openEditorCallback;
     this.resetRecipesCallback = resetRecipesCallback;
+    this.updateTabIndexCallback = updateTabIndexCallback;
     document.getElementById("nav-menu-button").onclick = this.hide;
     document.getElementById("nav-add-button").onclick = this.clickedAddRecipe;
     document.getElementById("nav-reset-button").onclick = this.clickedResetList;
@@ -27,11 +29,13 @@ class Nav {
   show() {
     this.nav.classList.remove("hidden");
     this.recipeWindow.classList.add("narrower");
+    this.updateTabIndexCallback();
   }
 
   hide() {
     this.nav.classList.add("hidden");
     this.recipeWindow.classList.remove("narrower");
+    this.updateTabIndexCallback();
   }
 
   setTabIndex(tabIndex) {

@@ -1,5 +1,10 @@
 class RecipeWindow {
-  constructor(openEditorCallback, openDeleteCallback, saveRecipeCallback) {
+  constructor(
+    openEditorCallback,
+    openDeleteCallback,
+    saveRecipeCallback,
+    updateTabIndexCallback
+  ) {
     this.show = this.show.bind(this);
     this.hide = this.hide.bind(this);
     this.slideIn = this.slideIn.bind(this);
@@ -31,6 +36,7 @@ class RecipeWindow {
     this.openEditorCallback = openEditorCallback;
     this.openDeleteCallback = openDeleteCallback;
     this.saveRecipeCallback = saveRecipeCallback;
+    this.updateTabIndexCallback = updateTabIndexCallback;
     document.getElementById("recipe-close-button").onclick = this.clickedClose;
     document.getElementById("recipe-edit-button").onclick = this.clickedEdit;
     document.getElementById(
@@ -168,6 +174,7 @@ class RecipeWindow {
 
       setTimeout(() => {
         this.changing = false;
+        this.updateTabIndexCallback();
       }, this.animationTime);
     }
   }
@@ -185,16 +192,22 @@ class RecipeWindow {
       else if (styleIn === "fade") functionIn = this.fadeIn;
       else functionIn = this.slideIn;
 
+      // if window not visible update recipe and display
       if (!this.visible) {
         this.update(obj);
         functionIn(() => {
           this.changing = false;
+          this.updateTabIndexCallback();
         });
-      } else if (obj !== this.obj) {
+      }
+      // if window visible and showing incorrect recipe
+      // hide window, update recipe and show window
+      else if (obj !== this.obj) {
         functionOut(() => {
           this.update(obj);
           functionIn(() => {
             this.changing = false;
+            this.updateTabIndexCallback();
           });
         });
       }
