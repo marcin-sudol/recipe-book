@@ -4,7 +4,7 @@
     "sources": [
         "../../src/scss/main.scss",
         "../../src/scss/_base.scss",
-        "../../src/scss/_background.scss",
+        "../../src/scss/_bg.scss",
         "../../src/scss/_nav.scss",
         "../../src/scss/_recipeWindow.scss",
         "../../src/scss/_popup.scss"

@@ -19,7 +19,6 @@ class Nav {
     this.openEditorCallback = openEditorCallback;
     this.resetRecipesCallback = resetRecipesCallback;
     document.getElementById("nav-menu-button").onclick = this.hide;
-    document.getElementById("bg-menu-button").onclick = this.show;
     document.getElementById("nav-add-button").onclick = this.clickedAddRecipe;
     document.getElementById("nav-reset-button").onclick = this.clickedResetList;
     this.addList(arr, "fade");
@@ -28,42 +27,26 @@ class Nav {
   show() {
     this.nav.classList.remove("hidden");
     this.recipeWindow.classList.add("narrower");
-    this.setNavTabIndex("0");
-    this.setBgTabIndex("-1");
   }
 
   hide() {
     this.nav.classList.add("hidden");
     this.recipeWindow.classList.remove("narrower");
-    this.setNavTabIndex("-1");
-    this.setBgTabIndex("0");
   }
 
-  setNavTabIndex(tabIndex) {
+  setTabIndex(tabIndex) {
     const buttons = this.nav.querySelectorAll("button");
     buttons.forEach((button) => {
       button.setAttribute("tabindex", tabIndex);
     });
   }
 
-  setBgTabIndex(tabIndex) {
-    const button = document.getElementById("bg-menu-button");
-    button.setAttribute("tabindex", tabIndex);
-  }
-
   enableTab() {
-    if (this.nav.classList.contains("hidden")) {
-      this.setNavTabIndex("-1");
-      this.setBgTabIndex("0");
-    } else {
-      this.setNavTabIndex("0");
-      this.setBgTabIndex("-1");
-    }
+    this.setTabIndex("0");
   }
 
   disableTab() {
-    this.setNavTabIndex("-1");
-    this.setBgTabIndex("-1");
+    this.setTabIndex("-1");
   }
 
   isVisible() {

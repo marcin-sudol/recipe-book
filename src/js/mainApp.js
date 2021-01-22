@@ -4,6 +4,7 @@ class MainApp {
     this.saveRecipe = this.saveRecipe.bind(this);
     this.resetRecipes = this.resetRecipes.bind(this);
     this.displayRecipe = this.displayRecipe.bind(this);
+    this.showNav = this.showNav.bind(this);
     this.openEditor = this.openEditor.bind(this);
     this.openDelete = this.openDelete.bind(this);
     this.popupClosed = this.popupClosed.bind(this);
@@ -19,6 +20,9 @@ class MainApp {
       // data in local storage
       this.arr = JSON.parse(storedArr);
     }
+
+    this.bg = new Bg(this.showNav);
+
     this.nav = new Nav(
       this.arr,
       this.displayRecipe,
@@ -82,21 +86,22 @@ class MainApp {
     this.recipeWindow.display(obj, "slide", "slide");
   }
 
+  showNav() {
+    this.nav.show();
+  }
+
   openEditor(obj) {
-    this.nav.disableTab();
-    this.recipeWindow.disableTab();
+    // manage tabs
     this.editPopup.open(obj);
   }
 
   openDelete(obj) {
-    this.nav.disableTab();
-    this.recipeWindow.disableTab();
+    // manage tabs
     this.deletePopup.open(obj);
   }
 
   popupClosed() {
-    this.nav.enableTab();
-    this.recipeWindow.enableTab();
+    // manage tabs
   }
 
   keyPressed(event) {
