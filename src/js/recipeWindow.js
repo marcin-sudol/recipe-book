@@ -170,12 +170,10 @@ class RecipeWindow {
       else functionOut = this.slideOut;
 
       this.changing = true;
-      functionOut();
-
-      setTimeout(() => {
+      functionOut(() => {
         this.changing = false;
         this.updateTabIndexCallback();
-      }, this.animationTime);
+      });
     }
   }
 

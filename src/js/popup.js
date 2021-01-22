@@ -28,7 +28,7 @@ class Popup {
     this.updateTabIndexCallback();
   }
 
-  isOpened() {
+  isVisible() {
     return this.popupContainer.classList.contains("visible");
   }
 }

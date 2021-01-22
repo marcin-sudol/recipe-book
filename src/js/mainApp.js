@@ -8,6 +8,7 @@ class MainApp {
     this.openEditor = this.openEditor.bind(this);
     this.openDelete = this.openDelete.bind(this);
     this.keyPressed = this.keyPressed.bind(this);
+    this.windowResized = this.windowResized.bind(this);
     this.updateTabIndex = this.updateTabIndex.bind(this);
     this.startingArrayString = JSON.stringify(arr);
     this.storage = window.localStorage;
@@ -43,6 +44,9 @@ class MainApp {
     this.deletePopup = new DeletePopup(this.deleteRecipe, this.updateTabIndex);
 
     document.addEventListener("keydown", this.keyPressed);
+
+    this.resizeTimeout = undefined;
+    window.addEventListener("resize", this.windowResized);
   }
 
   addRecipe(obj) {
@@ -102,24 +106,61 @@ class MainApp {
 
   keyPressed(event) {
     if ((event.code === "Escape") & !this.recipeWindow.changing) {
-      if (this.editPopup.isOpened()) {
+      if (this.editPopup.isVisible()) {
         event.preventDefault();
         this.editPopup.close();
-      } else if (this.deletePopup.isOpened()) {
+      } else if (this.deletePopup.isVisible()) {
         event.preventDefault();
         this.deletePopup.close();
       } else if (this.recipeWindow.isVisible()) {
         event.preventDefault();
         this.recipeWindow.close("slide");
-      } else if (this.nav.isVisible()) {
+      } else if (this.nav.isVisible() && wideWindow()) {
         event.preventDefault();
         this.nav.hide();
       }
     }
   }
 
+  windowResized() {
+    clearTimeout(this.resizeTimeout);
+    this.resizeTimeout = setTimeout(this.updateTabIndex, 100);
+  }
+
   // manage tabs for entire application here
+  // checks what is visible and update tabindex
   updateTabIndex() {
-    log("update");
+    // we don't control manually tabs for popups
+    if (this.editPopup.isVisible() || this.deletePopup.isVisible()) {
+      // if popup is visible disable anything else
+      this.bg.disableTab();
+      this.nav.disableTab();
+      this.recipeWindow.disableTab();
+    } else if (this.recipeWindow.isVisible()) {
+      // otherwise if recipe window is visible, enable it
+      this.recipeWindow.enableTab();
+      // and set nav and bg depending on screen width and nav visibility
+      if (!wideWindow()) {
+        this.bg.disableTab();
+        this.nav.disableTab();
+      } else if (this.nav.isVisible()) {
+        this.bg.disableTab();
+        this.nav.enableTab();
+      } else {
+        this.bg.enableTab();
+        this.nav.disableTab();
+      }
+    } else {
+      // otherwise disable recipe window
+      this.recipeWindow.disableTab();
+      // and set nav and bg depending on screen width and nav visibility
+      if (!wideWindow() || this.nav.isVisible()) {
+        this.bg.disableTab();
+        this.nav.enableTab();
+      } else {
+        this.bg.enableTab();
+        this.nav.disableTab();
+      }
+    }
   }
 }
