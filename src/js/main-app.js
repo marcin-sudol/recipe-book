@@ -43,6 +43,8 @@ class MainApp {
 
     this.deletePopup = new DeletePopup(this.deleteRecipe, this.updateTabIndex);
 
+    this.message = new Message();
+
     document.addEventListener("keydown", this.keyPressed);
 
     this.resizeTimeout = undefined;
@@ -54,6 +56,7 @@ class MainApp {
     this.saveRecipesToLocalMemory();
     this.nav.addItem(obj);
     this.recipeWindow.display(obj, "slide", "slide");
+    this.message.displayMessage("Recipe added!");
   }
 
   deleteRecipe(obj) {
@@ -61,18 +64,23 @@ class MainApp {
     this.saveRecipesToLocalMemory();
     this.recipeWindow.close("fade");
     this.nav.removeItem(obj);
+    this.message.displayMessage("Recipe removed!");
   }
 
   saveRecipe(obj) {
+    // recipe doesn't have id so its new
     if (!obj.hasOwnProperty("id")) {
       obj.id = this.arr[this.arr.length - 1].id + 1;
       this.addRecipe(obj);
-    } else {
+    }
+    // recipe has id so it exists
+    else {
       const index = this.arr.findIndex((item) => item.id === obj.id);
       this.arr[index] = obj;
       this.saveRecipesToLocalMemory();
       this.nav.updateItem(obj);
       this.recipeWindow.display(obj, "no", "fade");
+      this.message.displayMessage("Recipe saved!");
     }
   }
 

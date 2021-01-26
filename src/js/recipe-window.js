@@ -56,10 +56,12 @@ class RecipeWindow {
 
     this.ingredientsList.innerHTML = "";
     this.obj.ingredients.split(",").forEach((ingredient) => {
-      newItem = document.createElement("li");
-      newItem.className = "ingredients-item";
-      newItem.textContent = ingredient;
-      this.ingredientsList.appendChild(newItem);
+      if (ingredient) {
+        newItem = document.createElement("li");
+        newItem.className = "ingredients-item";
+        newItem.textContent = ingredient;
+        this.ingredientsList.appendChild(newItem);
+      }
     });
 
     this.stepsList.innerHTML = "";
