@@ -70,7 +70,7 @@ class MainApp {
   saveRecipe(obj) {
     // recipe doesn't have id so its new
     if (!obj.hasOwnProperty("id")) {
-      obj.id = this.arr[this.arr.length - 1].id + 1;
+      obj.id = this.arr.length > 0 ? this.arr[this.arr.length - 1].id + 1 : 0;
       this.addRecipe(obj);
     }
     // recipe has id so it exists
