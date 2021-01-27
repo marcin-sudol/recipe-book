@@ -1,13 +1,13 @@
 #message-container {
   display: none;
   position: fixed;
-  font-size: 1.6em;
+  font-size: 1.4em;
   top: -10em;
   right: 1em;
   padding: 1em;
-  border-radius: 0.4em;
   z-index: $z-index-message;
-  background-color: $accent-yellow;
-  color: $mono-dark1;
-  box-shadow: 0 0 3px $mono-light1;
+  background-color: $accent-green2;
+  color: white;
+  border: 1px solid $accent-green3;
+  border-radius: 0.6em;
 }

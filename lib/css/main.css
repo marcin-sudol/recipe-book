@@ -935,15 +935,14 @@ textarea.incorrect {
 #message-container {
   display: none;
   position: fixed;
-  font-size: 1.6em;
+  font-size: 1.4em;
   top: -10em;
   right: 1em;
   padding: 1em;
-  border-radius: 0.4em;
   z-index: 40;
-  background-color: #f9c74f;
-  color: #555;
-  -webkit-box-shadow: 0 0 3px #f4f4f4;
-          box-shadow: 0 0 3px #f4f4f4;
+  background-color: #43aa8b;
+  color: white;
+  border: 1px solid #4d908e;
+  border-radius: 0.6em;
 }
 /*# sourceMappingURL=main.css.map */
