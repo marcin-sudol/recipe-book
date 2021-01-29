@@ -932,11 +932,10 @@ textarea.incorrect {
   color: #333;
 }
 
-#message-container {
-  display: none;
+.message-container {
   position: fixed;
   font-size: 1.4em;
-  top: -10em;
+  top: 1em;
   right: 1em;
   padding: 1em;
   z-index: 40;
