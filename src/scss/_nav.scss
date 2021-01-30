@@ -37,9 +37,11 @@
 }
 
 #nav-menu-button {
-  height: 100%;
-  float: left;
+  position: absolute;
+  left: 1em;
+  top: 1em;
   font-size: 2rem;
+  color: white;
   &:hover {
     color: $accent-yellow;
   }

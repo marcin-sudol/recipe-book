@@ -87,7 +87,7 @@
 }
 
 #edit-cancel-button {
-  @extend #recipe-close-button;
+  @include close-btn;
 }
 
 #input-name-label,

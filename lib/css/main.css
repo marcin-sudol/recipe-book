@@ -124,9 +124,11 @@ button:hover {
 }
 
 #nav-menu-button {
-  height: 100%;
-  float: left;
+  position: absolute;
+  left: 1em;
+  top: 1em;
   font-size: 2rem;
+  color: white;
 }
 
 #nav-menu-button:hover {
@@ -342,14 +344,14 @@ button:hover {
   text-align: center;
 }
 
-#recipe-close-button, #edit-cancel-button {
+#recipe-close-button {
   position: absolute;
   right: 1em;
   padding: 0.5em;
   color: #aaa;
 }
 
-#recipe-close-button:hover, #edit-cancel-button:hover {
+#recipe-close-button:hover {
   color: #555;
 }
 
@@ -729,6 +731,17 @@ button:hover {
   text-align: center;
   font-size: 1.2em;
   font-weight: bold;
+}
+
+#edit-cancel-button {
+  position: absolute;
+  right: 1em;
+  padding: 0.5em;
+  color: #aaa;
+}
+
+#edit-cancel-button:hover {
+  color: #555;
 }
 
 #input-name-label,

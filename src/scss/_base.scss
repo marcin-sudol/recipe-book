@@ -102,3 +102,13 @@ button {
     color: $hover-color;
   }
 }
+
+@mixin close-btn {
+  position: absolute;
+  right: 1em;
+  padding: 0.5em;
+  color: $mono-medium;
+  &:hover {
+    color: $mono-dark1;
+  }
+}

@@ -41,13 +41,7 @@
 }
 
 #recipe-close-button {
-  position: absolute;
-  right: 1em;
-  padding: 0.5em;
-  color: $mono-medium;
-  &:hover {
-    color: $mono-dark1;
-  }
+  @include close-btn;
 }
 
 #recipe-content {

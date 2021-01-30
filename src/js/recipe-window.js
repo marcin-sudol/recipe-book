@@ -78,11 +78,17 @@ class RecipeWindow {
   }
 
   updateLocalRating(style) {
-    for (let i = 0; i < 5; i++)
+    for (let i = 0; i < 5; i++) {
       this.recipeRatingButtons[i].classList.remove("checked");
+      this.recipeRatingButtons[i].setAttribute("aria-checked", false);
+    }
 
     if (this.obj.rating.hasOwnProperty("local")) {
       const localRating = parseInt(this.obj.rating.local);
+      this.recipeRatingButtons[localRating - 1].setAttribute(
+        "aria-checked",
+        true
+      );
       for (let i = 0; i < localRating; i++) {
         const button = this.recipeRatingButtons[i];
         button.classList.add("checked");

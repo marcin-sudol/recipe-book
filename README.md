@@ -1,6 +1,6 @@
 # Recipes
 
-_Application written to learn vanilla javascript._
+_Application written to learn javascript. Only HTML, SCSS and vanilla java script_
 
 ### Application features
 
@@ -14,13 +14,14 @@ _Application written to learn vanilla javascript._
 
 - responsive design
 - collapsable menu
+- modals for adding / editing recipe
 - multiple animations (css `transition`, `animation`, js `animate`)
-- popups on hover
-- mutliple java script classes
-- classes inhertance, composition
 - saving to and reading from local storage
+- mutliple java script classes, classes inhertance, composition
 
 ### Accessibility features
 
+- set up roles and labels for screen readers
 - dynamically changing elements' tabindex depending on what components are visible to user
+- changing focus when components tree update
 - closing components with <kbd>Escape</kbd> key

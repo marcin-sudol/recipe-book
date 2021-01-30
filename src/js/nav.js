@@ -15,12 +15,14 @@ class Nav {
     this.hideTooltip = this.hideTooltip.bind(this);
     this.nav = document.getElementById("nav");
     this.navList = document.getElementById("nav-list");
+    this.navMenuButton = document.getElementById("nav-menu-button");
+    this.bgMenuButton = document.getElementById("bg-menu-button");
     this.recipeWindow = document.getElementById("recipe-window");
     this.displayRecipeCallback = displayRecipeCallback;
     this.openEditorCallback = openEditorCallback;
     this.resetRecipesCallback = resetRecipesCallback;
     this.updateTabIndexCallback = updateTabIndexCallback;
-    document.getElementById("nav-menu-button").onclick = this.hide;
+    this.navMenuButton.onclick = this.hide;
     document.getElementById("nav-add-button").onclick = this.clickedAddRecipe;
     document.getElementById("nav-reset-button").onclick = this.clickedResetList;
     this.addList(arr, "fade");
@@ -30,12 +32,14 @@ class Nav {
     this.nav.classList.remove("hidden");
     this.recipeWindow.classList.add("narrower");
     this.updateTabIndexCallback();
+    this.navMenuButton.focus();
   }
 
   hide() {
     this.nav.classList.add("hidden");
     this.recipeWindow.classList.remove("narrower");
     this.updateTabIndexCallback();
+    this.bgMenuButton.focus();
   }
 
   setTabIndex(tabIndex) {

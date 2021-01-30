@@ -42,7 +42,12 @@
     APP BACKGROUND
     --------------------------------------------------------->
     <div id="bg">
-      <button id="bg-menu-button" type="button" tabindex="-1">
+      <button
+        id="bg-menu-button"
+        type="button"
+        tabindex="-1"
+        aria-label="Show recipe list"
+      >
         <i class="fas fa-bars"></i>
       </button>
       <i id="bg-icon" class="fas fa-utensils"></i>
@@ -52,12 +57,10 @@
     NAV
     --------------------------------------------------------->
     <nav id="nav">
-      <header id="nav-header">
-        <button id="nav-menu-button" type="button">
-          <i class="fas fa-times"></i>
-        </button>
-        Recipes
-      </header>
+      <button id="nav-menu-button" type="button" aria-label="Hide recipe list">
+        <i class="fas fa-times"></i>
+      </button>
+      <header id="nav-header">Recipes</header>
       <ul id="nav-list"></ul>
       <button id="nav-add-button" type="button">add new recipe</button>
       <div id="nav-reset-container">
@@ -77,7 +80,11 @@
     <div id="recipe-window" class="narrower">
       <header id="recipe-header">
         <h4 id="recipe-name"></h4>
-        <button id="recipe-close-button" type="button">
+        <button
+          id="recipe-close-button"
+          type="button"
+          aria-label="Close recipe window"
+        >
           <i class="fas fa-times"></i>
         </button>
       </header>
@@ -92,15 +99,22 @@
         </div>
       </div>
       <div id="recipe-menu">
-        <button id="recipe-edit-button" type="button">
+        <button id="recipe-edit-button" type="button" aria-label="Edit recipe">
           <i class="fas fa-marker"></i> Edit
         </button>
-        <div id="recipe-rating-container">
+        <div
+          id="recipe-rating-container"
+          role="radiogroup"
+          aria-orientation="horizontal"
+          aria-label="Rate recipe"
+        >
           <button
             class="recipe-rating-button"
             id="recipe-rating-1"
             type="button"
             data-id="1"
+            role="radio"
+            aria-label="1"
           >
             <i class="fas fa-star"></i></button
           ><button
@@ -108,6 +122,8 @@
             id="recipe-rating-2"
             type="button"
             data-id="2"
+            role="radio"
+            aria-label="2"
           >
             <i class="fas fa-star"></i></button
           ><button
@@ -115,6 +131,8 @@
             id="recipe-rating-3"
             type="button"
             data-id="3"
+            role="radio"
+            aria-label="3"
           >
             <i class="fas fa-star"></i></button
           ><button
@@ -122,6 +140,8 @@
             id="recipe-rating-4"
             type="button"
             data-id="4"
+            role="radio"
+            aria-label="4"
           >
             <i class="fas fa-star"></i></button
           ><button
@@ -129,11 +149,17 @@
             id="recipe-rating-5"
             type="button"
             data-id="5"
+            role="radio"
+            aria-label="5"
           >
             <i class="fas fa-star"></i>
           </button>
         </div>
-        <button id="recipe-delete-button" type="button">
+        <button
+          id="recipe-delete-button"
+          type="button"
+          aria-label="Delete recipe"
+        >
           <i class="fas fa-trash-alt"></i> Delete
         </button>
       </div>
@@ -145,11 +171,15 @@
     <div id="popup-edit-container" class="popup-container">
       <div id="popup-edit-bg" class="popup-bg"></div>
       <div id="popup-edit-window">
+        <button
+          id="edit-cancel-button"
+          type="button"
+          aria-label="Discard changes and close"
+        >
+          <i class="fas fa-times"></i>
+        </button>
         <header id="popup-edit-header">
           <p id="popup-edit-title">Edit recipe</p>
-          <button id="edit-cancel-button" type="button">
-            <i class="fas fa-times"></i>
-          </button>
         </header>
         <form id="popup-edit-form" novalidate>
           <label id="input-name-label" for="input-name">Name:</label>
@@ -165,12 +195,24 @@
           <p id="steps-label">Steps:</p>
           <ol id="input-steps-list"></ol>
           <div id="input-steps-menu">
-            <button id="add-step-button" type="button">&plus;</button>
-            <button id="remove-step-button" type="button">&minus;</button>
+            <button
+              id="add-step-button"
+              type="button"
+              aria-label="Add next step"
+            >
+              &plus;
+            </button>
+            <button
+              id="remove-step-button"
+              type="button"
+              aria-label="Remove last step"
+            >
+              &minus;
+            </button>
           </div>
         </form>
 
-        <div id="form-validation-warning">
+        <div id="form-validation-warning" role="alert">
           <p>
             <i class="fas fa-exclamation-triangle"></i> Correct highlighted
             fields.<br />All fields should be filled.<br />Minutes should be
@@ -179,10 +221,10 @@
         </div>
 
         <div id="popup-edit-menu">
-          <button id="edit-ok-button" type="button">
+          <button id="edit-ok-button" type="button" aria-label="Accept changes">
             <i class="fas fa-check"></i> OK
           </button>
-          <button id="edit-clear-button" type="button">
+          <button id="edit-clear-button" type="button" aria-label="Clear form">
             <i class="fas fa-undo"></i> Clear
           </button>
         </div>
