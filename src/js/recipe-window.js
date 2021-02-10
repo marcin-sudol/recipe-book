@@ -110,6 +110,7 @@ class RecipeWindow {
   show(callback) {
     this.recipeWindow.style.display = "flex";
     this.visible = true;
+    this.recipeName.focus();
     if (callback !== undefined) callback();
   }
 
