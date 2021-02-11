@@ -25,10 +25,6 @@ class Nav {
     this.bgMenuButton = document.getElementById("bg-menu-button");
     this.recipeWindow = document.getElementById("recipe-window");
 
-    // Setting additional properties
-    this._selectedItem = 0;
-    this.itemsCounter = 0;
-
     // Binding methods
     this.show = this.show.bind(this);
     this.hide = this.hide.bind(this);
@@ -38,6 +34,10 @@ class Nav {
     this.keyPressedOnNavList = this.keyPressedOnNavList.bind(this);
     this.showTooltip = this.showTooltip.bind(this);
     this.hideTooltip = this.hideTooltip.bind(this);
+
+    // Setting additional properties
+    this._selectedItem = 0;
+    this.itemsCounter = 0;
 
     // Adding events listeners
     this.navMenuButton.onclick = this.hide;

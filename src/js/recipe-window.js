@@ -17,25 +17,26 @@ class RecipeWindow {
     this.ingredientsList = document.getElementById("ingredients-list");
     this.stepsList = document.getElementById("steps-list");
 
-    // Setting additional properties
-    this.obj = undefined;
-    this.rating = new RecipeRating();
-    this.visible = false;
-    this.changing = false;
-    this.animationTime = 400;
-
     // Binding methods
     this.open = this.open.bind(this);
     this.close = this.close.bind(this);
-    this.show = this.show.bind(this);
-    this.hide = this.hide.bind(this);
     this.slideIn = this.slideIn.bind(this);
     this.slideOut = this.slideOut.bind(this);
     this.fadeIn = this.fadeIn.bind(this);
     this.fadeOut = this.fadeOut.bind(this);
+    this.show = this.show.bind(this);
+    this.hide = this.hide.bind(this);
     this.clickedClose = this.clickedClose.bind(this);
     this.clickedEdit = this.clickedEdit.bind(this);
     this.clickedDelete = this.clickedDelete.bind(this);
+    this.saveRating = this.saveRating.bind(this);
+
+    // Setting additional properties
+    this.obj = undefined;
+    this.rating = new RecipeRating(this.saveRating);
+    this.visible = false;
+    this.changing = false;
+    this.animationTime = 400;
 
     // Adding events listeners
     document.getElementById("recipe-close-button").onclick = this.clickedClose;
@@ -127,7 +128,12 @@ class RecipeWindow {
       </span>`;
       this.stepsList.appendChild(newItem);
     });
-    // this.updateLocalRating();
+    this.rating.update();
+
+    const itemRating = this.obj.rating.hasOwnProperty("local")
+      ? this.obj.rating.local
+      : 0;
+    this.rating.update(itemRating, "no");
   }
 
   // ----------------------------------------------------------------
@@ -211,7 +217,26 @@ class RecipeWindow {
   }
 
   // ----------------------------------------------------------------
-  // Managing tab interactions
+  // Saving rating to recipe
+  // ----------------------------------------------------------------
+
+  saveRating(rating) {
+    if (this.obj.rating.hasOwnProperty("local")) {
+      // existing rating modified
+      this.obj.rating.sum -= this.obj.rating.local;
+      this.obj.rating.sum += rating;
+      this.obj.rating.local = rating;
+    } else {
+      // new rating added
+      this.obj.rating.sum += rating;
+      this.obj.rating.local = rating;
+      this.obj.rating.votes += 1;
+    }
+    this.saveRecipeCallback(this.obj);
+  }
+
+  // ----------------------------------------------------------------
+  // Managing interactions with tab key
   // ----------------------------------------------------------------
 
   // Enable interaction with tab key
@@ -251,13 +276,3 @@ class RecipeWindow {
     this.openDeleteCallback(this.obj);
   }
 }
-
-// if (this.obj.rating.hasOwnProperty("local")) {
-//   this.obj.rating.sum -= this.obj.rating.local;
-//   this.obj.rating.sum += localRating;
-//   this.obj.rating.local = localRating;
-// } else {
-//   this.obj.rating.sum += localRating;
-//   this.obj.rating.local = localRating;
-//   this.obj.rating.votes += 1;
-// }

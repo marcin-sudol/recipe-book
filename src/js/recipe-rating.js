@@ -4,60 +4,55 @@ class RecipeRating {
     this.saveRatingCallback = saveRatingCallback;
 
     // Setting DOM elements
-    this.recipeRatingButtons = [];
+    this.ratingButtons = [];
     for (let i = 1; i <= 5; i++) {
-      this.recipeRatingButtons.push(
-        document.getElementById("recipe-rating-" + i)
-      );
+      this.ratingButtons.push(document.getElementById("recipe-rating-" + i));
     }
-
-    // Setting additional properties
-    this.currentRating = 0;
 
     // Binding methods
     this.clickedRating = this.clickedRating.bind(this);
     this.hoverRatingOn = this.hoverRatingOn.bind(this);
     this.hoverRatingOff = this.hoverRatingOff.bind(this);
 
+    // Setting additional properties
+    this.currentRating = 0;
+
     // Adding events listeners
-    for (let button of this.recipeRatingButtons) {
-      // button.onclick = this.clickedLocalRating;
+    for (let button of this.ratingButtons) {
+      button.onclick = this.clickedRating;
       button.onmouseenter = this.hoverRatingOn;
       button.onmouseleave = this.hoverRatingOff;
     }
   }
 
   // ----------------------------------------------------------------
-  // Updating displayed rating
+  // Updating rating
   // ----------------------------------------------------------------
 
-  // Update displayed rating to rating in stored obj
-  updateRating(value, style) {
-    //   for (let i = 0; i < 5; i++) {
-    //     this.recipeRatingButtons[i].classList.remove("checked");
-    //     this.recipeRatingButtons[i].setAttribute("aria-checked", false);
-    //   }
-    //   if (this.obj.rating.hasOwnProperty("local")) {
-    //     const localRating = parseInt(this.obj.rating.local);
-    //     this.recipeRatingButtons[localRating - 1].setAttribute(
-    //       "aria-checked",
-    //       true
-    //     );
-    //     for (let i = 0; i < localRating; i++) {
-    //       const button = this.recipeRatingButtons[i];
-    //       button.classList.add("checked");
-    //       if (style === "fade") {
-    //         button.classList.remove("hovered");
-    //         button.animate(
-    //           {
-    //             transform: ["scale(1.4)", "scale(1.0)"],
-    //             opacity: [0, 1],
-    //           },
-    //           { duration: 600, easing: "ease-out" }
-    //         );
-    //       }
-    //     }
-    //   }
+  // Update displayed and stored rating to given value
+  update(newRating, style) {
+    this.currentRating = newRating;
+    for (let i = 0; i < 5; i++) {
+      this.ratingButtons[i].classList.remove("checked");
+      this.ratingButtons[i].setAttribute("aria-checked", false);
+    }
+    if (newRating > 0) {
+      this.ratingButtons[newRating - 1].setAttribute("aria-checked", true);
+      for (let i = 0; i < newRating; i++) {
+        const button = this.ratingButtons[i];
+        button.classList.add("checked");
+        if (style === "fade") {
+          button.classList.remove("hovered");
+          button.animate(
+            {
+              transform: ["scale(1.4)", "scale(1.0)"],
+              opacity: [0, 1],
+            },
+            { duration: 600, easing: "ease-out" }
+          );
+        }
+      }
+    }
   }
 
   // ----------------------------------------------------------------
@@ -74,9 +69,9 @@ class RecipeRating {
     }
 
     if (button !== undefined) {
-      const rating = parseInt(button.dataset.id);
-      this.updateRating(rating, "fade");
-      this.saveRatingCallback(rating);
+      const newRating = parseInt(button.dataset.id);
+      this.update(newRating, "fade");
+      this.saveRatingCallback(newRating);
     }
   }
 
@@ -84,13 +79,13 @@ class RecipeRating {
   hoverRatingOn(event) {
     const rating = event.target.dataset.id;
     for (let i = 0; i < rating; i++)
-      this.recipeRatingButtons[i].classList.add("hovered");
+      this.ratingButtons[i].classList.add("hovered");
   }
 
   // When mouse leaves rating
   hoverRatingOff(event) {
     const rating = event.target.dataset.id;
     for (let i = 0; i < rating; i++)
-      this.recipeRatingButtons[i].classList.remove("hovered");
+      this.ratingButtons[i].classList.remove("hovered");
   }
 }
