@@ -1,3 +1,9 @@
+// Constants for keyboard codes
+const CODE_LEFT = "ArrowLeft";
+const CODE_RIGHT = "ArrowRight";
+const CODE_UP = "ArrowUp";
+const CODE_DOWN = "ArrowDown";
+
 class Nav {
   constructor(
     arr,
@@ -6,14 +12,11 @@ class Nav {
     resetRecipesCallback,
     updateTabIndexCallback
   ) {
-    // Binding methods
-    this.show = this.show.bind(this);
-    this.hide = this.hide.bind(this);
-    this.clickedAddRecipe = this.clickedAddRecipe.bind(this);
-    this.clickedDisplayRecipe = this.clickedDisplayRecipe.bind(this);
-    this.clickedResetList = this.clickedResetList.bind(this);
-    this.showTooltip = this.showTooltip.bind(this);
-    this.hideTooltip = this.hideTooltip.bind(this);
+    // Saving callbacks
+    this.displayRecipeCallback = displayRecipeCallback;
+    this.openEditorCallback = openEditorCallback;
+    this.resetRecipesCallback = resetRecipesCallback;
+    this.updateTabIndexCallback = updateTabIndexCallback;
 
     // Setting DOM elements
     this.nav = document.getElementById("nav");
@@ -22,16 +25,27 @@ class Nav {
     this.bgMenuButton = document.getElementById("bg-menu-button");
     this.recipeWindow = document.getElementById("recipe-window");
 
-    // Saving callbacks
-    this.displayRecipeCallback = displayRecipeCallback;
-    this.openEditorCallback = openEditorCallback;
-    this.resetRecipesCallback = resetRecipesCallback;
-    this.updateTabIndexCallback = updateTabIndexCallback;
+    // Setting additional fields
+    this._selectedItem = 0;
+    this.itemsCounter = 0;
+
+    // Binding methods
+    this.show = this.show.bind(this);
+    this.hide = this.hide.bind(this);
+    this.clickedAddRecipe = this.clickedAddRecipe.bind(this);
+    this.clickedDisplayRecipe = this.clickedDisplayRecipe.bind(this);
+    this.clickedResetList = this.clickedResetList.bind(this);
+    this.keyPressedOnNavList = this.keyPressedOnNavList.bind(this);
+    this.showTooltip = this.showTooltip.bind(this);
+    this.hideTooltip = this.hideTooltip.bind(this);
 
     // Adding events listeners
     this.navMenuButton.onclick = this.hide;
     document.getElementById("nav-add-button").onclick = this.clickedAddRecipe;
     document.getElementById("nav-reset-button").onclick = this.clickedResetList;
+    this.navList.onkeydown = this.keyPressedOnNavList;
+
+    // Initializing item list with array
     this.addList(arr, "fade");
   }
 
@@ -78,6 +92,7 @@ class Nav {
         }
       );
     }
+    this.selectedItem = 0;
   }
 
   // Remove all items from nav list
@@ -85,6 +100,7 @@ class Nav {
     while (this.navList.childElementCount > 0) {
       this.navList.removeChild(this.navList.lastElementChild);
     }
+    this.itemsCounter = 0;
   }
 
   // Fill nav list with items from array (with removing previous items)
@@ -99,7 +115,7 @@ class Nav {
     item.className = "nav-item";
     item.id = "nav-item-" + obj.id;
     item.dataset.id = obj.id;
-    item.innerHTML = `<button class="nav-item-button" type="button">${
+    item.innerHTML = `<button class="nav-item-button" type="button" tabindex="-1">${
       obj.name
     }</button>
     <div class="nav-item-rating"><span class="rating-value">${this.getRating(
@@ -111,6 +127,9 @@ class Nav {
     item.querySelector(".nav-item-button").onclick = this.clickedDisplayRecipe;
     item.querySelector(".nav-item-rating").onmouseenter = this.showTooltip;
     item.querySelector(".nav-item-rating").onmouseleave = this.hideTooltip;
+
+    this.itemsCounter++;
+    this.selectedItem = this.itemsCounter - 1;
   }
 
   // Update item's name and rating on nav list
@@ -136,6 +155,8 @@ class Nav {
       )
       .finished.then(() => {
         item.remove();
+        this.itemsCounter--;
+        this.selectedItem = 0;
       });
   }
 
@@ -146,6 +167,8 @@ class Nav {
   // Enable interaction with tab key
   enableTab() {
     this.setTabIndex("0");
+    // Setting selected item to itself will also change item's button's tabindex to 0.
+    this.selectedItem = this.selectedItem;
   }
 
   // Disable interaction with tab key
@@ -153,7 +176,27 @@ class Nav {
     this.setTabIndex("-1");
   }
 
-  // Set tabindex for all interactive elements
+  // Getter for selected item (for roving tabindex)
+  get selectedItem() {
+    return this._selectedItem;
+  }
+
+  // Setter for selected item (for roving tabindex)
+  set selectedItem(i) {
+    const buttons = Array.from(
+      this.navList.querySelectorAll(".nav-item-button")
+    );
+
+    if (i >= 0 && i < buttons.length) {
+      buttons.forEach((b) => {
+        b.tabIndex = "-1";
+      });
+      buttons[i].tabIndex = "0";
+      this._selectedItem = i;
+    }
+  }
+
+  // Set tabindex for all interactive elements on nav
   setTabIndex(tabIndex) {
     const buttons = this.nav.querySelectorAll("button");
     buttons.forEach((button) => {
@@ -196,6 +239,29 @@ class Nav {
     tooltip.classList.remove("visible");
   }
 
+  // When pressed arrow on nav list
+  keyPressedOnNavList(e) {
+    if (this.itemsCounter > 0) {
+      if (e.code === CODE_LEFT || e.code === CODE_UP) {
+        e.preventDefault();
+        if (this.selectedItem <= 0) {
+          this.selectedItem = this.itemsCounter - 1;
+        } else {
+          this.selectedItem--;
+        }
+        this.focusOnSelectedItem();
+      } else if (e.code === CODE_RIGHT || e.code === CODE_DOWN) {
+        e.preventDefault();
+        if (this.selectedItem >= this.itemsCounter - 1) {
+          this.selectedItem = 0;
+        } else {
+          this.selectedItem++;
+        }
+        this.focusOnSelectedItem();
+      }
+    }
+  }
+
   // ----------------------------------------------------------------
   // Helper functions
   // ----------------------------------------------------------------
@@ -207,5 +273,11 @@ class Nav {
       rating = (obj.rating.sum / obj.rating.votes).toFixed(1);
     else rating = "-";
     return rating;
+  }
+
+  focusOnSelectedItem() {
+    Array.from(this.navList.querySelectorAll(".nav-item-button"))[
+      this.selectedItem
+    ].focus();
   }
 }
