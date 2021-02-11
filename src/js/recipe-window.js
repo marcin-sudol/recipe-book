@@ -16,15 +16,10 @@ class RecipeWindow {
     this.recipeName = document.getElementById("recipe-name");
     this.ingredientsList = document.getElementById("ingredients-list");
     this.stepsList = document.getElementById("steps-list");
-    this.recipeRatingButtons = [];
-    for (let i = 1; i <= 5; i++) {
-      this.recipeRatingButtons.push(
-        document.getElementById("recipe-rating-" + i)
-      );
-    }
 
-    // Settng additional properties
-    this.obj = "undefined";
+    // Setting additional properties
+    this.obj = undefined;
+    this.rating = new RecipeRating();
     this.visible = false;
     this.changing = false;
     this.animationTime = 400;
@@ -41,9 +36,6 @@ class RecipeWindow {
     this.clickedClose = this.clickedClose.bind(this);
     this.clickedEdit = this.clickedEdit.bind(this);
     this.clickedDelete = this.clickedDelete.bind(this);
-    this.clickedLocalRating = this.clickedLocalRating.bind(this);
-    this.hoverRatingOn = this.hoverRatingOn.bind(this);
-    this.hoverRatingOff = this.hoverRatingOff.bind(this);
 
     // Adding events listeners
     document.getElementById("recipe-close-button").onclick = this.clickedClose;
@@ -51,11 +43,6 @@ class RecipeWindow {
     document.getElementById(
       "recipe-delete-button"
     ).onclick = this.clickedDelete;
-    for (let button of this.recipeRatingButtons) {
-      button.onclick = this.clickedLocalRating;
-      button.onmouseenter = this.hoverRatingOn;
-      button.onmouseleave = this.hoverRatingOff;
-    }
   }
 
   // ----------------------------------------------------------------
@@ -140,7 +127,7 @@ class RecipeWindow {
       </span>`;
       this.stepsList.appendChild(newItem);
     });
-    this.updateLocalRating();
+    // this.updateLocalRating();
   }
 
   // ----------------------------------------------------------------
@@ -263,75 +250,14 @@ class RecipeWindow {
   clickedDelete() {
     this.openDeleteCallback(this.obj);
   }
-
-  // Clicked on rating
-  clickedLocalRating(event) {
-    let button;
-    let localRating;
-    if (event.target.tagName === "BUTTON") {
-      button = event.target;
-    } else if (event.target.parentElement.tagName === "BUTTON") {
-      button = event.target.parentElement;
-    }
-
-    if (button !== undefined) {
-      localRating = parseInt(button.dataset.id);
-      if (this.obj.rating.hasOwnProperty("local")) {
-        this.obj.rating.sum -= this.obj.rating.local;
-        this.obj.rating.sum += localRating;
-        this.obj.rating.local = localRating;
-      } else {
-        this.obj.rating.sum += localRating;
-        this.obj.rating.local = localRating;
-        this.obj.rating.votes += 1;
-      }
-      this.updateLocalRating("fade");
-      this.saveRecipeCallback(this.obj);
-    }
-  }
-
-  // When mouse enters rating
-  hoverRatingOn(event) {
-    const rating = event.target.dataset.id;
-    for (let i = 0; i < rating; i++)
-      this.recipeRatingButtons[i].classList.add("hovered");
-  }
-
-  // When mouse leaves rating
-  hoverRatingOff(event) {
-    const rating = event.target.dataset.id;
-    for (let i = 0; i < rating; i++)
-      this.recipeRatingButtons[i].classList.remove("hovered");
-  }
-
-  // Update displayed rating to rating in stored obj
-  updateLocalRating(style) {
-    for (let i = 0; i < 5; i++) {
-      this.recipeRatingButtons[i].classList.remove("checked");
-      this.recipeRatingButtons[i].setAttribute("aria-checked", false);
-    }
-
-    if (this.obj.rating.hasOwnProperty("local")) {
-      const localRating = parseInt(this.obj.rating.local);
-      this.recipeRatingButtons[localRating - 1].setAttribute(
-        "aria-checked",
-        true
-      );
-      for (let i = 0; i < localRating; i++) {
-        const button = this.recipeRatingButtons[i];
-        button.classList.add("checked");
-
-        if (style === "fade") {
-          button.classList.remove("hovered");
-          button.animate(
-            {
-              transform: ["scale(1.4)", "scale(1.0)"],
-              opacity: [0, 1],
-            },
-            { duration: 600, easing: "ease-out" }
-          );
-        }
-      }
-    }
-  }
 }
+
+// if (this.obj.rating.hasOwnProperty("local")) {
+//   this.obj.rating.sum -= this.obj.rating.local;
+//   this.obj.rating.sum += localRating;
+//   this.obj.rating.local = localRating;
+// } else {
+//   this.obj.rating.sum += localRating;
+//   this.obj.rating.local = localRating;
+//   this.obj.rating.votes += 1;
+// }
