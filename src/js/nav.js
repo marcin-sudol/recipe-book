@@ -25,7 +25,7 @@ class Nav {
     this.bgMenuButton = document.getElementById("bg-menu-button");
     this.recipeWindow = document.getElementById("recipe-window");
 
-    // Setting additional fields
+    // Setting additional properties
     this._selectedItem = 0;
     this.itemsCounter = 0;
 
@@ -196,7 +196,7 @@ class Nav {
     }
   }
 
-  // Set tabindex for all interactive elements on nav
+  // Set tabindex for all interactive elements on component
   setTabIndex(tabIndex) {
     const buttons = this.nav.querySelectorAll("button");
     buttons.forEach((button) => {

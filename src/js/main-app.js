@@ -55,7 +55,7 @@ class MainApp {
     this.arr.push(obj);
     this.saveRecipesToLocalMemory();
     this.nav.addItem(obj);
-    this.recipeWindow.display(obj, "slide", "slide");
+    this.recipeWindow.open(obj, "slide", "slide");
     this.message.displayMessage("Recipe added!");
   }
 
@@ -79,7 +79,7 @@ class MainApp {
       this.arr[index] = obj;
       this.saveRecipesToLocalMemory();
       this.nav.updateItem(obj);
-      this.recipeWindow.display(obj, "no", "fade");
+      this.recipeWindow.open(obj, "no", "fade");
       this.message.displayMessage("Recipe saved!");
     }
   }
@@ -97,7 +97,7 @@ class MainApp {
 
   displayRecipe(id) {
     const obj = this.arr.find((item) => item.id === id);
-    this.recipeWindow.display(obj, "slide", "slide");
+    this.recipeWindow.open(obj, "slide", "slide");
   }
 
   showNav() {

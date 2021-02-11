@@ -5,20 +5,13 @@ class RecipeWindow {
     saveRecipeCallback,
     updateTabIndexCallback
   ) {
-    this.show = this.show.bind(this);
-    this.hide = this.hide.bind(this);
-    this.slideIn = this.slideIn.bind(this);
-    this.slideOut = this.slideOut.bind(this);
-    this.fadeIn = this.fadeIn.bind(this);
-    this.fadeOut = this.fadeOut.bind(this);
-    this.display = this.display.bind(this);
-    this.close = this.close.bind(this);
-    this.clickedClose = this.clickedClose.bind(this);
-    this.clickedEdit = this.clickedEdit.bind(this);
-    this.clickedDelete = this.clickedDelete.bind(this);
-    this.clickedLocalRating = this.clickedLocalRating.bind(this);
-    this.hoverRatingOn = this.hoverRatingOn.bind(this);
-    this.hoverRatingOff = this.hoverRatingOff.bind(this);
+    // Saving callbacks
+    this.openEditorCallback = openEditorCallback;
+    this.openDeleteCallback = openDeleteCallback;
+    this.saveRecipeCallback = saveRecipeCallback;
+    this.updateTabIndexCallback = updateTabIndexCallback;
+
+    // Setting DOM elements
     this.recipeWindow = document.getElementById("recipe-window");
     this.recipeName = document.getElementById("recipe-name");
     this.ingredientsList = document.getElementById("ingredients-list");
@@ -29,14 +22,30 @@ class RecipeWindow {
         document.getElementById("recipe-rating-" + i)
       );
     }
+
+    // Settng additional properties
     this.obj = "undefined";
     this.visible = false;
     this.changing = false;
     this.animationTime = 400;
-    this.openEditorCallback = openEditorCallback;
-    this.openDeleteCallback = openDeleteCallback;
-    this.saveRecipeCallback = saveRecipeCallback;
-    this.updateTabIndexCallback = updateTabIndexCallback;
+
+    // Binding methods
+    this.open = this.open.bind(this);
+    this.close = this.close.bind(this);
+    this.show = this.show.bind(this);
+    this.hide = this.hide.bind(this);
+    this.slideIn = this.slideIn.bind(this);
+    this.slideOut = this.slideOut.bind(this);
+    this.fadeIn = this.fadeIn.bind(this);
+    this.fadeOut = this.fadeOut.bind(this);
+    this.clickedClose = this.clickedClose.bind(this);
+    this.clickedEdit = this.clickedEdit.bind(this);
+    this.clickedDelete = this.clickedDelete.bind(this);
+    this.clickedLocalRating = this.clickedLocalRating.bind(this);
+    this.hoverRatingOn = this.hoverRatingOn.bind(this);
+    this.hoverRatingOff = this.hoverRatingOff.bind(this);
+
+    // Adding events listeners
     document.getElementById("recipe-close-button").onclick = this.clickedClose;
     document.getElementById("recipe-edit-button").onclick = this.clickedEdit;
     document.getElementById(
@@ -49,144 +58,13 @@ class RecipeWindow {
     }
   }
 
-  update(obj) {
-    let newItem;
-    this.obj = obj;
-    this.recipeName.innerHTML = this.obj.name;
+  // ----------------------------------------------------------------
+  // Managing visibility and displayed recipe
+  // ----------------------------------------------------------------
 
-    this.ingredientsList.innerHTML = "";
-    this.obj.ingredients.split(",").forEach((ingredient) => {
-      if (ingredient) {
-        newItem = document.createElement("li");
-        newItem.className = "ingredients-item";
-        newItem.textContent = ingredient;
-        this.ingredientsList.appendChild(newItem);
-      }
-    });
-
-    this.stepsList.innerHTML = "";
-    this.obj.steps.forEach((step) => {
-      newItem = document.createElement("li");
-      newItem.className = "steps-item";
-      newItem.innerHTML = `<span class="step-name">${step.name}</span>
-      <span class="step-time">
-      <i class="far fa-clock"></i> ${step.time} min.
-      </span>`;
-      this.stepsList.appendChild(newItem);
-    });
-    this.updateLocalRating();
-  }
-
-  updateLocalRating(style) {
-    for (let i = 0; i < 5; i++) {
-      this.recipeRatingButtons[i].classList.remove("checked");
-      this.recipeRatingButtons[i].setAttribute("aria-checked", false);
-    }
-
-    if (this.obj.rating.hasOwnProperty("local")) {
-      const localRating = parseInt(this.obj.rating.local);
-      this.recipeRatingButtons[localRating - 1].setAttribute(
-        "aria-checked",
-        true
-      );
-      for (let i = 0; i < localRating; i++) {
-        const button = this.recipeRatingButtons[i];
-        button.classList.add("checked");
-
-        if (style === "fade") {
-          button.classList.remove("hovered");
-          button.animate(
-            {
-              transform: ["scale(1.4)", "scale(1.0)"],
-              opacity: [0, 1],
-            },
-            { duration: 600, easing: "ease-out" }
-          );
-        }
-      }
-    }
-  }
-
-  show(callback) {
-    this.recipeWindow.style.display = "flex";
-    this.visible = true;
-    this.recipeName.focus();
-    if (callback !== undefined) callback();
-  }
-
-  hide(callback) {
-    this.recipeWindow.style.display = "none";
-    this.visible = false;
-    if (callback !== undefined) callback();
-  }
-
-  slideIn(callback) {
-    this.recipeWindow.style.display = "flex";
-    this.recipeWindow
-      .animate(
-        {
-          transform: ["translateX(-20vw)", "translateX(0px)"],
-          opacity: [0, 1],
-        },
-        { duration: this.animationTime, easing: "ease-out" }
-      )
-      .finished.then(() => {
-        this.show(callback);
-      });
-  }
-
-  slideOut(callback) {
-    this.recipeWindow
-      .animate(
-        {
-          transform: ["translateX(0px)", "translateX(-20vw)"],
-          opacity: [1, 0],
-        },
-        { duration: this.animationTime, easing: "ease-out" }
-      )
-      .finished.then(() => {
-        this.hide(callback);
-      });
-  }
-
-  fadeIn(callback) {
-    this.recipeWindow.style.display = "flex";
-    this.recipeWindow
-      .animate(
-        { opacity: [0, 1] },
-        { duration: this.animationTime, easing: "ease-out" }
-      )
-      .finished.then(() => {
-        this.show(callback);
-      });
-  }
-
-  fadeOut(callback) {
-    this.recipeWindow
-      .animate(
-        { opacity: [1, 0] },
-        { duration: this.animationTime, easing: "ease-out" }
-      )
-      .finished.then(() => {
-        this.hide(callback);
-      });
-  }
-
-  close(styleOut) {
-    if (this.visible) {
-      let functionOut;
-      if (styleOut === "fade") functionOut = this.fadeOut;
-      else functionOut = this.slideOut;
-
-      this.changing = true;
-      functionOut(() => {
-        this.changing = false;
-        this.updateTabIndexCallback();
-      });
-    }
-  }
-
-  display(obj, styleOut, styleIn) {
+  // Open window with given recipe (as object) and given animation style
+  // if window already opened, first close window and update displayed recipe
+  open(obj, styleOut, styleIn) {
     if (!this.changing && (!this.visible || obj !== this.obj)) {
       this.changing = true;
 
@@ -221,6 +99,145 @@ class RecipeWindow {
     }
   }
 
+  // Close window with selected animation style
+  close(styleOut) {
+    if (this.visible) {
+      let functionOut;
+      if (styleOut === "fade") functionOut = this.fadeOut;
+      else functionOut = this.slideOut;
+
+      this.changing = true;
+      functionOut(() => {
+        this.changing = false;
+        this.updateTabIndexCallback();
+      });
+    }
+  }
+
+  // Update informations diplayed in window with passed object
+  update(obj) {
+    let newItem;
+    this.obj = obj;
+    this.recipeName.innerHTML = this.obj.name;
+
+    this.ingredientsList.innerHTML = "";
+    this.obj.ingredients.split(",").forEach((ingredient) => {
+      if (ingredient) {
+        newItem = document.createElement("li");
+        newItem.className = "ingredients-item";
+        newItem.textContent = ingredient;
+        this.ingredientsList.appendChild(newItem);
+      }
+    });
+
+    this.stepsList.innerHTML = "";
+    this.obj.steps.forEach((step) => {
+      newItem = document.createElement("li");
+      newItem.className = "steps-item";
+      newItem.innerHTML = `<span class="step-name">${step.name}</span>
+      <span class="step-time">
+      <i class="far fa-clock"></i> ${step.time} min.
+      </span>`;
+      this.stepsList.appendChild(newItem);
+    });
+    this.updateLocalRating();
+  }
+
+  // ----------------------------------------------------------------
+  // Helper methods for visibility
+  // ----------------------------------------------------------------
+
+  // Animate window -> slide in and make visible
+  slideIn(callback) {
+    this.recipeWindow.style.display = "flex";
+    this.recipeWindow
+      .animate(
+        {
+          transform: ["translateX(-20vw)", "translateX(0px)"],
+          opacity: [0, 1],
+        },
+        { duration: this.animationTime, easing: "ease-out" }
+      )
+      .finished.then(() => {
+        this.show(callback);
+      });
+  }
+
+  // Animate window -> slide out and make hidden
+  slideOut(callback) {
+    this.recipeWindow
+      .animate(
+        {
+          transform: ["translateX(0px)", "translateX(-20vw)"],
+          opacity: [1, 0],
+        },
+        { duration: this.animationTime, easing: "ease-out" }
+      )
+      .finished.then(() => {
+        this.hide(callback);
+      });
+  }
+
+  // Animate window -> fade in and make visible
+  fadeIn(callback) {
+    this.recipeWindow.style.display = "flex";
+    this.recipeWindow
+      .animate(
+        { opacity: [0, 1] },
+        { duration: this.animationTime, easing: "ease-out" }
+      )
+      .finished.then(() => {
+        this.show(callback);
+      });
+  }
+
+  // Animate window -> fade out and make visible
+  fadeOut(callback) {
+    this.recipeWindow
+      .animate(
+        { opacity: [1, 0] },
+        { duration: this.animationTime, easing: "ease-out" }
+      )
+      .finished.then(() => {
+        this.hide(callback);
+      });
+  }
+
+  // Make window visible
+  show(callback) {
+    this.recipeWindow.style.display = "flex";
+    this.visible = true;
+    this.recipeName.focus();
+    if (callback !== undefined) callback();
+  }
+
+  // Make window hidden
+  hide(callback) {
+    this.recipeWindow.style.display = "none";
+    this.visible = false;
+    if (callback !== undefined) callback();
+  }
+
+  // Checks if window is visible
+  isVisible() {
+    return this.visible;
+  }
+
+  // ----------------------------------------------------------------
+  // Managing tab interactions
+  // ----------------------------------------------------------------
+
+  // Enable interaction with tab key
+  enableTab() {
+    this.setTabIndex("0");
+  }
+
+  // Disable interaction with tab key
+  disableTab() {
+    this.setTabIndex("-1");
+  }
+
+  // Set tabindex for all interactive elements on component
   setTabIndex(tabIndex) {
     const buttons = this.recipeWindow.querySelectorAll("button");
     buttons.forEach((button) => {
@@ -228,30 +245,26 @@ class RecipeWindow {
     });
   }
 
-  enableTab() {
-    this.setTabIndex("0");
-  }
+  // ----------------------------------------------------------------
+  // Event handlers
+  // ----------------------------------------------------------------
 
-  disableTab() {
-    this.setTabIndex("-1");
-  }
-
-  isVisible() {
-    return this.visible;
-  }
-
+  // Clicked close window
   clickedClose() {
     this.close("slide");
   }
 
+  // Clicked edit recipe
   clickedEdit() {
     this.openEditorCallback(this.obj);
   }
 
+  // Clicked delete recipe
   clickedDelete() {
     this.openDeleteCallback(this.obj);
   }
 
+  // Clicked on rating
   clickedLocalRating(event) {
     let button;
     let localRating;
@@ -277,15 +290,48 @@ class RecipeWindow {
     }
   }
 
+  // When mouse enters rating
   hoverRatingOn(event) {
     const rating = event.target.dataset.id;
     for (let i = 0; i < rating; i++)
       this.recipeRatingButtons[i].classList.add("hovered");
   }
 
+  // When mouse leaves rating
   hoverRatingOff(event) {
     const rating = event.target.dataset.id;
     for (let i = 0; i < rating; i++)
       this.recipeRatingButtons[i].classList.remove("hovered");
+  }
+
+  // Update displayed rating to rating in stored obj
+  updateLocalRating(style) {
+    for (let i = 0; i < 5; i++) {
+      this.recipeRatingButtons[i].classList.remove("checked");
+      this.recipeRatingButtons[i].setAttribute("aria-checked", false);
+    }
+
+    if (this.obj.rating.hasOwnProperty("local")) {
+      const localRating = parseInt(this.obj.rating.local);
+      this.recipeRatingButtons[localRating - 1].setAttribute(
+        "aria-checked",
+        true
+      );
+      for (let i = 0; i < localRating; i++) {
+        const button = this.recipeRatingButtons[i];
+        button.classList.add("checked");
+
+        if (style === "fade") {
+          button.classList.remove("hovered");
+          button.animate(
+            {
+              transform: ["scale(1.4)", "scale(1.0)"],
+              opacity: [0, 1],
+            },
+            { duration: 600, easing: "ease-out" }
+          );
+        }
+      }
+    }
   }
 }
