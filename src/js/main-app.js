@@ -113,7 +113,7 @@ class MainApp {
   }
 
   keyPressed(event) {
-    if ((event.code === "Escape") & !this.recipeWindow.changing) {
+    if ((event.code === KEY_ESCAPE) & !this.recipeWindow.changing) {
       if (this.editPopup.isVisible()) {
         event.preventDefault();
         this.editPopup.close();

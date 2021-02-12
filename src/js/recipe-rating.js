@@ -4,6 +4,7 @@ class RecipeRating {
     this.saveRatingCallback = saveRatingCallback;
 
     // Setting DOM elements
+    this.ratingContainer = document.getElementById("recipe-rating-container");
     this.ratingButtons = [];
     for (let i = 1; i <= 5; i++) {
       this.ratingButtons.push(document.getElementById("recipe-rating-" + i));
@@ -13,9 +14,11 @@ class RecipeRating {
     this.clickedRating = this.clickedRating.bind(this);
     this.hoverRatingOn = this.hoverRatingOn.bind(this);
     this.hoverRatingOff = this.hoverRatingOff.bind(this);
+    this.keyDown = this.keyDown.bind(this);
 
     // Setting additional properties
     this.currentRating = 0;
+    this._selectedItem = 0;
 
     // Adding events listeners
     for (let button of this.ratingButtons) {
@@ -23,6 +26,7 @@ class RecipeRating {
       button.onmouseenter = this.hoverRatingOn;
       button.onmouseleave = this.hoverRatingOff;
     }
+    this.ratingContainer.onkeydown = this.keyDown;
   }
 
   // ----------------------------------------------------------------
@@ -53,6 +57,42 @@ class RecipeRating {
         }
       }
     }
+  }
+
+  // ----------------------------------------------------------------
+  // Managing interactions with tab key
+  // ----------------------------------------------------------------
+
+  // Enable interaction with tab key
+  enableTab() {
+    // enabling tab key resets the selected item to current rating
+    this.selectedItem = this.currentRating > 0 ? this.currentRating - 1 : 0;
+  }
+
+  // Disable interaction with tab key
+  disableTab() {
+    this.setTabIndex("-1");
+  }
+
+  // Getter for selected item (for roving tabindex)
+  get selectedItem() {
+    return this._selectedItem;
+  }
+
+  // Setter for selected item (for roving tabindex)
+  set selectedItem(i) {
+    if (i >= 0 && i < 5) {
+      this.setTabIndex("-1");
+      this.ratingButtons[i].tabIndex = "0";
+      this._selectedItem = i;
+    }
+  }
+
+  // Set tabindex for all interactive elements on component
+  setTabIndex(tabIndex) {
+    this.ratingButtons.forEach((b) => {
+      b.tabIndex = tabIndex;
+    });
   }
 
   // ----------------------------------------------------------------
@@ -87,5 +127,34 @@ class RecipeRating {
     const rating = event.target.dataset.id;
     for (let i = 0; i < rating; i++)
       this.ratingButtons[i].classList.remove("hovered");
+  }
+
+  // When pressed arrow on rating
+  keyDown(event) {
+    if (event.code === KEY_LEFT || event.code === KEY_UP) {
+      event.preventDefault();
+      if (this.selectedItem <= 0) {
+        this.selectedItem = 4;
+      } else {
+        this.selectedItem--;
+      }
+      this.focusOnSelectedItem();
+    } else if (event.code === KEY_RIGHT || event.code === KEY_DOWN) {
+      event.preventDefault();
+      if (this.selectedItem >= 4) {
+        this.selectedItem = 0;
+      } else {
+        this.selectedItem++;
+      }
+      this.focusOnSelectedItem();
+    }
+  }
+
+  // ----------------------------------------------------------------
+  // Helper functions
+  // ----------------------------------------------------------------
+
+  focusOnSelectedItem() {
+    this.ratingButtons[this.selectedItem].focus();
   }
 }

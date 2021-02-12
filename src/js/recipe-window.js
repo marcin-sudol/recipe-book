@@ -242,11 +242,13 @@ class RecipeWindow {
   // Enable interaction with tab key
   enableTab() {
     this.setTabIndex("0");
+    this.rating.enableTab();
   }
 
   // Disable interaction with tab key
   disableTab() {
     this.setTabIndex("-1");
+    this.rating.disableTab();
   }
 
   // Set tabindex for all interactive elements on component

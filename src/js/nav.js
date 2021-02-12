@@ -1,9 +1,3 @@
-// Constants for keyboard codes
-const CODE_LEFT = "ArrowLeft";
-const CODE_RIGHT = "ArrowRight";
-const CODE_UP = "ArrowUp";
-const CODE_DOWN = "ArrowDown";
-
 class Nav {
   constructor(
     arr,
@@ -31,7 +25,7 @@ class Nav {
     this.clickedAddRecipe = this.clickedAddRecipe.bind(this);
     this.clickedDisplayRecipe = this.clickedDisplayRecipe.bind(this);
     this.clickedResetList = this.clickedResetList.bind(this);
-    this.keyPressedOnNavList = this.keyPressedOnNavList.bind(this);
+    this.keyDownOnNavList = this.keyDownOnNavList.bind(this);
     this.showTooltip = this.showTooltip.bind(this);
     this.hideTooltip = this.hideTooltip.bind(this);
 
@@ -43,7 +37,7 @@ class Nav {
     this.navMenuButton.onclick = this.hide;
     document.getElementById("nav-add-button").onclick = this.clickedAddRecipe;
     document.getElementById("nav-reset-button").onclick = this.clickedResetList;
-    this.navList.onkeydown = this.keyPressedOnNavList;
+    this.navList.onkeydown = this.keyDownOnNavList;
 
     // Initializing item list with array
     this.addList(arr, "fade");
@@ -161,7 +155,7 @@ class Nav {
   }
 
   // ----------------------------------------------------------------
-  // Managing tab interactions
+  // Managing interactions with tab key
   // ----------------------------------------------------------------
 
   // Enable interaction with tab key
@@ -240,9 +234,9 @@ class Nav {
   }
 
   // When pressed arrow on nav list
-  keyPressedOnNavList(e) {
+  keyDownOnNavList(e) {
     if (this.itemsCounter > 0) {
-      if (e.code === CODE_LEFT || e.code === CODE_UP) {
+      if (e.code === KEY_LEFT || e.code === KEY_UP) {
         e.preventDefault();
         if (this.selectedItem <= 0) {
           this.selectedItem = this.itemsCounter - 1;
@@ -250,7 +244,7 @@ class Nav {
           this.selectedItem--;
         }
         this.focusOnSelectedItem();
-      } else if (e.code === CODE_RIGHT || e.code === CODE_DOWN) {
+      } else if (e.code === KEY_RIGHT || e.code === KEY_DOWN) {
         e.preventDefault();
         if (this.selectedItem >= this.itemsCounter - 1) {
           this.selectedItem = 0;
