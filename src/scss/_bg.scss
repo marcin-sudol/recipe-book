@@ -8,17 +8,6 @@
   background: white;
 }
 
-#bg-menu-button {
-  position: fixed;
-  left: 1em;
-  top: 1em;
-  font-size: 2rem;
-  color: $accent-green3;
-  &:hover {
-    color: $accent-yellow;
-  }
-}
-
 #bg-icon {
   font-size: 2em;
   color: $accent-yellow;

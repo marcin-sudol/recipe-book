@@ -36,7 +36,7 @@
   font-weight: bold;
 }
 
-#nav-menu-button {
+#hide-list-button {
   position: absolute;
   left: 1em;
   top: 1em;
@@ -150,6 +150,17 @@
 #nav-reset-button {
   padding: 0.5em;
   color: white;
+  &:hover {
+    color: $accent-yellow;
+  }
+}
+
+#show-list-button {
+  position: fixed;
+  left: 1em;
+  top: 1em;
+  font-size: 2rem;
+  color: $accent-green3;
   &:hover {
     color: $accent-yellow;
   }

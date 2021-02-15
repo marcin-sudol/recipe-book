@@ -42,37 +42,43 @@
     APP BACKGROUND
     --------------------------------------------------------->
     <div id="bg">
-      <button
-        id="bg-menu-button"
-        type="button"
-        tabindex="-1"
-        aria-label="Show recipe list"
-      >
-        <i class="fas fa-bars"></i>
-      </button>
       <i id="bg-icon" class="fas fa-utensils"></i>
     </div>
 
     <!--------------------------------------------------------
     NAV
     --------------------------------------------------------->
-    <nav id="nav">
-      <button id="nav-menu-button" type="button" aria-label="Hide recipe list">
-        <i class="fas fa-times"></i>
-      </button>
-      <header id="nav-header">Recipes</header>
-      <ul id="nav-list"></ul>
-      <button id="nav-add-button" type="button">add new recipe</button>
-      <div id="nav-reset-container">
+    <div id="nav-container">
+      <nav id="nav">
         <button
-          id="nav-reset-button"
+          id="hide-list-button"
           type="button"
-          title="Restore exemplary list"
+          aria-label="Hide recipe list"
         >
-          <i class="fas fa-undo"></i>
+          <i class="fas fa-times"></i>
         </button>
-      </div>
-    </nav>
+        <header id="nav-header">Recipes</header>
+        <ul id="nav-list"></ul>
+        <button id="nav-add-button" type="button">add new recipe</button>
+        <div id="nav-reset-container">
+          <button
+            id="nav-reset-button"
+            type="button"
+            title="Restore exemplary list"
+          >
+            <i class="fas fa-undo"></i>
+          </button>
+        </div>
+      </nav>
+      <button
+        id="show-list-button"
+        type="button"
+        tabindex="-1"
+        aria-label="Show recipe list"
+      >
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
 
     <!--------------------------------------------------------
     RECIPE WINDOW
@@ -260,7 +266,6 @@
     </template>
 
     <!-- SCRIPTS -->
-    <script src="./lib/js/bg.js"></script>
     <script src="./lib/js/nav.js"></script>
     <script src="./lib/js/recipe-window.js"></script>
     <script src="./lib/js/recipe-rating.js"></script>

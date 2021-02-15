@@ -4,7 +4,6 @@ class MainApp {
     this.saveRecipe = this.saveRecipe.bind(this);
     this.resetRecipes = this.resetRecipes.bind(this);
     this.displayRecipe = this.displayRecipe.bind(this);
-    this.showNav = this.showNav.bind(this);
     this.openEditor = this.openEditor.bind(this);
     this.openDelete = this.openDelete.bind(this);
     this.keyPressed = this.keyPressed.bind(this);
@@ -21,8 +20,6 @@ class MainApp {
       // data in local storage
       this.arr = JSON.parse(storedArr);
     }
-
-    this.bg = new Bg(this.showNav);
 
     this.nav = new Nav(
       this.arr,
@@ -100,10 +97,6 @@ class MainApp {
     this.recipeWindow.open(obj, "slide", "slide");
   }
 
-  showNav() {
-    this.nav.show();
-  }
-
   openEditor(obj) {
     this.editPopup.open(obj);
   }
@@ -153,30 +146,17 @@ class MainApp {
       // otherwise if recipe window is visible, enable it
       this.recipeWindow.enableTab();
       this.recipeWindow.focus();
-      // and set nav and bg depending on screen width and nav visibility
-      if (!wideWindow()) {
-        this.bg.disableTab();
-        this.nav.disableTab();
-      } else if (this.nav.isVisible()) {
-        this.bg.disableTab();
+      // and set nav depending on screen width
+      if (wideWindow()) {
         this.nav.enableTab();
       } else {
-        this.bg.enableTab();
         this.nav.disableTab();
       }
     } else {
       // otherwise disable recipe window
       this.recipeWindow.disableTab();
-      // and set nav and bg depending on screen width and nav visibility
-      if (!wideWindow() || this.nav.isVisible()) {
-        this.bg.disableTab();
-        this.nav.enableTab();
-        this.nav.focus();
-      } else {
-        this.bg.enableTab();
-        this.nav.disableTab();
-        this.bg.focus();
-      }
+      this.nav.enableTab();
+      this.nav.focus();
     }
   }
 }

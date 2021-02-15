@@ -13,10 +13,11 @@ class Nav {
     this.updateTabIndexCallback = updateTabIndexCallback;
 
     // Setting DOM elements
+    this.navContainer = document.getElementById("nav-container");
     this.nav = document.getElementById("nav");
     this.navList = document.getElementById("nav-list");
-    this.navMenuButton = document.getElementById("nav-menu-button");
-    this.bgMenuButton = document.getElementById("bg-menu-button");
+    this.hideListButton = document.getElementById("hide-list-button");
+    this.showListButton = document.getElementById("show-list-button");
     this.recipeWindow = document.getElementById("recipe-window");
 
     // Binding methods
@@ -34,7 +35,8 @@ class Nav {
     this.itemsCounter = 0;
 
     // Adding events listeners
-    this.navMenuButton.onclick = this.hide;
+    this.hideListButton.onclick = this.hide;
+    this.showListButton.onclick = this.show;
     document.getElementById("nav-add-button").onclick = this.clickedAddRecipe;
     document.getElementById("nav-reset-button").onclick = this.clickedResetList;
     this.navList.onkeydown = this.keyDownOnNavList;
@@ -156,7 +158,7 @@ class Nav {
   // Managing interactions with tab key and focus
   // ----------------------------------------------------------------
 
-  // Enable interaction with tab key
+  // Update elements' tab key index
   enableTab() {
     this.setTabIndex("0");
     // Setting selected item to itself will also change item's button's tabindex to 0.
@@ -197,7 +199,7 @@ class Nav {
   }
 
   focus() {
-    this.navMenuButton.focus();
+    this.hideListButton.focus();
   }
 
   // ----------------------------------------------------------------

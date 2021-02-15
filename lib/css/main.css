@@ -55,18 +55,6 @@ button:hover {
   background: white;
 }
 
-#bg-menu-button {
-  position: fixed;
-  left: 1em;
-  top: 1em;
-  font-size: 2rem;
-  color: #4d908e;
-}
-
-#bg-menu-button:hover {
-  color: #f9c74f;
-}
-
 #bg-icon {
   font-size: 2em;
   color: #f9c74f;
@@ -123,7 +111,7 @@ button:hover {
   font-weight: bold;
 }
 
-#nav-menu-button {
+#hide-list-button {
   position: absolute;
   left: 1em;
   top: 1em;
@@ -131,12 +119,12 @@ button:hover {
   color: white;
 }
 
-#nav-menu-button:hover {
+#hide-list-button:hover {
   color: #f9c74f;
 }
 
 @media (max-width: 800px) {
-  #nav-menu-button {
+  #hide-list-button {
     display: none;
   }
 }
@@ -280,6 +268,18 @@ button:hover {
 }
 
 #nav-reset-button:hover {
+  color: #f9c74f;
+}
+
+#show-list-button {
+  position: fixed;
+  left: 1em;
+  top: 1em;
+  font-size: 2rem;
+  color: #4d908e;
+}
+
+#show-list-button:hover {
   color: #f9c74f;
 }
 
