@@ -17,4 +17,8 @@ class Bg {
   disableTab() {
     this.setTabIndex("-1");
   }
+
+  focus() {
+    this.menuButton.focus();
+  }
 }

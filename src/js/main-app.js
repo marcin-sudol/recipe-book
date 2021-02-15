@@ -144,9 +144,15 @@ class MainApp {
       this.bg.disableTab();
       this.nav.disableTab();
       this.recipeWindow.disableTab();
+      if (this.editPopup.isVisible()) {
+        this.editPopup.focus();
+      } else {
+        this.deletePopup.focus();
+      }
     } else if (this.recipeWindow.isVisible()) {
       // otherwise if recipe window is visible, enable it
       this.recipeWindow.enableTab();
+      this.recipeWindow.focus();
       // and set nav and bg depending on screen width and nav visibility
       if (!wideWindow()) {
         this.bg.disableTab();
@@ -165,9 +171,11 @@ class MainApp {
       if (!wideWindow() || this.nav.isVisible()) {
         this.bg.disableTab();
         this.nav.enableTab();
+        this.nav.focus();
       } else {
         this.bg.enableTab();
         this.nav.disableTab();
+        this.bg.focus();
       }
     }
   }

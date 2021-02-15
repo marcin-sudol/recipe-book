@@ -52,7 +52,6 @@ class Nav {
     this.nav.classList.remove("hidden");
     this.recipeWindow.classList.add("narrower");
     this.updateTabIndexCallback();
-    this.navMenuButton.focus();
   }
 
   // Hide nav
@@ -60,7 +59,6 @@ class Nav {
     this.nav.classList.add("hidden");
     this.recipeWindow.classList.remove("narrower");
     this.updateTabIndexCallback();
-    this.bgMenuButton.focus();
   }
 
   // Check if nav is visible
@@ -155,7 +153,7 @@ class Nav {
   }
 
   // ----------------------------------------------------------------
-  // Managing interactions with tab key
+  // Managing interactions with tab key and focus
   // ----------------------------------------------------------------
 
   // Enable interaction with tab key
@@ -196,6 +194,10 @@ class Nav {
     buttons.forEach((button) => {
       button.setAttribute("tabindex", tabIndex);
     });
+  }
+
+  focus() {
+    this.navMenuButton.focus();
   }
 
   // ----------------------------------------------------------------

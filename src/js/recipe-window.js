@@ -200,7 +200,6 @@ class RecipeWindow {
   show(callback) {
     this.recipeWindow.style.display = "flex";
     this.visible = true;
-    this.recipeName.focus();
     if (callback !== undefined) callback();
   }
 
@@ -257,6 +256,11 @@ class RecipeWindow {
     buttons.forEach((button) => {
       button.setAttribute("tabindex", tabIndex);
     });
+  }
+
+  // Focus on recipe window
+  focus() {
+    this.recipeName.focus();
   }
 
   // ----------------------------------------------------------------

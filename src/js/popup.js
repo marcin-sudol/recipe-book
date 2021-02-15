@@ -70,7 +70,6 @@ class EditPopup extends Popup {
       this.load();
     }
     super.open();
-    document.getElementById("input-name").focus();
   }
 
   addStep() {
@@ -213,6 +212,10 @@ class EditPopup extends Popup {
       this.saveRecipeCallback(this.export());
     }
   }
+
+  focus() {
+    document.getElementById("input-name").focus();
+  }
 }
 
 // -------------------------------------------------------
@@ -234,11 +237,13 @@ class DeletePopup extends Popup {
   open(obj) {
     this.obj = obj;
     super.open();
-    document.getElementById("delete-ok-button").focus();
   }
 
   submit() {
     this.close();
     this.deleteRecipeCallback(this.obj);
+  }
+  focus() {
+    document.getElementById("delete-ok-button").focus();
   }
 }
