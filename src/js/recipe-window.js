@@ -34,7 +34,7 @@ class RecipeWindow {
     // Setting additional properties
     this.obj = undefined;
     this.rating = new RecipeRating(this.saveRating);
-    this.visible = false;
+    this._visible = false;
     this.changing = false;
     this.animationTime = 400;
 
@@ -199,20 +199,20 @@ class RecipeWindow {
   // Make window visible
   show(callback) {
     this.recipeWindow.style.display = "flex";
-    this.visible = true;
+    this._visible = true;
     if (callback !== undefined) callback();
   }
 
   // Make window hidden
   hide(callback) {
     this.recipeWindow.style.display = "none";
-    this.visible = false;
+    this._visible = false;
     if (callback !== undefined) callback();
   }
 
-  // Checks if window is visible
-  isVisible() {
-    return this.visible;
+  // If window is visible
+  get visible() {
+    return this._visible;
   }
 
   // ----------------------------------------------------------------

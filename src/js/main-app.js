@@ -107,13 +107,13 @@ class MainApp {
 
   keyPressed(event) {
     if ((event.code === KEY_ESCAPE) & !this.recipeWindow.changing) {
-      if (this.editPopup.isVisible()) {
+      if (this.editPopup.visible) {
         event.preventDefault();
         this.editPopup.close();
-      } else if (this.deletePopup.isVisible()) {
+      } else if (this.deletePopup.visible) {
         event.preventDefault();
         this.deletePopup.close();
-      } else if (this.recipeWindow.isVisible()) {
+      } else if (this.recipeWindow.visible) {
         event.preventDefault();
         this.recipeWindow.close("slide");
       } else if (this.nav.visible && wideWindow()) {
@@ -132,16 +132,16 @@ class MainApp {
   // checks what is visible and update tabindex
   updateTabIndex() {
     // we don't control manually tabs for popups
-    if (this.editPopup.isVisible() || this.deletePopup.isVisible()) {
+    if (this.editPopup.visible || this.deletePopup.visible) {
       // if popup is visible disable anything else
       this.nav.disableTab();
       this.recipeWindow.disableTab();
-      if (this.editPopup.isVisible()) {
+      if (this.editPopup.visible) {
         this.editPopup.focus();
       } else {
         this.deletePopup.focus();
       }
-    } else if (this.recipeWindow.isVisible()) {
+    } else if (this.recipeWindow.visible) {
       // otherwise if recipe window is visible, enable it
       this.recipeWindow.enableTab();
       this.recipeWindow.focus();
