@@ -24,4 +24,5 @@ _Application written to learn javascript. Only HTML, SCSS and vanilla java scrip
 - set up roles and labels for screen readers
 - dynamically changing elements' tabindex depending on what components are visible to user
 - changing focus when components tree update
+- roving tabindex technique on recipes list and radiogroup for easier keyboard navigation
 - closing components with <kbd>Escape</kbd> key
