@@ -116,7 +116,7 @@ class MainApp {
       } else if (this.recipeWindow.isVisible()) {
         event.preventDefault();
         this.recipeWindow.close("slide");
-      } else if (this.nav.isVisible() && wideWindow()) {
+      } else if (this.nav.visible && wideWindow()) {
         event.preventDefault();
         this.nav.hide();
       }
@@ -134,7 +134,6 @@ class MainApp {
     // we don't control manually tabs for popups
     if (this.editPopup.isVisible() || this.deletePopup.isVisible()) {
       // if popup is visible disable anything else
-      this.bg.disableTab();
       this.nav.disableTab();
       this.recipeWindow.disableTab();
       if (this.editPopup.isVisible()) {

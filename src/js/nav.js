@@ -53,18 +53,20 @@ class Nav {
   show() {
     this.nav.classList.remove("hidden");
     this.recipeWindow.classList.add("narrower");
-    this.updateTabIndexCallback();
+    this.enableTab();
+    this.focus();
   }
 
   // Hide nav
   hide() {
     this.nav.classList.add("hidden");
     this.recipeWindow.classList.remove("narrower");
-    this.updateTabIndexCallback();
+    this.enableTab();
+    this.focus();
   }
 
   // Check if nav is visible
-  isVisible() {
+  get visible() {
     return !this.nav.classList.contains("hidden");
   }
 
@@ -160,9 +162,21 @@ class Nav {
 
   // Update elements' tab key index
   enableTab() {
-    this.setTabIndex("0");
-    // Setting selected item to itself will also change item's button's tabindex to 0.
-    this.selectedItem = this.selectedItem;
+    if (!wideWindow()) {
+      this.setTabIndex("0");
+      this.hideListButton.tabIndex = "-1";
+      this.showListButton.tabIndex = "-1";
+      // Setting selected item to itself will also change item's button's tabindex to 0.
+      this.selectedItem = this.selectedItem;
+    } else if (this.visible) {
+      this.setTabIndex("0");
+      this.showListButton.tabIndex = "-1";
+      // Setting selected item to itself will also change item's button's tabindex to 0.
+      this.selectedItem = this.selectedItem;
+    } else {
+      this.setTabIndex("-1");
+      this.showListButton.tabIndex = "0";
+    }
   }
 
   // Disable interaction with tab key
@@ -199,7 +213,13 @@ class Nav {
   }
 
   focus() {
-    this.hideListButton.focus();
+    if (!wideWindow()) {
+      this.navList.focus();
+    } else if (this.visible) {
+      this.hideListButton.focus();
+    } else {
+      this.showListButton.focus();
+    }
   }
 
   // ----------------------------------------------------------------
