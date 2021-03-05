@@ -2,7 +2,7 @@
 
 _Application written to learn javascript. Only HTML, SCSS and vanilla java script_
 
-### Application features
+## Application features
 
 - displaying selected recipe
 - adding new recipe
@@ -10,7 +10,7 @@ _Application written to learn javascript. Only HTML, SCSS and vanilla java scrip
 - rating recipe
 - removing recipe from list
 
-### Selected programming features
+## Selected programming features
 
 - responsive design
 - collapsable menu
@@ -19,7 +19,7 @@ _Application written to learn javascript. Only HTML, SCSS and vanilla java scrip
 - saving to and reading from local storage
 - mutliple java script classes, classes inhertance, composition
 
-### Accessibility features
+## Accessibility features
 
 - set up roles and labels for screen readers
 - dynamically changing elements' tabindex depending on what components are visible to user
